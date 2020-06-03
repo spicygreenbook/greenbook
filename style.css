@@ -3,6 +3,14 @@ body {
   color: #333;
   font-family: open sans;
 }
+input, select {
+  border: 1px solid black;
+  padding: 16px;
+  font-size: 18px;
+  background-color: #fff;
+  margin: 16px;
+}
+
 .overall-container{
   background-color: #eaeaea;
   padding: 4%;
@@ -65,7 +73,13 @@ body {
 }
 .hero {
   position: relative;
-  padding-top: 40%;
+  padding: 20% 0;
+  text-align: center;
+}
+.hero-content {
+  display:inline-block;
+  z-index: 2;
+  position: relative;
 }
 .heroText {
   display:inline-block;

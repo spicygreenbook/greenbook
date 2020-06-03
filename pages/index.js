@@ -1,10 +1,51 @@
+import { useState, useEffect } from 'react';
 import Link from 'next/link'
+import Head from 'next/head';
+import Router from 'next/router';
+
+const fuzzySearch = (string, srch) => {
+    return (string || '').match(RegExp(srch.trim().split(/\s+/).map(function(c) {
+        return c.split('').join('\\W*');
+    }).join('|'), 'gi'));
+};
 
 export default (props) => {
 
+    const [neighborhood, setNeighborhood] = useState('');
+    const [search, setSearch] = useState('');
+    let intervalTimer;
+    useEffect(
+      () => {
+        let url = '/';
+        if (neighborhood || search) {
+          url += '?';
+        }
+        if (neighborhood) {
+          url += '&neighborhood=' + encodeURIComponent(neighborhood)
+        }
+        if (search) {
+          url += '&search=' + encodeURIComponent(search)
+        }
+        Router.push(url)
+      },
+      [search,neighborhood]
+    );
+
+    let neighborhoods = new Set();
     const list = props.list.map((row, i) => {
       let processed = row;
       processed._actions = [];
+      row._neighborhood = '';
+      row._search = '';
+      Object.keys(row).forEach(key => {
+        if (row[key] && typeof row[key] === 'string'){
+          row._search += row[key];
+        }
+      })
+      if (processed.Neighborhood) {
+        row._neighborhood = processed.Neighborhood.trim().toLowerCase();
+        neighborhoods.add(processed.Neighborhood.trim());
+      }
       if(processed.Website){
         processed._actions.push(<a className="box-links" key={'website'+i} href={processed.Website}>Website</a>);
         //delete processed.Website;
@@ -19,41 +60,92 @@ export default (props) => {
       }
       return processed;
     })
+    neighborhoods = Array.from(neighborhoods);
+
+    let filtered_list = list.filter(row => {
+      let go = true;
+      if (search && !fuzzySearch(row._search, search)) {
+        go = false;
+      }
+      if (neighborhood && row._neighborhood !== neighborhood) {
+        go = false;
+      }
+      return go;
+    });
 
     return (
     <div>
+      <Head>
+          <title>Spicy Green Book</title>
+          <meta name="description" content="Support local black owned businesses with our free directory" />
+      </Head>
       <div className="hero">
-        <span className="heroText">
-          Supporting Black Business
-        </span>
+        <div className="hero-content">
+          <form method="GET" action="" onSubmit={(e) => {
+            e.preventDefault();
+            document.querySelector('.overall-container').scrollIntoView()
+          }}>
+            <select name="neighborhood" onChange={(e) => {
+              let value = e.target.value;
+              clearTimeout(intervalTimer);
+              intervalTimer = setTimeout(() => {
+                setNeighborhood(value);
+              }, 100)
+              
+            }}>
+              <option value="">Select a neighorhood</option>
+              <option value="">Browse all neighborhoods</option>
+              {neighborhoods.map(option => {
+                return <option key={option} value={option.toLowerCase()}>{option}</option>
+              })}
+            </select>
+            <input type="search" name="search" placeholder="Search" onChange={(e) => {
+              let value = e.target.value;
+              clearTimeout(intervalTimer);
+              intervalTimer = setTimeout(() => {
+                setSearch(value);
+              }, 100);
+            }}/>
+            <input type="submit" value="GO" />
+          </form>
+        </div>
+        
       </div>
       <div className="overall-container">
         <div className="box-container">
-        {list.map((row, i) => (
-          <div className="box">
-            <h3 className="box-title">{row.Restaurant}</h3>
-            <p className="box-content">
-             {Object.keys(row).filter(key => {
-              return key.substr(0,1) !== '_' && (row[key] || '').trim() && key != 'Restaurant' && key != 'Website' && key != 'Gift cards' && key != 'Merch/Online Store';
-             }).map(key => (
-                <React.Fragment>
-                  { key === 'IG' ? (
-                    <span key={key+i}><b>{key}</b>: <a href={'https://instagram.com/'+row[key].slice(1)}>{row[key]}</a><br /></span>
-                  ) : key === 'Phone number' ? (
-                    <span key={key+i}><b>{key}</b>: <a href={'tel:'+row[key]}>{row[key]}</a><br /></span>
-                  ) : (
-                    <span key={key+i}><b>{key}</b>: {row[key]}<br /></span>
-                  )}
-                </React.Fragment>
-             ))}
-            </p>
-            <div className="box-actions">{row._actions.map(action => action)}</div>
-          </div>
-        ))}
+          {
+            filtered_list && filtered_list.length ? (
+              <React.Fragment>
+              {filtered_list.map((row, i) => (
+                <div className="box" key={"item"+i}>
+                  <h3 className="box-title">{row.Restaurant}</h3>
+                  <p className="box-content">
+                   {Object.keys(row).filter(key => {
+                    return key.substr(0,1) !== '_' && (row[key] || '').trim() && key != 'Restaurant' && key != 'Website' && key != 'Gift cards' && key != 'Merch/Online Store';
+                   }).map(key => (
+                      <React.Fragment key={key+i}>
+                        { key === 'IG' ? (
+                          <span><b>{key}</b>: <a href={'https://instagram.com/'+row[key].slice(1)}>{row[key]}</a><br /></span>
+                        ) : key === 'Phone number' ? (
+                          <span><b>{key}</b>: <a href={'tel:'+row[key]}>{row[key]}</a><br /></span>
+                        ) : (
+                          <span><b>{key}</b>: {row[key]}<br /></span>
+                        )}
+                      </React.Fragment>
+                   ))}
+                  </p>
+                  <div className="box-actions">{row._actions.map(action => action)}</div>
+                </div>
+              ))}
+              </React.Fragment>
+            ) : (
+              <span>Sorry, nothing matches your search</span>
+            )
+          }
         </div>
       </div>
     </div>
-    );
+  );
 }
 
 export async function getStaticProps(context) {

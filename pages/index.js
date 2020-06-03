@@ -27,6 +27,7 @@ export default (props) => {
       </Head>
       <div className="hero">
         <div className="hero-content">
+          <div class="heroText">Spicy Green Book</div>
           <form method="GET" action="/search">
             <select name="neighborhood" onChange={(e) => {
               let value = e.target.value;

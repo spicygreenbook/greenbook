@@ -84,13 +84,10 @@ input, select {
   height: 100vh;
 }
 .hero-content {
-  display:inline-block;
   z-index: 2;
   position: relative;
 }
 .heroText {
-  display:inline-block;
-  text-align: left;
   font-size: 80px;
   font-weight: 300;
   line-height: 120%;

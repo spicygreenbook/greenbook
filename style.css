@@ -4,11 +4,13 @@ body {
   font-family: open sans;
 }
 input, select {
-  border: 1px solid black;
+  border: 2px solid #7CBE8D;
+  border-radius: 4px;
   padding: 16px;
   font-size: 18px;
   background-color: #fff;
   margin: 16px;
+  box-shadow: 0 0 4px #000;
 }
 
 .overall-container{
@@ -22,8 +24,10 @@ input, select {
 }
 .box {
   background-color: #fff;
+  border-radius:4px;
   overflow: hidden;
   vertical-align: top;
+  box-shadow: 0 0 2px rgba(0,0,0,0.2);
 }
 .box-title {
   margin: 0;
@@ -39,6 +43,7 @@ input, select {
 }
 .box-links{
   display: inline-block;
+  border-radius:4px;
   text-decoration: none;
   margin: 0 4px 4px 0;
   padding: 8px;
@@ -104,6 +109,9 @@ input, select {
   }
 }
 @media all and (max-width: 600px) {
+  .hero {
+    text-align: left;
+  }
   .box-container{
     grid-template-columns: minmax(0, 1fr);
   }

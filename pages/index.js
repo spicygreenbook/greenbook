@@ -64,6 +64,9 @@ export default (props) => {
 
     let filtered_list = list.filter(row => {
       let go = true;
+      if (!row.Restaurant) {
+        go = false;
+      }
       if (search && !fuzzySearch(row._search, search)) {
         go = false;
       }
@@ -99,7 +102,7 @@ export default (props) => {
                 return <option key={option} value={option.toLowerCase()}>{option}</option>
               })}
             </select>
-            <input type="search" name="search" placeholder="Search" onChange={(e) => {
+            <input type="search" size="14" name="search" placeholder="Search" onChange={(e) => {
               let value = e.target.value;
               clearTimeout(intervalTimer);
               intervalTimer = setTimeout(() => {

@@ -60,7 +60,7 @@ input, select {
   top: 0;
   right: 0;
   bottom: 0;
-  background-image: url('/images/greenbook_bg1.jpg');
+  background-image: url('/images/bg1.jpg');
   background-size: cover;
   background-position: center top;
   filter: blur(2px);
@@ -80,6 +80,8 @@ input, select {
   position: relative;
   padding: 20% 0;
   text-align: center;
+  box-sizing: border-box;
+  height: 100vh;
 }
 .hero-content {
   display:inline-block;

@@ -4,7 +4,9 @@ export default class MyDocument extends Document {
     return (
       <html>
         <Head>
-          <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            <title>Spicy Green Book</title>
+            <meta name="description" content="Support local black owned businesses with our free directory" />
+            <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1" />
         </Head>
         <body>
           <Main />

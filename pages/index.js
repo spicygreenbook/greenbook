@@ -1,17 +1,4 @@
-import {
-  Breadcrumb,
-  Icon,
-  Row,
-  Col,
-  Layout,
-  Card,
-  Carousel,
-} from 'antd';
 import Link from 'next/link'
-import "../assets/style.less";
-const {
-  Header, Content,
-} = Layout;
 
 export default (props) => {
 
@@ -19,36 +6,33 @@ export default (props) => {
       let processed = row;
       processed._actions = [];
       if(processed.Website){
-        processed._actions.push(<a key={'website'+i} href={processed.Website}>Website</a>);
+        processed._actions.push(<a className="box-links" key={'website'+i} href={processed.Website}>Website</a>);
         //delete processed.Website;
       }
       if(processed['Gift cards']){
-        processed._actions.push(<a key={'giftcards'+i} href={processed['Gift cards']}>Gift Cards</a>);
+        processed._actions.push(<a className="box-links" key={'giftcards'+i} href={processed['Gift cards']}>Gift Cards</a>);
         //delete processed['Gift cards']
       }
       if(processed['Merch/Online Store']){
-        processed._actions.push(<a key={'store'+i} href={processed['Merch/Online Store']}>Store</a>);
+        processed._actions.push(<a className="box-links" key={'store'+i} href={processed['Merch/Online Store']}>Store</a>);
         //delete processed['Merch/Online Store']
       }
       return processed;
     })
 
     return (
-    <Layout>
-      <Header className="hero">
+    <div>
+      <div className="hero">
         <span className="heroText">
-          Supporting<br />Black<br />Business
+          Supporting Black Business
         </span>
-      </Header>
-      <Content>
-        <Row>
-          <Col>
-          </Col>
-        </Row>
-        <Row gutter={16} vgutter={16} style={{maxWidth: 900, margin: '100px auto'}}>
+      </div>
+      <div className="overall-container">
+        <div className="box-container">
         {list.map((row, i) => (
-          <Col span={8} key={'row' + i} style={{padding: 16}}>
-            <Card hoverable title={row.Restaurant} actions={row._actions}>
+          <div className="box">
+            <h3 className="box-title">{row.Restaurant}</h3>
+            <p className="box-content">
              {Object.keys(row).filter(key => {
               return key.substr(0,1) !== '_' && (row[key] || '').trim() && key != 'Restaurant' && key != 'Website' && key != 'Gift cards' && key != 'Merch/Online Store';
              }).map(key => (
@@ -62,12 +46,13 @@ export default (props) => {
                   )}
                 </React.Fragment>
              ))}
-            </Card>
-          </Col>
+            </p>
+            <div className="box-actions">{row._actions.map(action => action)}</div>
+          </div>
         ))}
-        </Row>
-      </Content>
-    </Layout>
+        </div>
+      </div>
+    </div>
     );
 }
 

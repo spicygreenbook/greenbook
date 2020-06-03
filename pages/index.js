@@ -14,25 +14,22 @@ const {
 } = Layout;
 
 export default (props) => {
-    console.log('props', props)
 
-    const list = props.list.map(row => {
+    const list = props.list.map((row, i) => {
       let processed = row;
       processed._actions = [];
       if(processed.Website){
-        console.log(processed.Website);
-        processed._actions.push(<a href={processed.Website}>Website</a>);
+        processed._actions.push(<a key={'website'+i} href={processed.Website}>Website</a>);
         //delete processed.Website;
       }
       if(processed['Gift cards']){
-        processed._actions.push(<a href={processed['Gift cards']}>Gift Cards</a>);
+        processed._actions.push(<a key={'giftcards'+i} href={processed['Gift cards']}>Gift Cards</a>);
         //delete processed['Gift cards']
       }
       if(processed['Merch/Online Store']){
-        processed._actions.push(<a href={processed['Merch/Online Store']}>Store</a>);
+        processed._actions.push(<a key={'store'+i} href={processed['Merch/Online Store']}>Store</a>);
         //delete processed['Merch/Online Store']
       }
-      console.log('actions', processed._actions)
       return processed;
     })
 
@@ -57,11 +54,11 @@ export default (props) => {
              }).map(key => (
                 <React.Fragment>
                   { key === 'IG' ? (
-                    <span key={key}><b>{key}</b>: <a href={'https://instagram.com/'+row[key].slice(1)}>{row[key]}</a><br /></span>
+                    <span key={key+i}><b>{key}</b>: <a href={'https://instagram.com/'+row[key].slice(1)}>{row[key]}</a><br /></span>
                   ) : key === 'Phone number' ? (
-                    <span key={key}><b>{key}</b>: <a href={'tel:'+row[key]}>{row[key]}</a><br /></span>
+                    <span key={key+i}><b>{key}</b>: <a href={'tel:'+row[key]}>{row[key]}</a><br /></span>
                   ) : (
-                    <span key={key}><b>{key}</b>: {row[key]}<br /></span>
+                    <span key={key+i}><b>{key}</b>: {row[key]}<br /></span>
                   )}
                 </React.Fragment>
              ))}
@@ -166,10 +163,8 @@ export async function getStaticProps(context) {
   let csv = await data.text();
   var res = [];
   var parsed_data = CSVToArray(csv);
-  console.log('data', parsed_data)
   var line = parsed_data[0];
   var colmap = {};
-  console.log('line', line)
   parsed_data[0].forEach((key, c) => {
       colmap[c] = (key || '').trim().toLowerCase().replace(/ /ig, '_');
   })

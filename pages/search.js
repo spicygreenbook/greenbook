@@ -130,11 +130,11 @@ export default (props) => {
 		if (neighborhood && row._neighborhood !== neighborhood) {
 			go = false;
 		}
-		if (cuisine && row._cuisine !== cuisine) {
+		if (cuisine && row.Cuisine && row.Cuisine.toLowerCase().indexOf(cuisine) < 0) {
 			go = false;
 		}
 		return go;
-	});
+	}).map(row => row);
 
 	neighborhoods.map((option) => {
 		console.log('op', option.toLowerCase().trim(), 'neighrhood', neighborhood, neighborhood === option.toLowerCase().trim());

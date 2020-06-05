@@ -5,28 +5,12 @@ import Router from "next/router";
 import getListings from "../utils/getListings";
 
 export default (props) => {
-	console.log("props", props);
+	const { cuisines, neighborhoods } = props;
 	const [neighborhood, setNeighborhood] = useState("");
 	const [search, setSearch] = useState("");
 	let intervalTimer;
 
-	let neighborhoods = new Set();
-	let cuisines = new Set();
-	const list = props.list.map((row, i) => {
-		if (row._cuisines) {
-			row._cuisines.forEach((line) => {
-				cuisines.add(line);
-			});
-		}
-		if (row._neighborhoods) {
-			row._neighborhoods.forEach((line) => {
-				neighborhoods.add(line);
-			});
-		}
-		return row;
-	});
-	neighborhoods = Array.from(neighborhoods);
-	cuisines = Array.from(cuisines);
+	console.log('cuisines', cuisines);
 
 	return (
 		<div>
@@ -39,7 +23,7 @@ export default (props) => {
 			</Head>
 			<div className="hero">
 				<div className="hero-content">
-					<div className="heroText">Spicy Green Book</div>
+					<img src="/safari-pinned-tab-light.svg" style={{width: '50%', maxWidth: 200}} />
 					<form method="GET" action="/search">
 						<select
 							name="neighborhood"
@@ -55,7 +39,10 @@ export default (props) => {
 							<option value="">Browse all neighborhoods</option>
 							{neighborhoods.map((option) => {
 								return (
-									<option key={option} value={option.toLowerCase()}>
+									<option
+										key={option}
+										value={option.toLowerCase()}
+									>
 										{option}
 									</option>
 								);
@@ -76,28 +63,46 @@ export default (props) => {
 						/>
 						<input type="submit" value="GO" />
 					</form>
-					<div style={{ margin: '10px auto 0 auto', textAlign: 'left', maxWidth: 900 }}>
+					<div
+						style={{
+							margin: "10px auto 0 auto",
+							textAlign: "left",
+							maxWidth: 900,
+						}}
+					>
 						<h3 className="browseHeader">Browse Cuisines</h3>
 						{cuisines.map((option) => {
 							return (
 								<a
 									className="link"
 									key={option}
-									href={"/search?cuisine=" + encodeURIComponent(option.toLowerCase())}
+									href={
+										"/search?cuisine=" +
+										encodeURIComponent(option.toLowerCase())
+									}
 								>
 									{option}
 								</a>
 							);
 						})}
 					</div>
-					<div style={{ margin: '10px auto 0 auto', textAlign: 'left', maxWidth: 900}}>
+					<div
+						style={{
+							margin: "10px auto 0 auto",
+							textAlign: "left",
+							maxWidth: 900,
+						}}
+					>
 						<h3 className="browseHeader">Browse Neighborhoods</h3>
 						{neighborhoods.map((option) => {
 							return (
 								<a
 									className="link"
 									key={option}
-									href={"/search?neighborhood=" + encodeURIComponent(option.toLowerCase())}
+									href={
+										"/search?neighborhood=" +
+										encodeURIComponent(option.toLowerCase())
+									}
 								>
 									{option}
 								</a>
@@ -111,8 +116,8 @@ export default (props) => {
 };
 
 export async function getStaticProps(context) {
-	let rows = await getListings({ saveImages: false });
-	rows = rows.map((row) => {
+	let data = await getListings({ saveImages: false });
+	const rows = data.rows.map((row) => {
 		return {
 			Neighborhood: row.Neighborhood || "",
 			_neighborhoods: row._neighborhoods || "",
@@ -121,6 +126,10 @@ export async function getStaticProps(context) {
 		};
 	});
 	return {
-		props: { list: rows },
+		props: {
+			list: rows,
+			neighborhoods: data.neighborhoods,
+			cuisines: data.cuisines,
+		},
 	};
 }

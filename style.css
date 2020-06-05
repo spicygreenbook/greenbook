@@ -4,13 +4,21 @@ body {
   font-family: open sans;
 }
 input, select {
-  border: 2px solid #7CBE8D;
+  border: 2px solid #589147;
   border-radius: 4px;
   padding: 16px;
   font-size: 18px;
   background-color: #fff;
   margin: 16px;
   box-shadow: 0 0 4px #000;
+}
+input[type="submit"] {
+  background-color: #589147;
+  color: #fff;
+}
+.top-grid {
+  display: inline-block;
+  vertical-align: middle;
 }
 
 .overall-container{
@@ -48,7 +56,7 @@ input, select {
   margin: 0 4px 4px 0;
   padding: 8px;
   text-align: center;
-  background-color: #7CBE8D;
+  background-color: #589147;
   color: #000;
 }
 .box-image{
@@ -82,7 +90,7 @@ input, select {
 }
 .hero {
   position: relative;
-  padding: 20% 0;
+  padding: 10% 0;
   text-align: center;
   box-sizing: border-box;
   min-height: 100vh;

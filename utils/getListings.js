@@ -171,14 +171,20 @@ async function getListings(config) {
 			return row.Enable;
 		});
 
+	let neighborhoods = new Set();
+	let cuisines = new Set();
+
+
 	rows.forEach(async (row, i) => {
 
-		row._cuisines = row.Cuisine.replace(/\r?\n/, '   ').split('   ').filter(line => {
-			return (line || '').trim()
+		row._cuisines = row.Cuisine.replace(/\r?\n/, '   ').split('   ').map(line => line.trim()).filter(line => line).map(line => {
+			cuisines.add(line);
+			return line;
 		})
 
-		row._neighborhoods = row.Neighborhood.replace(/\r?\n/, '   ').split('   ').filter(line => {
-			return (line || '').trim()
+		row._neighborhoods = row.Neighborhood.replace(/\r?\n/, '   ').split('   ').map(line => line.trim()).filter(line => line).map(line => {
+			neighborhoods.add(line);
+			return line;
 		})
 
 		row._slug = (row.Restaurant || "")
@@ -198,7 +204,15 @@ async function getListings(config) {
 			row._img = row._slug + ".jpg";
 		}
 	});
-	return rows;
+
+	neighborhoods = Array.from(neighborhoods);
+	cuisines = Array.from(cuisines);
+
+	return {
+		rows: rows,
+		cuisines: cuisines,
+		neighborhoods: neighborhoods
+	}
 }
 
 module.exports = getListings;

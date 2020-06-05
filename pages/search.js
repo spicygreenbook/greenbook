@@ -19,6 +19,8 @@ const fuzzySearch = (string, srch) => {
 };
 
 export default (props) => {
+
+	const { cuisines, neighborhoods } = props;
 	let query = {};
 	if (typeof window !== "undefined") {
 		let params = (window.location.search || "")
@@ -48,10 +50,7 @@ export default (props) => {
 		console.log('updated', search, neighborhood, query)
 	}, [search, neighborhood, query]);
 
-	console.log('list', props.list)
 
-	let neighborhoods = new Set();
-	let cuisines = new Set();
 	const list = props.list.map((row, i) => {
 		let processed = row;
 		processed._actions = [];
@@ -68,16 +67,6 @@ export default (props) => {
 		}
 		if (processed.Cuisine) {
 			row._cuisine = processed.Cuisine.trim().toLowerCase();
-		}
-		if (row._cuisines) {
-			row._cuisines.forEach((line) => {
-				cuisines.add(line);
-			});
-		}
-		if (row._neighborhoods) {
-			row._neighborhoods.forEach((line) => {
-				neighborhoods.add(line);
-			});
 		}
 		if (processed.Website) {
 			processed._actions.push(
@@ -117,7 +106,6 @@ export default (props) => {
 		}
 		return processed;
 	});
-	neighborhoods = Array.from(neighborhoods);
 
 	let filtered_list = list.filter((row) => {
 		let go = true;
@@ -136,10 +124,6 @@ export default (props) => {
 		return go;
 	}).map(row => row);
 
-	neighborhoods.map((option) => {
-		console.log('op', option.toLowerCase().trim(), 'neighrhood', neighborhood, neighborhood === option.toLowerCase().trim());
-	});
-
 	return (
 		<div>
 			<Head>
@@ -149,40 +133,76 @@ export default (props) => {
 					content="Support local black owned businesses with our free directory"
 				/>
 			</Head>
-			<form method="GET" action="/search">
-				<select
-					name="neighborhood"
-					value={neighborhood.toLowerCase().trim()}
-					onChange={(e) => {
-						let value = e.target.value;
-						setNeighborhood(value);
-					}}
-				>
-					<option value="">Browse all neighborhoods</option>
-					{neighborhoods.map((option) => {
-						return (
-							<option
-								key={option}
-								value={option.toLowerCase().trim()}
-							>
-								{option}
-							</option>
-						);
-					})}
-				</select>
-				<input
-					type="search"
-					size="14"
-					name="query"
-					placeholder="Search"
-					value={search}
-					onChange={(e) => {
-						let value = e.target.value;
-						setSearch(value);
-					}}
-				/>
-				<input type="submit" value="GO" />
-			</form>
+			<div style={{padding: "0 4%"}}>
+				<form method="GET" action="/search">
+					<a className="top-grid" href="/"><img src="/safari-pinned-tab.svg" height="80" /></a>
+					<span className="top-grid">
+						<select
+							style={{boxShadow: 'none'}}					
+							name="cuisine"
+							onChange={(e) => {
+								let value = e.target.value;
+								clearTimeout(intervalTimer);
+								intervalTimer = setTimeout(() => {
+									setCuisine(value);
+								}, 100);
+							}}
+						>
+							<option value="">Show all cuisines</option>
+							{cuisines.map((option) => {
+								return (
+									<option
+										key={option}
+										value={option.toLowerCase()}
+									>
+										{option}
+									</option>
+								);
+							})}
+						</select>
+					</span>
+					<span className="top-grid">
+						<select
+							style={{boxShadow: 'none'}}
+							name="neighborhood"
+							value={neighborhood.toLowerCase().trim()}
+							onChange={(e) => {
+								let value = e.target.value;
+								setNeighborhood(value);
+							}}
+						>
+							<option value="">Show all neighborhoods</option>
+							{neighborhoods.map((option) => {
+								return (
+									<option
+										key={option}
+										value={option.toLowerCase().trim()}
+									>
+										{option}
+									</option>
+								);
+							})}
+						</select>
+					</span>
+					<span className="top-grid">
+						<input
+							style={{boxShadow: 'none'}}
+							type="search"
+							size="14"
+							name="query"
+							placeholder="Search"
+							value={search}
+							onChange={(e) => {
+								let value = e.target.value;
+								setSearch(value);
+							}}
+						/>
+					</span>
+					<span className="top-grid">
+						<input type="submit" value="GO" style={{boxShadow: 'none'}} />
+					</span>
+				</form>
+			</div>
 			<div className="overall-container">
 				<div className="box-container">
 					{filtered_list && filtered_list.length ? (
@@ -263,8 +283,8 @@ export default (props) => {
 };
 
 export async function getStaticProps(context) {
-	let rows = await getListings({ saveImages: true });
+	let data = await getListings({ saveImages: true });
 	return {
-		props: { list: rows },
+		props: { list: data.rows, neighborhoods: data.neighborhoods, cuisines: data.cuisines },
 	};
 }

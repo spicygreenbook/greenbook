@@ -23,7 +23,9 @@ export default (props) => {
 			</Head>
 			<div className="hero">
 				<div className="hero-content">
-					<img src="/safari-pinned-tab-light.svg" style={{width: '50%', maxWidth: 200}} />
+					<div style={{textAlign: 'center'}}>
+						<img src="/safari-pinned-tab-light.svg" style={{width: '50%', maxWidth: 200}} />
+					</div>
 					<form method="GET" action="/search">
 						<select
 							name="neighborhood"
@@ -108,6 +110,9 @@ export default (props) => {
 								</a>
 							);
 						})}
+					</div>
+					<div style={{marginTop: 40, color: '#fff'}}>
+						Cake by Arielle Batson <a style={{color: '#fff', textDecoration: 'none'}} href="https://instagram.com/arry829">@arry829</a>
 					</div>
 				</div>
 			</div>

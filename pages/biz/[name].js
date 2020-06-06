@@ -146,7 +146,7 @@ export default (props) => {
                     content="Support local black owned businesses with our free directory"
                 />
             </Head>
-            <div style={{ padding: "0 4%" }}>
+            <div style={{ padding: "10px 20px" }}>
                 <form method="GET" action="/search">
                     <a className="top-grid" href="/">
                         <img src="/safari-pinned-tab.svg" height="80" />
@@ -230,7 +230,7 @@ export default (props) => {
                     />
                 ))}
             </div>
-            <div style={{ maxWidth: 800, margin: "20px auto" }}>
+            <div style={{ maxWidth: 800, margin: "20px auto", padding: 20, boxSizing: 'border-box'}}>
                 <h3 className="box-title">{row.Restaurant}</h3>
                 <p className="box-details">
                     {show_content_cols

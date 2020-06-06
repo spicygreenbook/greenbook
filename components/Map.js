@@ -36,14 +36,18 @@ export default function Map({ list, options, onMount, className, onMountProps })
           }
 
           var infoWindowMarkup = `
+          <a href="/biz/${row._slug}" style="color:#000;text-decoration:none">
           <table cellpadding="4" cellspacing="0" border="0">
-          <tr>
-            <td colspan="2" style="font-size:18px"><b>${row.Restaurant}</b></td>
-          </tr>
-          ${show_content_cols.filter(key => row[key]).map(key => {
-            return `<tr><td style="text-align:right"><b>${key}</b></td><td>${row[key]}</td></tr>`;
-          }).join('')}
-          `;
+          <tbody>
+            <tr>
+              <td colspan="2" style="font-size:18px"><b>${row.Restaurant}</b></td>
+            </tr>
+            ${show_content_cols.filter(key => row[key]).map(key => {
+              return `<tr><td style="text-align:right"><b>${key}</b></td><td>${row[key]}</td></tr>`;
+            }).join('')}
+            </a>
+          </tbody>
+          </table>`;
           var infoWindow = new google.maps.InfoWindow({
             content: infoWindowMarkup
           });

@@ -3,6 +3,7 @@ import Link from "next/link";
 import Head from "next/head";
 import getListings from "../utils/getListings";
 import Map from "../components/Map"
+import Header from "../components/Header"
 
 const fuzzySearch = (string, srch) => {
 	return (string || "").match(
@@ -95,57 +96,9 @@ export default (props) => {
 					content="Support local black owned businesses with our free directory"
 				/>
 			</Head>
-			<div style={{padding: "0 4%"}}>
-				<form method="GET" action="/search">
-					<span className="top-grid" style={{maxWidth: '20%'}}>
-						<a className="top-grid" href="/"><img src="/safari-pinned-tab.svg" height="80" /></a>
-					</span>
-					<span className="top-grid" style={{paddingLeft: 20, maxWidth: '80%'}}>
-						<span className="top-grid">
-							<input
-								style={{boxShadow: 'none'}}
-								type="search"
-								size="14"
-								name="query"
-								placeholder="Search"
-								value={search}
-								onChange={(e) => {
-									let value = e.target.value;
-									setSearch(value);
-								}}
-							/>
-						</span>
-						<span className="top-grid">
-							<select
-								style={{boxShadow: 'none'}}
-								name="neighborhood"
-								value={neighborhood.toLowerCase().trim()}
-								onChange={(e) => {
-									let value = e.target.value;
-									setNeighborhood(value);
-								}}
-							>
-								<option value="">Show all neighborhoods</option>
-								{neighborhoods.map((option) => {
-									return (
-										<option
-											key={option}
-											value={option.toLowerCase().trim()}
-										>
-											{option}
-										</option>
-									);
-								})}
-							</select>
-						</span>
-						<span className="top-grid">
-							<input type="submit" value="GO" style={{boxShadow: 'none'}} />
-						</span>
-					</span>
-				</form>
-			</div>
+			<Header setSearch={setSearch} search={search} neighborhoods={neighborhoods} neighborhood={neighborhood} setNeighborhood={setNeighborhood} />
 			<div className="layout-map">
-				<Map list={list} />
+				<Map list={filtered_list} />
 			</div>
 			<div className="layout-list">
 				<div className="overall-container">

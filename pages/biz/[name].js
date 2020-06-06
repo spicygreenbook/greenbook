@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Head from "next/head";
 import getListings from "../../utils/getListings";
+import Header from "../../components/Header";
 
 const fuzzySearch = (string, srch) => {
     return (string || "").match(
@@ -146,90 +147,19 @@ export default (props) => {
                     content="Support local black owned businesses with our free directory"
                 />
             </Head>
-            <div style={{ padding: "10px 20px" }}>
-                <form method="GET" action="/search">
-                    <a className="top-grid" href="/">
-                        <img src="/safari-pinned-tab.svg" height="80" />
-                    </a>
-                    <span className="top-grid">
-                        <select
-                            style={{ boxShadow: "none" }}
-                            name="cuisine"
-                            onChange={(e) => {
-                                let value = e.target.value;
-                                clearTimeout(intervalTimer);
-                                intervalTimer = setTimeout(() => {
-                                    setCuisine(value);
-                                }, 100);
-                            }}
-                        >
-                            <option value="">Show all cuisines</option>
-                            {cuisines.map((option) => {
-                                return (
-                                    <option
-                                        key={option}
-                                        value={option.toLowerCase()}
-                                    >
-                                        {option}
-                                    </option>
-                                );
-                            })}
-                        </select>
-                    </span>
-                    <span className="top-grid">
-                        <select
-                            style={{ boxShadow: "none" }}
-                            name="neighborhood"
-                            value={neighborhood.toLowerCase().trim()}
-                            onChange={(e) => {
-                                let value = e.target.value;
-                                setNeighborhood(value);
-                            }}
-                        >
-                            <option value="">Show all neighborhoods</option>
-                            {neighborhoods.map((option) => {
-                                return (
-                                    <option
-                                        key={option}
-                                        value={option.toLowerCase().trim()}
-                                    >
-                                        {option}
-                                    </option>
-                                );
-                            })}
-                        </select>
-                    </span>
-                    <span className="top-grid">
-                        <input
-                            style={{ boxShadow: "none" }}
-                            type="search"
-                            size="14"
-                            name="query"
-                            placeholder="Search"
-                            value={search}
-                            onChange={(e) => {
-                                let value = e.target.value;
-                                setSearch(value);
-                            }}
-                        />
-                    </span>
-                    <span className="top-grid">
-                        <input
-                            type="submit"
-                            value="GO"
-                            style={{ boxShadow: "none" }}
-                        />
-                    </span>
-                </form>
-            </div>
-            <div style={{ whiteSpace: "nowrap", overflow: "hidden" }}>
-                {props.images.map((image) => (
-                    <span
-                        class="splashMedia"
-                        style={{ backgroundImage: `url(${image.media.src})` }}
-                    />
-                ))}
-            </div>
+
+            <Header setSearch={setSearch} search={search} neighborhoods={neighborhoods} neighborhood={neighborhood} setNeighborhood={setNeighborhood} />
+
+            <div className="splashMedia-wrapper">
+	            <div className="splashMedia-container">
+	                {props.images.map((image) => (
+	                    <span
+	                        class="splashMedia"
+	                        style={{ backgroundImage: `url(${image.media.src})` }}
+	                    />
+	                ))}
+	            </div>
+	        </div>
             <div style={{ maxWidth: 800, margin: "20px auto", padding: 20, boxSizing: 'border-box'}}>
                 <h3 className="box-title">{row.Restaurant}</h3>
                 <p className="box-details">

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Head from "next/head";
 import getListings from "../utils/getListings";
+import Map from "../components/Map"
 
 const fuzzySearch = (string, srch) => {
 	return (string || "").match(
@@ -34,6 +35,7 @@ export default (props) => {
 	const [neighborhood, setNeighborhood] = useState(query.neighborhood || "");
 	const [search, setSearch] = useState(query.query || "");
 	const [cuisine, setCuisine] = useState(query.cuisine || "");
+	console.log('search initial is', search)
 	let intervalTimer;
 	console.log('neighborhood', neighborhood)
 	const show_content_cols = [
@@ -137,29 +139,18 @@ export default (props) => {
 				<form method="GET" action="/search">
 					<a className="top-grid" href="/"><img src="/safari-pinned-tab.svg" height="80" /></a>
 					<span className="top-grid">
-						<select
+						<input
 							style={{boxShadow: 'none'}}
-							name="cuisine"
+							type="search"
+							size="14"
+							name="query"
+							placeholder="Search"
+							value={search}
 							onChange={(e) => {
 								let value = e.target.value;
-								clearTimeout(intervalTimer);
-								intervalTimer = setTimeout(() => {
-									setCuisine(value);
-								}, 100);
+								setSearch(value);
 							}}
-						>
-							<option value="">Show all cuisines</option>
-							{cuisines.map((option) => {
-								return (
-									<option
-										key={option}
-										value={option.toLowerCase()}
-									>
-										{option}
-									</option>
-								);
-							})}
-						</select>
+						/>
 					</span>
 					<span className="top-grid">
 						<select
@@ -185,24 +176,11 @@ export default (props) => {
 						</select>
 					</span>
 					<span className="top-grid">
-						<input
-							style={{boxShadow: 'none'}}
-							type="search"
-							size="14"
-							name="query"
-							placeholder="Search"
-							value={search}
-							onChange={(e) => {
-								let value = e.target.value;
-								setSearch(value);
-							}}
-						/>
-					</span>
-					<span className="top-grid">
 						<input type="submit" value="GO" style={{boxShadow: 'none'}} />
 					</span>
 				</form>
 			</div>
+			<Map list={list} />
 			<div className="overall-container">
 				<div className="box-container">
 					{filtered_list && filtered_list.length ? (

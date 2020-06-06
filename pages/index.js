@@ -27,6 +27,19 @@ export default (props) => {
 						<img src="/safari-pinned-tab-light.svg" style={{width: '50%', maxWidth: 200}} />
 					</div>
 					<form method="GET" action="/search">
+						<input
+							type="search"
+							size="14"
+							name="query"
+							placeholder="Search"
+							onChange={(e) => {
+								let value = e.target.value;
+								clearTimeout(intervalTimer);
+								intervalTimer = setTimeout(() => {
+									setSearch(value);
+								}, 100);
+							}}
+						/>
 						<select
 							name="neighborhood"
 							onChange={(e) => {
@@ -50,19 +63,6 @@ export default (props) => {
 								);
 							})}
 						</select>
-						<input
-							type="search"
-							size="14"
-							name="query"
-							placeholder="Search"
-							onChange={(e) => {
-								let value = e.target.value;
-								clearTimeout(intervalTimer);
-								intervalTimer = setTimeout(() => {
-									setSearch(value);
-								}, 100);
-							}}
-						/>
 						<input type="submit" value="GO" />
 					</form>
 					<div
@@ -79,7 +79,7 @@ export default (props) => {
 									className="link"
 									key={option}
 									href={
-										"/search?cuisine=" +
+										"/search?query=" +
 										encodeURIComponent(option.toLowerCase())
 									}
 								>

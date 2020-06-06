@@ -133,6 +133,17 @@ input[type="submit"] {
   font-weight: bold;
   text-decoration: none;
 }
+.splashMedia {
+  display:inline-block;
+  width: 200px;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.splashMedia:after{
+  content: '';
+  display:block;
+  padding-top: 100%;
+}
 
 @media all and (max-width: 900px) {
   .box-container{
@@ -151,6 +162,9 @@ input[type="submit"] {
   }
   .heroText {
     font-size: 40px;
+  }
+  .splashMedia {
+    width: 100px;
   }
 }
 

@@ -208,69 +208,71 @@ export default (props) => {
 					{filtered_list && filtered_list.length ? (
 						<React.Fragment>
 							{filtered_list.map((row, i) => (
-								<div className="box" key={"item" + i}>
-									<div
-										className="box-image"
-										style={{
-											backgroundImage:
-												"url(/assets/" +
-												(row._img ? row._img : 'default.png') +
-												")",
-										}}
-									/>
-									<div className="box-content">
-										<h3 className="box-title">
-											{row.Restaurant}
-										</h3>
-										<p className="box-details">
-											{show_content_cols
-												.filter((key) => row[key])
-												.map((key) => (
-													<React.Fragment key={key + i}>
-														{key === "IG" ? (
-															<span>
-																<b>{key}</b>:{" "}
-																<a
-																	href={
-																		"https://instagram.com/" +
-																		row[
-																			key
-																		].slice(1)
-																	}
-																>
+								<Link href={'/biz/' + row._slug} key={"item" + i}>
+									<div className="box">
+										<div
+											className="box-image"
+											style={{
+												backgroundImage:
+													"url(/assets/" +
+													(row._img ? row._img : 'default.png') +
+													")",
+											}}
+										/>
+										<div className="box-content">
+											<h3 className="box-title">
+												{row.Restaurant}
+											</h3>
+											<p className="box-details">
+												{show_content_cols
+													.filter((key) => row[key])
+													.map((key) => (
+														<React.Fragment key={key + i}>
+															{key === "IG" ? (
+																<span>
+																	<b>{key}</b>:{" "}
+																	<a
+																		href={
+																			"https://instagram.com/" +
+																			row[
+																				key
+																			].slice(1)
+																		}
+																	>
+																		{row[key]}
+																	</a>
+																	<br />
+																</span>
+															) : key ===
+															  "Phone number" ? (
+																<span>
+																	<b>{key}</b>:{" "}
+																	<a
+																		href={
+																			"tel:" +
+																			row[key]
+																		}
+																	>
+																		{row[key]}
+																	</a>
+																	<br />
+																</span>
+															) : (
+																<span>
+																	<b>{key}</b>:{" "}
 																	{row[key]}
-																</a>
-																<br />
-															</span>
-														) : key ===
-														  "Phone number" ? (
-															<span>
-																<b>{key}</b>:{" "}
-																<a
-																	href={
-																		"tel:" +
-																		row[key]
-																	}
-																>
-																	{row[key]}
-																</a>
-																<br />
-															</span>
-														) : (
-															<span>
-																<b>{key}</b>:{" "}
-																{row[key]}
-																<br />
-															</span>
-														)}
-													</React.Fragment>
-												))}
-										</p>
-										<div className="box-actions">
-											{row._actions.map((action) => action)}
+																	<br />
+																</span>
+															)}
+														</React.Fragment>
+													))}
+											</p>
+											<div className="box-actions">
+												{row._actions.map((action) => action)}
+											</div>
 										</div>
 									</div>
-								</div>
+								</Link>
 							))}
 						</React.Fragment>
 					) : (

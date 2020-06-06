@@ -54,7 +54,7 @@ input[type="submit"] {
   white-space: normal;
   display: inline-block;
   box-sizing: border-box;
-  padding-left: 10px;
+  padding-left: 20px;
   vertical-align: top;
   max-width: 80%
 }

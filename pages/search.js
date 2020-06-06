@@ -39,13 +39,10 @@ export default (props) => {
 	let intervalTimer;
 	console.log('neighborhood', neighborhood)
 	const show_content_cols = [
-		"Neighborhood",
-		"Cuisine",
+		"Neighborhood",	
+	"Cuisine",
 		"Service",
 		"Hours",
-		"IG",
-		"Phone number",
-		"Address",
 	];
 
 	useEffect(() => {
@@ -55,7 +52,6 @@ export default (props) => {
 
 	const list = props.list.map((row, i) => {
 		let processed = row;
-		processed._actions = [];
 		row._neighborhood = "";
 		row._cuisine = "";
 		row._search = "";
@@ -69,42 +65,6 @@ export default (props) => {
 		}
 		if (processed.Cuisine) {
 			row._cuisine = processed.Cuisine.trim().toLowerCase();
-		}
-		if (processed.Website) {
-			processed._actions.push(
-				<a
-					className="box-links"
-					key={"website" + i}
-					href={processed.Website}
-				>
-					Website
-				</a>
-			);
-			//delete processed.Website;
-		}
-		if (processed["Gift cards"]) {
-			processed._actions.push(
-				<a
-					className="box-links"
-					key={"giftcards" + i}
-					href={processed["Gift cards"]}
-				>
-					Gift Cards
-				</a>
-			);
-			//delete processed['Gift cards']
-		}
-		if (processed["Merch/Online Store"]) {
-			processed._actions.push(
-				<a
-					className="box-links"
-					key={"store" + i}
-					href={processed["Merch/Online Store"]}
-				>
-					Store
-				</a>
-			);
-			//delete processed['Merch/Online Store']
 		}
 		return processed;
 	});
@@ -140,7 +100,7 @@ export default (props) => {
 					<span className="top-grid" style={{maxWidth: '20%'}}>
 						<a className="top-grid" href="/"><img src="/safari-pinned-tab.svg" height="80" /></a>
 					</span>
-					<span className="top-grid" style={{paddingLeft: 10, maxWidth: '80%'}}>
+					<span className="top-grid" style={{paddingLeft: 20, maxWidth: '80%'}}>
 						<span className="top-grid">
 							<input
 								style={{boxShadow: 'none'}}
@@ -252,9 +212,6 @@ export default (props) => {
 															</React.Fragment>
 														))}
 												</p>
-												<div className="box-actions">
-													{row._actions.map((action) => action)}
-												</div>
 											</div>
 										</div>
 									</Link>

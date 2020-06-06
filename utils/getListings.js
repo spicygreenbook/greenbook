@@ -31,41 +31,46 @@ async function fetchInsta(igname, row) {
 				}
 			});
 			let html = await data.text();
-			const jsonObject = html
-				.match(
-					/<script type="text\/javascript">window\._sharedData = (.*)<\/script>/
-				)[1]
-				.slice(0, -1);
-			const json = JSON.parse(jsonObject);
-			if (row._img_path) {
-				fs.writeFileSync(
-					row._img_path.replace(".jpg", ".json"),
-					JSON.stringify(json),
-					"utf8"
-				);
-			} else {
-				console.log('row path', row._img_path, 'row', row)
-			}
-			let user = json.entry_data && json.entry_data.ProfilePage && json.entry_data.ProfilePage[0] && json.entry_data.ProfilePage[0].graphql.user;
-			//console.log('user', user)
-			if (
-				user &&
-				user.profile_pic_url_hd
-			) {
-				row._img = row._slug + ".jpg";
-				let saved = await saveImageToDisk(
-					user.profile_pic_url_hd,
-					row._img_path
-				);
-				if (saved) {
-					resolve(true);
+			try {
+				const jsonObject = html
+					.match(
+						/<script type="text\/javascript">window\._sharedData = (.*)<\/script>/
+					)[1]
+					.slice(0, -1);
+				const json = JSON.parse(jsonObject);
+				if (row._img_path) {
+					fs.writeFileSync(
+						row._img_path.replace(".jpg", ".json"),
+						JSON.stringify(json),
+						"utf8"
+					);
 				} else {
-					reject("failed to save image");
+					console.log('row path', row._img_path, 'row', row)
 				}
-			} else {
-				resolve("all good but invalid ig for " + igname, row);
+				let user = json.entry_data && json.entry_data.ProfilePage && json.entry_data.ProfilePage[0] && json.entry_data.ProfilePage[0].graphql.user;
+				//console.log('user', user)
+				if (
+					user &&
+					user.profile_pic_url_hd
+				) {
+					row._img = row._slug + ".jpg";
+					let saved = await saveImageToDisk(
+						user.profile_pic_url_hd,
+						row._img_path
+					);
+					if (saved) {
+						resolve(true);
+					} else {
+						reject("failed to save image");
+					}
+				} else {
+					resolve("all good but invalid ig for " + igname, row);
+				}
+				//console.log("json", json);
+			} catch(ig_err) {
+				console.log('failed to get insta for', igname, 'more data', row)
+				console.error(ig_err)
 			}
-			//console.log("json", json);
 		} else {
 			reject("no ig name");
 		}

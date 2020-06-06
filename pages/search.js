@@ -137,125 +137,133 @@ export default (props) => {
 			</Head>
 			<div style={{padding: "0 4%"}}>
 				<form method="GET" action="/search">
-					<a className="top-grid" href="/"><img src="/safari-pinned-tab.svg" height="80" /></a>
-					<span className="top-grid">
-						<input
-							style={{boxShadow: 'none'}}
-							type="search"
-							size="14"
-							name="query"
-							placeholder="Search"
-							value={search}
-							onChange={(e) => {
-								let value = e.target.value;
-								setSearch(value);
-							}}
-						/>
+					<span className="top-grid" style={{maxWidth: '20%'}}>
+						<a className="top-grid" href="/"><img src="/safari-pinned-tab.svg" height="80" /></a>
 					</span>
-					<span className="top-grid">
-						<select
-							style={{boxShadow: 'none'}}
-							name="neighborhood"
-							value={neighborhood.toLowerCase().trim()}
-							onChange={(e) => {
-								let value = e.target.value;
-								setNeighborhood(value);
-							}}
-						>
-							<option value="">Show all neighborhoods</option>
-							{neighborhoods.map((option) => {
-								return (
-									<option
-										key={option}
-										value={option.toLowerCase().trim()}
-									>
-										{option}
-									</option>
-								);
-							})}
-						</select>
-					</span>
-					<span className="top-grid">
-						<input type="submit" value="GO" style={{boxShadow: 'none'}} />
+					<span className="top-grid" style={{paddingLeft: 10, maxWidth: '80%'}}>
+						<span className="top-grid">
+							<input
+								style={{boxShadow: 'none'}}
+								type="search"
+								size="14"
+								name="query"
+								placeholder="Search"
+								value={search}
+								onChange={(e) => {
+									let value = e.target.value;
+									setSearch(value);
+								}}
+							/>
+						</span>
+						<span className="top-grid">
+							<select
+								style={{boxShadow: 'none'}}
+								name="neighborhood"
+								value={neighborhood.toLowerCase().trim()}
+								onChange={(e) => {
+									let value = e.target.value;
+									setNeighborhood(value);
+								}}
+							>
+								<option value="">Show all neighborhoods</option>
+								{neighborhoods.map((option) => {
+									return (
+										<option
+											key={option}
+											value={option.toLowerCase().trim()}
+										>
+											{option}
+										</option>
+									);
+								})}
+							</select>
+						</span>
+						<span className="top-grid">
+							<input type="submit" value="GO" style={{boxShadow: 'none'}} />
+						</span>
 					</span>
 				</form>
 			</div>
-			<Map list={list} />
-			<div className="overall-container">
-				<div className="box-container">
-					{filtered_list && filtered_list.length ? (
-						<React.Fragment>
-							{filtered_list.map((row, i) => (
-								<Link href={'/biz/' + row._slug} key={"item" + i}>
-									<div className="box">
-										<div
-											className="box-image"
-											style={{
-												backgroundImage:
-													"url(/assets/" +
-													(row._img ? row._img : 'default.png') +
-													")",
-											}}
-										/>
-										<div className="box-content">
-											<h3 className="box-title">
-												{row.Restaurant}
-											</h3>
-											<p className="box-details">
-												{show_content_cols
-													.filter((key) => row[key])
-													.map((key) => (
-														<React.Fragment key={key + i}>
-															{key === "IG" ? (
-																<span>
-																	<b>{key}</b>:{" "}
-																	<a
-																		href={
-																			"https://instagram.com/" +
-																			row[
-																				key
-																			].slice(1)
-																		}
-																	>
+			<div className="layout-map">
+				<Map list={list} />
+			</div>
+			<div className="layout-list">
+				<div className="overall-container">
+					<div className="box-container">
+						{filtered_list && filtered_list.length ? (
+							<React.Fragment>
+								{filtered_list.map((row, i) => (
+									<Link href={'/biz/' + row._slug} key={"item" + i}>
+										<div className="box">
+											<div
+												className="box-image"
+												style={{
+													backgroundImage:
+														"url(/assets/" +
+														(row._img ? row._img : 'default.png') +
+														")",
+												}}
+											/>
+											<div className="box-content">
+												<h3 className="box-title">
+													{row.Restaurant}
+												</h3>
+												<p className="box-details">
+													{show_content_cols
+														.filter((key) => row[key])
+														.map((key) => (
+															<React.Fragment key={key + i}>
+																{key === "IG" ? (
+																	<span>
+																		<b>{key}</b>:{" "}
+																		<a
+																			href={
+																				"https://instagram.com/" +
+																				row[
+																					key
+																				].slice(1)
+																			}
+																		>
+																			{row[key]}
+																		</a>
+																		<br />
+																	</span>
+																) : key ===
+																  "Phone number" ? (
+																	<span>
+																		<b>{key}</b>:{" "}
+																		<a
+																			href={
+																				"tel:" +
+																				row[key]
+																			}
+																		>
+																			{row[key]}
+																		</a>
+																		<br />
+																	</span>
+																) : (
+																	<span>
+																		<b>{key}</b>:{" "}
 																		{row[key]}
-																	</a>
-																	<br />
-																</span>
-															) : key ===
-															  "Phone number" ? (
-																<span>
-																	<b>{key}</b>:{" "}
-																	<a
-																		href={
-																			"tel:" +
-																			row[key]
-																		}
-																	>
-																		{row[key]}
-																	</a>
-																	<br />
-																</span>
-															) : (
-																<span>
-																	<b>{key}</b>:{" "}
-																	{row[key]}
-																	<br />
-																</span>
-															)}
-														</React.Fragment>
-													))}
-											</p>
-											<div className="box-actions">
-												{row._actions.map((action) => action)}
+																		<br />
+																	</span>
+																)}
+															</React.Fragment>
+														))}
+												</p>
+												<div className="box-actions">
+													{row._actions.map((action) => action)}
+												</div>
 											</div>
 										</div>
-									</div>
-								</Link>
-							))}
-						</React.Fragment>
-					) : (
-						<span>Sorry, nothing matches your search</span>
-					)}
+									</Link>
+								))}
+							</React.Fragment>
+						) : (
+							<span>Sorry, nothing matches your search</span>
+						)}
+					</div>
 				</div>
 			</div>
 		</div>

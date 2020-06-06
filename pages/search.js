@@ -138,7 +138,7 @@ export default (props) => {
 					<a className="top-grid" href="/"><img src="/safari-pinned-tab.svg" height="80" /></a>
 					<span className="top-grid">
 						<select
-							style={{boxShadow: 'none'}}					
+							style={{boxShadow: 'none'}}
 							name="cuisine"
 							onChange={(e) => {
 								let value = e.target.value;
@@ -209,66 +209,66 @@ export default (props) => {
 						<React.Fragment>
 							{filtered_list.map((row, i) => (
 								<div className="box" key={"item" + i}>
-									{row._img && row._img.indexOf(row._slug) > -1 && row._img && (
-										<div
-											className="box-image"
-											style={{
-												backgroundImage:
-													"url(/assets/" +
-													row._img +
-													")",
-											}}
-										/>
-									)}
-									<h3 className="box-title">
-										{row.Restaurant}
-									</h3>
-									<p className="box-content">
-										{show_content_cols
-											.filter((key) => row[key])
-											.map((key) => (
-												<React.Fragment key={key + i}>
-													{key === "IG" ? (
-														<span>
-															<b>{key}</b>:{" "}
-															<a
-																href={
-																	"https://instagram.com/" +
-																	row[
-																		key
-																	].slice(1)
-																}
-															>
+									<div
+										className="box-image"
+										style={{
+											backgroundImage:
+												"url(/assets/" +
+												(row._img ? row._img : 'default.png') +
+												")",
+										}}
+									/>
+									<div className="box-content">
+										<h3 className="box-title">
+											{row.Restaurant}
+										</h3>
+										<p className="box-details">
+											{show_content_cols
+												.filter((key) => row[key])
+												.map((key) => (
+													<React.Fragment key={key + i}>
+														{key === "IG" ? (
+															<span>
+																<b>{key}</b>:{" "}
+																<a
+																	href={
+																		"https://instagram.com/" +
+																		row[
+																			key
+																		].slice(1)
+																	}
+																>
+																	{row[key]}
+																</a>
+																<br />
+															</span>
+														) : key ===
+														  "Phone number" ? (
+															<span>
+																<b>{key}</b>:{" "}
+																<a
+																	href={
+																		"tel:" +
+																		row[key]
+																	}
+																>
+																	{row[key]}
+																</a>
+																<br />
+															</span>
+														) : (
+															<span>
+																<b>{key}</b>:{" "}
 																{row[key]}
-															</a>
-															<br />
-														</span>
-													) : key ===
-													  "Phone number" ? (
-														<span>
-															<b>{key}</b>:{" "}
-															<a
-																href={
-																	"tel:" +
-																	row[key]
-																}
-															>
-																{row[key]}
-															</a>
-															<br />
-														</span>
-													) : (
-														<span>
-															<b>{key}</b>:{" "}
-															{row[key]}
-															<br />
-														</span>
-													)}
-												</React.Fragment>
-											))}
-									</p>
-									<div className="box-actions">
-										{row._actions.map((action) => action)}
+																<br />
+															</span>
+														)}
+													</React.Fragment>
+												))}
+										</p>
+										<div className="box-actions">
+											{row._actions.map((action) => action)}
+										</div>
 									</div>
 								</div>
 							))}

@@ -194,7 +194,7 @@ export default (props) => {
 							<React.Fragment>
 								{filtered_list.map((row, i) => (
 									<Link href={'/biz/' + row._slug} key={"item" + i}>
-										<div className="box">
+										<div className="box" style={{cursor: 'pointer'}}>
 											<div
 												className="box-image"
 												style={{

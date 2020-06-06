@@ -55,7 +55,6 @@ input[type="submit"] {
   box-sizing: border-box;
   padding-left: 10px;
   vertical-align: top;
-  width: calc(100% - 200px);
   max-width: 80%
 }
 .box-title {

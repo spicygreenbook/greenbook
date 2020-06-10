@@ -125,9 +125,6 @@ export default (props) => {
 															{row.phone_number}
 														</p>
 													)}
-													{row.instagram && (
-														<p>{row.instagram}</p>
-													)}
 													{row.website_url && (
 														<p>
 															<a

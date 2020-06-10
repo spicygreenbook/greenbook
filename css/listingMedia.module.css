@@ -1,30 +1,48 @@
-.item {
+.wrapper, .wrapperFull {
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  position: relative;
+  background-color: #000;
+  font-size: 0;
+  transition: all 0.25s ease-in-out;
+}
+.container, .containerFull {
+  white-space: nowrap;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  box-sizing: content-box;
+  width: 100%;
+  height: 100%;
+  padding-right: 17px;
+  padding-bottom: 17px;
+  transition: all 0.25s ease-in-out;
+
+}
+.wrapperFull {
+  height: calc(100vh - 200px);
+}
+.item, .itemFull {
   display:inline-block;
   width: 200px;
   background-size: cover;
   background-repeat: no-repeat;
+  transition: all 0.25s ease-in-out;
 }
 .item:after{
   content: '';
   display:block;
   padding-top: 100%;
 }
-.wrapper {
-  width: 100%;
-  height: 200px;
-  overflow: hidden;
-  position: relative;
-}
-.container {
-  white-space: nowrap;
-  overflow-x: scroll;
-  box-sizing: content-box;
+.itemFull {
   width: 100%;
   height: 100%;
-  padding-right: 17px;
-  padding-bottom: 17px;
+  margin: 0 20px;
+  background-size: contain;
+  background-position: center center;
 }
-.showAll {
+.showAll, .showClose {
+    font-size: 18px;
     position: absolute;
     right: 20px;
     bottom: 20px;
@@ -36,11 +54,74 @@
     box-shadow: 0 0 2px rgba(0,0,0,0.5);
     cursor: pointer;
 }
+.leftArrow, .rightArrow, .close {
+  position: absolute;
+  margin-top: -20px;
+  width: 40px;
+  height: 40px;
+  display: inline-block;
+}
+.leftArrow{
+  top: 50%;
+  left: 20px;
+}
+.rightArrow {
+  top: 50%;
+  right: 20px;
+}
+.close {
+  top: 40px;
+  right: 20px;
+}
+div.wrapper[data-mode="grid"] {
+  height: auto;
+  padding: 10px;
+  box-sizing: border-box;
+}
+div.container[data-mode="grid"] {
+  overflow: visible;
+  white-space: normal;
+}
+div.showAll[data-mode="grid"], div.showAll[data-mode="full"] {
+  display: none;
+}
+div.showClose[data-mode="normal"], div.showClose[data-mode="full"] {
+  display: none;
+}
+div.showClose[data-mode="grid"] {
+  display: inline-block;
+}
+span.item[data-mode="grid"] {
+  margin: 10px;
+  width: calc(10% - 20px);
+}
+
+@media all and (max-width: 1600px) {
+  span.item[data-mode="grid"] {
+    width: calc(20% - 20px);
+  }
+}
+
+@media all and (max-width: 800px) {
+  span.item[data-mode="grid"] {
+    width: calc(25% - 20px);
+  }
+}
+
 @media all and (max-width: 600px) {
   .item {
     width: 140px;
   }
   .wrapper {
     height: 140px;
+  }
+  span.item[data-mode="grid"] {
+    width: calc(33% - 20px);
+  }
+}
+
+@media all and (max-width: 400px) {
+  span.item[data-mode="grid"] {
+    width: calc(50% - 20px);
   }
 }

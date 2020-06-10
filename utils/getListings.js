@@ -73,7 +73,7 @@ async function getListings(config) {
 			allCuisines.add(cuisine);
 		})
 
-		return {
+		let listing = {
 			_slug: doc.uid,
 			_singleRef: doc.href,
 			name: getPrismicValue(doc.data.listing.name),
@@ -90,7 +90,9 @@ async function getListings(config) {
 			address: getPrismicValue(doc.data.listing.address),
 			description: getPrismicValue(doc.data.listing.description),
 			images: images
-		}
+		};
+
+		return listing;
 	})
 
 	return {

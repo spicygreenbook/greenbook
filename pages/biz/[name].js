@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Head from "next/head";
 import { getListings } from "../../utils/getListings";
@@ -28,14 +28,30 @@ export default (props) => {
             <ListingMedia content={content} />
             <div style={{maxWidth: 800, margin: '0 auto', padding: 20}}>
                 <h1>{content.name}</h1>
-            </div>
-            <div className={listing.cols}>
-                <div className={listing.col}>
-                </div>
-                <div className={listing.col}>
-                </div>
-                <div className={listing.col}>
-                    <Map list={[content]} />
+                <div className={listing.cols}>
+                    <div className={listing.col}>
+                        <p>
+                            {content.cuisines.join(', ')}
+                        </p>
+                        <p style={{whiteSpace: 'pre'}}>
+                            {content.address}
+                        </p>
+                        <p>
+                            {content.phone_number}
+                        </p>
+                        <p>
+                            { content.description }
+                        </p>
+                        <p>
+                            {content.instagram && <a href={'https://instagram.com/' + (content.instagram.indexOf('@') > -1 ? content.instagram.slice(1) : content.instagram)}>{content.instagram}</a> }
+                        </p>
+                        <p>
+                            { content.hours.map((line, l) => (<span key={l}>{line}<br /></span>)) }
+                        </p>
+                    </div>
+                    <div className={listing.col}>
+                        <Map list={[content]} />
+                    </div>
                 </div>
             </div>
         </div>

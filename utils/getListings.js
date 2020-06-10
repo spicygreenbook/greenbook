@@ -83,7 +83,7 @@ async function getListings(config) {
 			//services: getPrismicValue(doc.data.listing.services, 'service'),
 			phone_number: getPrismicValue(doc.data.listing.phone_number),
 			yelp_link: getPrismicValue(doc.data.listing.yelp_link),
-			hours: getPrismicValue(doc.data.listing.hours),
+			hours: getPrismicValue(doc.data.listing.hours) || [],
 			website_url: getPrismicValue(doc.data.listing.website_url),
 			instagram: getPrismicValue(doc.data.listing.instagram),
 			geocoordinates: getPrismicValue(doc.data.listing.geocoordinates),

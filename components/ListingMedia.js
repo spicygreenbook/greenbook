@@ -29,7 +29,9 @@ export default function Header(props) {
     useEffect(
         () => {
             if (images[mediaIndex] && images[mediaIndex].ref) {
-                scrollToRef(fullContainerRef, images[mediaIndex].ref)
+                if (typeof window !== 'undefined') {
+                    scrollToRef(fullContainerRef, images[mediaIndex].ref)
+                }
             }
         },
         [ mode, mediaIndex, images ]

@@ -70,7 +70,7 @@ async function getListings(config) {
 
 		let cuisines = getPrismicValue(doc.data.listing.cuisines, 'cuisine');
 		cuisines.forEach(cuisine => {
-			allCuisines.add(cuisines);
+			allCuisines.add(cuisine);
 		})
 
 		return {
@@ -79,6 +79,7 @@ async function getListings(config) {
 			name: getPrismicValue(doc.data.listing.name),
 			primary_image: primary_image,
 			cuisines: cuisines,
+			_cuisines: cuisines.map(cuisine => { return (cuisine || '').toLowerCase().trim()}).filter(cuisine => cuisine),
 			//services: getPrismicValue(doc.data.listing.services, 'service'),
 			phone_number: getPrismicValue(doc.data.listing.phone_number),
 			yelp_link: getPrismicValue(doc.data.listing.yelp_link),
@@ -94,7 +95,7 @@ async function getListings(config) {
 
 	return {
 		listings: listings,
-		cuisines: Array.from(cuisines)
+		cuisines: Array.from(allCuisines)
 		//cuisines: cuisines,
 		//neighborhoods: neighborhoods
 	}

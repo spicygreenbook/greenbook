@@ -2,7 +2,9 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Head from "next/head";
 import { getListings } from "../../utils/getListings";
-import Header from "../../components/Header";
+import ListingMedia from "../../components/ListingMedia";
+import Map from "../../components/Map";
+import listing from "../../css/listing.module.css";
 
 export default (props) => {
 
@@ -20,24 +22,22 @@ export default (props) => {
                     content="Support local black owned businesses with our free directory"
                 />
             </Head>
-            <div style={{margin: '6px 20px'}}>
+            <div style={{padding: '20px'}}>
                 <a className="button" href="/search">&lt; Return To Listings</a>
             </div>
-            <div className="splashMedia-wrapper">
-	            <div className="splashMedia-container">
-	                {content.images && content.images.map((image, i) => (
-	                    <span
-                            key={i}
-	                        class="splashMedia"
-	                        style={{ backgroundImage: `url(${image.url})` }}
-	                    />
-	                ))}
-	            </div>
-	        </div>
+            <ListingMedia content={content} />
             <div style={{maxWidth: 800, margin: '0 auto', padding: 20}}>
                 <h1>{content.name}</h1>
             </div>
-
+            <div className={listing.cols}>
+                <div className={listing.col}>
+                </div>
+                <div className={listing.col}>
+                </div>
+                <div className={listing.col}>
+                    <Map list={[content]} />
+                </div>
+            </div>
         </div>
     );
 };

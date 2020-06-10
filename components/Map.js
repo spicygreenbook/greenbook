@@ -16,6 +16,7 @@ export default function Map({ list, options, onMount, className, onMountProps })
       const bounds = new google.maps.LatLngBounds();
       setMap(map);
 
+      map.initialZoom = true;
 
       list.forEach(row => {
         if (row.geocoordinates) {
@@ -36,7 +37,7 @@ export default function Map({ list, options, onMount, className, onMountProps })
             position: row.geocoordinates,
             title: row.name
           });
-          console.log('marker', marker)
+          //console.log('marker', marker)
           google.maps.event.addListener(marker, 'click', function() {
             if (lastInfoWindow) {
               lastInfoWindow.close();
@@ -47,6 +48,17 @@ export default function Map({ list, options, onMount, className, onMountProps })
           bounds.extend(row.geocoordinates)
         }
       })
+
+      map.fitBounds(bounds);
+      var zoomChangeBoundsListener = google.maps.event.addListenerOnce(map, 'bounds_changed', function(event) {
+          console.log('zoom', this.getZoom())
+          if (this.getZoom() > 11 && this.initialZoom == true) {
+              this.setZoom(11);
+              this.initialZoom = false;
+          }
+          google.maps.event.removeListener(zoomChangeBoundsListener);
+      });
+
     }
     if (!window.google) {
       const script = document.createElement(`script`)

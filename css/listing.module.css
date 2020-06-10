@@ -1,33 +1,10 @@
-.splashMedia {
-  display:inline-block;
-  width: 200px;
-  background-size: cover;
-  background-repeat: no-repeat;
-}
-.splashMedia:after{
-  content: '';
-  display:block;
-  padding-top: 100%;
-}
-.splashMedia-wrapper {
-  width: 100%;
-  height: 200px;
-  overflow: hidden;
-}
-.splashMedia-container {
+.cols {
   white-space: nowrap;
-  overflow-x: scroll;
-  box-sizing: content-box;
-  width: 100%;
-  height: 100%;
-  padding-right: 17px;
-  padding-bottom: 17px;
 }
-@media all and (max-width: 600px) {
-  .splashMedia {
-    width: 140px;
-  }
-  .splashMedia-wrapper {
-    height: 140px;
-  }
+.col {
+  display: inline-block;
+  white-space: nowrmal;
+  width: 33%;
+  box-sizing: border-box;
+  
 }

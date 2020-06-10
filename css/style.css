@@ -13,7 +13,11 @@ input, select, button, .button {
   display: inline-block;
   vertical-align: middle;
   text-decoration: none;
+  margin-right: 10px;
+  line-height: 100%;
+  min-height: 19px;
 }
+
 input[type="submit"] {
   background-color: #589147;
   color: #fff;
@@ -26,6 +30,7 @@ img {
 
 .link {
   display: inline-block;
+  box-sizing: border-box;
   vertical-align: middle;
   padding: 8px;
   border-radius: 2px;
@@ -37,6 +42,24 @@ img {
   max-width: 800px;
   boz-sizing: border-box;
   margin: 0 auto;
+}
+footer {
+  box-sizing: border-box;
+  max-width: 800px;
+  margin: 40px auto;
+}
+footer .link {
+  display:block;
+}
+footer .col {
+  vertical-align: top;
+  display:inline-block;
+  box-sizing: border-box;
+  width: 180px;
+}
+footer .col:first-child {
+  padding-right: 20px;
+  width: calc(100% - 180px);
 }
 
 @media all and (max-width: 900px) {

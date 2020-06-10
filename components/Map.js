@@ -15,47 +15,26 @@ export default function Map({ list, options, onMount, className, onMountProps })
       const map = new window.google.maps.Map(ref.current, options);
       const bounds = new google.maps.LatLngBounds();
       setMap(map);
-      console.log('now render list', list)
 
-      const show_content_cols = [
-        "Neighborhood",
-        "Cuisine",
-        "Service",
-        "Hours",
-        "IG",
-        "Phone number",
-        "Address",
-      ];
 
       list.forEach(row => {
-        if (row.Geocoordinates) {
-          var spl = row.Geocoordinates.split(',')
-          row._geocoords = {
-            lat: num(spl[0]),
-            lng: num(spl[1])
-          }
+        if (row.geocoordinates) {
 
           var infoWindowMarkup = `
           <a href="/biz/${row._slug}" style="color:#000;text-decoration:none">
-          <table cellpadding="4" cellspacing="0" border="0">
-          <tbody>
-            <tr>
-              <td colspan="2" style="font-size:18px"><b>${row.Restaurant}</b></td>
-            </tr>
-            ${show_content_cols.filter(key => row[key]).map(key => {
-              return `<tr><td style="text-align:right"><b>${key}</b></td><td>${row[key]}</td></tr>`;
-            }).join('')}
-            </a>
-          </tbody>
-          </table>`;
+          <img src="${row.primary_image.url}" width="${row.primary_image.width}" height="${row.primary_image.height}" style="max-width:100%;height:auto" />
+          <div style="font-size:18px; margin:8px 0"><b>${row.name}</b></div>
+          ${row.cuisines.join(', ')}
+          </a>
+          `;
           var infoWindow = new google.maps.InfoWindow({
             content: infoWindowMarkup
           });
 
           var marker = new google.maps.Marker({
             map: map,
-            position: row._geocoords,
-            title: row.Restaurant
+            position: row.geocoordinates,
+            title: row.name
           });
           console.log('marker', marker)
           google.maps.event.addListener(marker, 'click', function() {
@@ -65,8 +44,7 @@ export default function Map({ list, options, onMount, className, onMountProps })
             infoWindow.open(map, marker);
             lastInfoWindow = infoWindow;
           });
-          bounds.extend(row._geocoords)
-          console.log('coords', row._geocoords)
+          bounds.extend(row.geocoordinates)
         }
       })
     }
@@ -85,7 +63,7 @@ export default function Map({ list, options, onMount, className, onMountProps })
 
   return (
     <div
-      style={{ height: `60vh`, margin: `1em 0`, borderRadius: `0.5em` }}
+      style={{ height: `50vh`, margin: `20px 0`, borderRadius: `0.5em` }}
       {...{ ref, className }}
     />
   )

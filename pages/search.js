@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Head from "next/head";
-import getListings from "../utils/getListings";
+import { getListings } from "../utils/getListings";
 import Map from "../components/Map"
 import Header from "../components/Header"
+import list from "../css/list.module.css"
 
 const fuzzySearch = (string, srch) => {
 	return (string || "").match(
@@ -22,71 +23,8 @@ const fuzzySearch = (string, srch) => {
 
 export default (props) => {
 
-	const { cuisines, neighborhoods } = props;
-	let query = {};
-	if (typeof window !== "undefined") {
-		let params = (window.location.search || "")
-			.substr(1)
-			.split("&")
-			.forEach((pair) => {
-				var spl = pair.split("=");
-				query[decodeURIComponent(spl[0])] = decodeURIComponent(spl[1]);
-			});
-	}
-	const [neighborhood, setNeighborhood] = useState(query.neighborhood || "");
-	const [search, setSearch] = useState(query.query || "");
-	const [cuisine, setCuisine] = useState(query.cuisine || "");
-	console.log('search initial is', search)
-	let intervalTimer;
-	console.log('neighborhood', neighborhood)
-	const show_content_cols = [
-		"Neighborhood",	
-	"Cuisine",
-		"Service",
-		"Hours",
-	];
-
-	useEffect(() => {
-		console.log('updated', search, neighborhood, query)
-	}, [search, neighborhood, query]);
-
-
-	const list = props.list.map((row, i) => {
-		let processed = row;
-		row._neighborhood = "";
-		row._cuisine = "";
-		row._search = "";
-		Object.keys(row).forEach((key) => {
-			if (row[key] && typeof row[key] === "string") {
-				row._search += row[key];
-			}
-		});
-		if (processed.Neighborhood) {
-			row._neighborhood = processed.Neighborhood.trim().toLowerCase();
-		}
-		if (processed.Cuisine) {
-			row._cuisine = processed.Cuisine.trim().toLowerCase();
-		}
-		return processed;
-	});
-
-	let filtered_list = list.filter((row) => {
-		let go = true;
-		if (!row.Restaurant) {
-			go = false;
-		}
-		if (search && !fuzzySearch(row._search, search)) {
-			go = false;
-		}
-		if (neighborhood && row._neighborhood !== neighborhood) {
-			go = false;
-		}
-		if (cuisine && row.Cuisine && row.Cuisine.toLowerCase().indexOf(cuisine) < 0) {
-			go = false;
-		}
-		return go;
-	}).map(row => row);
-
+	const { listings } = props;
+	console.log('listings', listings)
 	return (
 		<div>
 			<Head>
@@ -96,75 +34,46 @@ export default (props) => {
 					content="Support local black owned businesses with our free directory"
 				/>
 			</Head>
+			{/*}
 			<Header setSearch={setSearch} search={search} neighborhoods={neighborhoods} neighborhood={neighborhood} setNeighborhood={setNeighborhood} />
-			<div className="layout-map">
-				<Map list={filtered_list} />
+		*/}
+			<div className={list.layoutMap}>
+				<Map list={listings} />
 			</div>
-			<div className="layout-list">
-				<div className="overall-container">
-					<div className="box-container">
-						{filtered_list && filtered_list.length ? (
+			<div className={list.layoutList}>
+				<div className={list.overallContainer}>
+					<div className={list.boxContainer}>
+						{listings && listings.length ? (
 							<React.Fragment>
-								{filtered_list.map((row, i) => (
+								{listings.map((row, i) => (
 									<Link href={'/biz/' + row._slug} key={"item" + i}>
-										<div className="box" style={{cursor: 'pointer'}}>
+										<div className={list.box} style={{cursor: 'pointer'}}>
 											<div
-												className="box-image"
+												className={list.boxImage}
 												style={{
 													backgroundImage:
-														"url(/assets/" +
-														(row._img ? row._img : 'default.png') +
+														"url(" +
+														row.primary_image.url +
 														")",
 												}}
 											/>
-											<div className="box-content">
-												<h3 className="box-title">
-													{row.Restaurant}
+											<div className={list.boxContent}>
+												<h3 className={list.boxTitle}>
+													{row.name}
 												</h3>
-												<p className="box-details">
-													{show_content_cols
-														.filter((key) => row[key])
-														.map((key) => (
-															<React.Fragment key={key + i}>
-																{key === "IG" ? (
-																	<span>
-																		<b>{key}</b>:{" "}
-																		<a
-																			href={
-																				"https://instagram.com/" +
-																				row[
-																					key
-																				].slice(1)
-																			}
-																		>
-																			{row[key]}
-																		</a>
-																		<br />
-																	</span>
-																) : key ===
-																  "Phone number" ? (
-																	<span>
-																		<b>{key}</b>:{" "}
-																		<a
-																			href={
-																				"tel:" +
-																				row[key]
-																			}
-																		>
-																			{row[key]}
-																		</a>
-																		<br />
-																	</span>
-																) : (
-																	<span>
-																		<b>{key}</b>:{" "}
-																		{row[key]}
-																		<br />
-																	</span>
-																)}
-															</React.Fragment>
-														))}
+												<p>
+												{
+													row.cuisines.join(', ')
+												}
 												</p>
+												<p>
+													{row.description}
+												</p>
+												<div className={list.boxContentRight}>
+													{row.phone_number && <p>{row.phone_number}</p>}
+													{row.instagram && <p>{row.instagram}</p>}
+													{row.website_url && <p><a href={row.website_url} target="_blank">{row.website_url.replace('https://', '').replace('http://', '').replace('www.', '')}</a></p>}
+												</div>
 											</div>
 										</div>
 									</Link>
@@ -181,8 +90,10 @@ export default (props) => {
 };
 
 export async function getStaticProps(context) {
-	let data = await getListings({ saveImages: true });
+	let data = await getListings({});
+
+	console.log('data is', data)
 	return {
-		props: { list: data.rows, neighborhoods: data.neighborhoods, cuisines: data.cuisines },
+		props: { listings: data.listings },
 	};
 }

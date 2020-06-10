@@ -1,0 +1,95 @@
+.box {
+  padding: 10px;
+  background-color: #fff;
+  border-radius:4px;
+  overflow: hidden;
+  vertical-align: top;
+  box-shadow: 0 0 2px rgba(0,0,0,0.2);
+  white-space:nowrap;
+  margin-bottom: 20px;
+}
+.boxImage{
+  display:inline-block;
+  vertical-align: top;
+  width: 200px;
+  max-width: 20%;
+  height: auto;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+.boxImage:after{
+  content: '';
+  display:block;
+  padding-top: 100%;
+}
+.boxContent{
+  white-space: normal;
+  display: inline-block;
+  box-sizing: border-box;
+  padding-left: 20px;
+  padding-right: 200px;
+  vertical-align: top;
+  width: 80%;
+  position: relative;
+}
+.boxContent-right{
+  text-align: right;
+}
+.boxContent p {
+  margin: 4px 0;
+}
+.boxContentRight {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 200px;
+}
+.boxTitle {
+  margin: 0;
+}
+
+
+.layoutMap {
+  width: 30%;
+  float: right;
+  padding: 0 20px 0 0;
+  box-sizing: border-box;
+}
+.layoutList {
+  width: 70%;
+  box-sizing: border-box;
+  padding: 20px;
+}
+
+@media all and (max-width: 900px) {
+
+  .layoutMap {
+    float: none;
+    padding: 0;
+    width: auto;
+  }
+  .layoutList {
+    width: auto;
+  }
+
+  .boxContainer{
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+}
+@media all and (max-width: 600px) {
+  .boxContainer{
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .boxImage {
+    max-width: 30%;
+  }
+  .boxContent {
+    padding-right: 20px;
+    width: 70%;
+  }
+  .boxContentRight {
+    position: static;
+    text-align: left;
+  }
+}

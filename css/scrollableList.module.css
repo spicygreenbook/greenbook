@@ -1,0 +1,55 @@
+.wrapper {
+    width: 100%;
+    height: 300px;
+    overflow: hidden;
+}
+
+.container {
+    white-space: nowrap;
+    overflow-x: scroll;
+    box-sizing: content-box;
+    width: 100%;
+    height: 100%;
+    padding: 0 17px 17px 10px;
+}
+
+.item {
+    display: inline-block;
+    vertical-align: top;
+    width: 240px;
+    height: 300px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    padding-right: 10px;
+    overflow: hidden;
+    text-decoration: none;
+    color: #333;
+}
+
+.title {
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: -1px;
+    max-width: 100%;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+.subTitle {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    font-size: 14px;
+    font-weight: 300;
+    letter-spacing: -1px;
+    max-width: 100%;
+}
+.media {
+    display: inline-block;
+    background-size: cover;
+    background-repeat: no-repeat;
+    padding-top: 100%;
+    width: 100%;
+}
+
+@media all and (max-width: 600px) {}

@@ -1,223 +1,134 @@
-const fs = require("fs");
-const http = {
-	http: require("http"),
-	https: require("https"),
-};
 
-async function saveImageToDisk(url, localPath) {
-	return new Promise((resolve, reject) => {
-		var fullUrl = url;
-		var file = fs.createWriteStream(localPath);
-		var request = http[url.indexOf("https") > -1 ? "https" : "http"].get(
-			url,
-			function (response) {
-				response.pipe(file);
-			}
-		);
-		request.on("end", resolve);
-		request.on("error", reject);
-		return request;
-	});
-}
-
-async function fetchInsta(igname, row) {
-	return new Promise(async (resolve, reject) => {
-		igname = igname.indexOf("@") === 0 ? igname.substr(1) : igname;
-		if (igname) {
-			console.log('fetching ig...', igname)
-			let data = await fetch("https://www.instagram.com/" + igname + "", {
-				headers: {
-					cookie: 'mid=XVBUBAAEAAH2PNXf3Z-4L6Qvk0dh; ig_did=DDC2E262-C1B9-4C2B-93B1-9ADB7A7C7E8F; csrftoken=4pP87kiff629eJjwwAoVSc8GEKZTmQRI; ds_user_id=4313273565; sessionid=4313273565%3AWxb2mOVbIsevXl%3A27; shbid=7898; shbts=1591281618.3389716; rur=FRC; urlgen="{\"172.88.195.113\": 20001}:1jgrQZ:OXB_XRJi5Z1mtiN-Traq9It_wdc"'
-				}
-			});
-			let html = await data.text();
-			try {
-				const jsonObject = html
-					.match(
-						/<script type="text\/javascript">window\._sharedData = (.*)<\/script>/
-					)[1]
-					.slice(0, -1);
-				const json = JSON.parse(jsonObject);
-				if (row._img_path) {
-					fs.writeFileSync(
-						row._img_path.replace(".jpg", ".json"),
-						JSON.stringify(json),
-						"utf8"
-					);
-				} else {
-					console.log('row path', row._img_path, 'row', row)
-				}
-				let user = json.entry_data && json.entry_data.ProfilePage && json.entry_data.ProfilePage[0] && json.entry_data.ProfilePage[0].graphql.user;
-				//console.log('user', user)
-				if (
-					user &&
-					user.profile_pic_url_hd
-				) {
-					row._img = row._slug + ".jpg";
-					let saved = await saveImageToDisk(
-						user.profile_pic_url_hd,
-						row._img_path
-					);
-					if (saved) {
-						resolve(true);
-					} else {
-						reject("failed to save image");
-					}
-				} else {
-					resolve("all good but invalid ig for " + igname, row);
-				}
-				//console.log("json", json);
-			} catch(ig_err) {
-				console.log('failed to get insta for', igname, 'more data', row)
-				console.error(ig_err)
+const getPrismicGroup = (ref, key) => {
+	//console.log('ref', ref, 'key', key)
+	if (ref[key] && ref[key].type === 'Text') {
+		return ref[key].value
+	} else if (ref[key] && ref[key].type === 'Image') {
+		if (ref[key].value.main.url) {
+			return {
+				width: ref[key].value.main.dimensions.width,
+				height: ref[key].value.main.dimensions.height,
+				url: ref[key].value.main.url
 			}
 		} else {
-			reject("no ig name");
+			return null
 		}
-	});
+	}
+}
+
+const getPrismicValue = (ref, key) => {
+	if (ref) {
+		if (ref.type === 'StructuredText') {
+			return ref.value.map(line => line.text)
+		} else if (ref.type === 'Text') {
+			return Array.isArray(ref.value) ? ref.value.map(line => line.text).join('') : ref.value
+		} else if (ref.type === 'Link.web') {
+			return ref.value.url
+		} else if (ref.type === 'GeoPoint') {
+			return {
+				lat: ref.value.latitude,
+				lng: ref.value.longitude
+			}
+		} else if(ref.type === 'Image') {
+			return {
+				width: ref.value.main.dimensions.width,
+				height: ref.value.main.dimensions.height,
+				url: ref.value.main.url
+			}
+		} else if(ref.type === 'Group') {
+			return ref.value.map(item => {
+				return getPrismicGroup(item, key)
+			}).filter(item => item)
+		}
+	} else {
+		console.log('tried passing empty ref', ref, 'with key', key)
+	}
+	return '';
 }
 
 async function getListings(config) {
-	var sheet =
-		"https://docs.google.com/spreadsheets/d/e/2PACX-1vTb5tlJvpBJH4dl8AMk-BRIgtGkPGZiTu601WxtVgQHXw70pKMpVf9klP8Ge7WZnQevXtvL8c9be4Aq/pub?gid=0&single=true&output=csv";
-	function CSVToArray(strData, strDelimiter) {
-		// Check to see if the delimiter is defined. If not,
-		// then default to comma.
-		strDelimiter = strDelimiter || ",";
-
-		// Create a regular expression to parse the CSV values.
-		var objPattern = new RegExp(
-			// Delimiters.
-			"(\\" +
-				strDelimiter +
-				"|\\r?\\n|\\r|^)" +
-				// Quoted fields.
-				'(?:"([^"]*(?:""[^"]*)*)"|' +
-				// Standard fields.
-				'([^"\\' +
-				strDelimiter +
-				"\\r\\n]*))",
-			"gi"
-		);
-
-		// Create an array to hold our data. Give the array
-		// a default empty first row.
-		var arrData = [[]];
-
-		// Create an array to hold our individual pattern
-		// matching groups.
-		var arrMatches = null;
-
-		// Keep looping over the regular expression matches
-		// until we can no longer find a match.
-		while ((arrMatches = objPattern.exec(strData))) {
-			// Get the delimiter that was found.
-			var strMatchedDelimiter = arrMatches[1];
-
-			// Check to see if the given delimiter has a length
-			// (is not the start of string) and if it matches
-			// field delimiter. If id does not, then we know
-			// that this delimiter is a row delimiter.
-			if (
-				strMatchedDelimiter.length &&
-				strMatchedDelimiter !== strDelimiter
-			) {
-				// Since we have reached a new row of data,
-				// add an empty row to our data array.
-				arrData.push([]);
-			}
-
-			var strMatchedValue;
-
-			// Now that we have our delimiter out of the way,
-			// let's check to see which kind of value we
-			// captured (quoted or unquoted).
-			if (arrMatches[2]) {
-				// We found a quoted value. When we capture
-				// this value, unescape any double quotes.
-				strMatchedValue = arrMatches[2].replace(
-					new RegExp('""', "g"),
-					'"'
-				);
-			} else {
-				// We found a non-quoted value.
-				strMatchedValue = arrMatches[3];
-			}
-
-			// Now that we have our value string, let's add
-			// it to the data array.
-			arrData[arrData.length - 1].push(strMatchedValue);
+	var masterRef = await fetch('https://spicygreenbook.prismic.io/api/v2');
+	var masterRef_json = await masterRef.json();
+	var master_ref;
+	masterRef_json.refs.forEach(line => {
+		if(line.id === 'master') {
+			master_ref = line.ref;
 		}
+	})
 
-		// Return the parsed data.
-		return arrData;
-	}
+	var url = 'https://spicygreenbook.prismic.io/api/v1/documents/search?ref='+master_ref+'&q=%5B%5Bat(document.type%2C+%22listing%22)%5D%5D#format=json';
+	let data = await fetch(url);
+	let parsed_data = await data.json();
 
-	let data = await fetch(sheet);
-	let csv = await data.text();
-	var res = [];
-	var parsed_data = CSVToArray(csv);
-	var line = parsed_data[0];
-	var colmap = {};
-	parsed_data[0].forEach((key, c) => {
-		colmap[c] = (key || "").trim().toLowerCase().replace(/ /gi, "_");
-	});
+	let allCuisines = new Set();
 
-	let rows = parsed_data
-		.slice(1)
-		.map((row, r) => {
-			let ret = {};
-			parsed_data[0].forEach((key, c) => {
-				ret[key] = row[c] || "";
-			});
-			return ret;
-		})
-		.filter((row) => {
-			return row.Enable;
-		});
+	let listings = parsed_data.results.map((doc, i) => {
 
-	let neighborhoods = new Set();
-	let cuisines = new Set();
+		let images = getPrismicValue(doc.data.listing.images, 'image');
+		let primary_image = getPrismicValue(doc.data.listing.primary_image);
+		images = (primary_image ? [primary_image] : []).concat(images ? images : []);
 
-
-	rows.forEach(async (row, i) => {
-
-		row._cuisines = row.Cuisine.replace(/\r?\n/, '   ').split('   ').map(line => line.trim()).filter(line => line).map(line => {
-			cuisines.add(line);
-			return line;
+		let cuisines = getPrismicValue(doc.data.listing.cuisines, 'cuisine');
+		cuisines.forEach(cuisine => {
+			allCuisines.add(cuisines);
 		})
 
-		row._neighborhoods = row.Neighborhood.replace(/\r?\n/, '   ').split('   ').map(line => line.trim()).filter(line => line).map(line => {
-			neighborhoods.add(line);
-			return line;
-		})
-
-		row._slug = (row.Restaurant || "")
-			.toLowerCase()
-			.replace(/[^a-z0-9\-]/gi, "-")
-			.replace(/\-\-/g, "-")
-			.replace(/\-\-/g, "-")
-			.replace(/\-$/, "");
-		row._img = "";
-		row._img_path = './public/assets/' + row._slug + ".jpg";
-		if (!fs.existsSync(row._img_path)) {
-			row["IG"] = (row["IG"] || "").trim();
-			if (row["IG"]) {
-				await fetchInsta(rows[i].IG, row);
-			}
-		} else {
-			row._img = row._slug + ".jpg";
+		return {
+			_slug: doc.uid,
+			_singleRef: doc.href,
+			name: getPrismicValue(doc.data.listing.name),
+			primary_image: primary_image,
+			cuisines: cuisines,
+			//services: getPrismicValue(doc.data.listing.services, 'service'),
+			phone_number: getPrismicValue(doc.data.listing.phone_number),
+			yelp_link: getPrismicValue(doc.data.listing.yelp_link),
+			hours: getPrismicValue(doc.data.listing.hours),
+			website_url: getPrismicValue(doc.data.listing.website_url),
+			instagram: getPrismicValue(doc.data.listing.instagram),
+			geocoordinates: getPrismicValue(doc.data.listing.geocoordinates),
+			address: getPrismicValue(doc.data.listing.address),
+			description: getPrismicValue(doc.data.listing.description),
+			images: images
 		}
-	});
-
-	neighborhoods = Array.from(neighborhoods);
-	cuisines = Array.from(cuisines);
+	})
 
 	return {
-		rows: rows,
-		cuisines: cuisines,
-		neighborhoods: neighborhoods
+		listings: listings,
+		cuisines: Array.from(cuisines)
+		//cuisines: cuisines,
+		//neighborhoods: neighborhoods
 	}
 }
 
-module.exports = getListings;
+async function getContent(config) {
+	var masterRef = await fetch('https://spicygreenbook.prismic.io/api/v2');
+	var masterRef_json = await masterRef.json();
+	var master_ref;
+	masterRef_json.refs.forEach(line => {
+		if(line.id === 'master') {
+			master_ref = line.ref;
+		}
+	})
+
+	var url = `https://spicygreenbook.prismic.io/api/v1/documents/search?ref=${master_ref}&q=%5B%5Bat(document.type%2C+%22${config.type}%22)%5D%5D`;
+	let data = await fetch(url);
+	let parsed_data = await data.json();
+
+	let content = {};
+	let listings = parsed_data.results.map((doc, i) => {
+		if (config.type === 'home_page' && doc.data.home_page) {
+			Object.keys(doc.data.home_page).forEach(key => {
+				content[key] = getPrismicValue(doc.data.home_page[key], key);
+			})
+		}
+	})
+
+	return {
+		content
+	}
+}
+
+module.exports = {
+	getListings: getListings,
+	getContent: getContent
+}

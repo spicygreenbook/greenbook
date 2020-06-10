@@ -2,139 +2,77 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Head from "next/head";
 import Router from "next/router";
-import getListings from "../utils/getListings";
+import { getContent, getListings } from "../utils/getListings";
+import home_styles from '../css/home.module.css';
+import scrollableList from '../css/scrollableList.module.css';
 
 export default (props) => {
-	const { cuisines, neighborhoods } = props;
-	const [neighborhood, setNeighborhood] = useState("");
-	const [search, setSearch] = useState("");
-	let intervalTimer;
 
-	console.log('cuisines', cuisines);
+	const {content, listings} = props
+
+	console.log('props', props)
 
 	return (
-		<div>
+		<div className="page-home">
 			<Head>
 				<title>Spicy Green Book</title>
 				<meta
 					name="description"
-					content="Support local black owned businesses with our free directory"
+					content=""
 				/>
 			</Head>
-			<div className="hero">
-				<div className="hero-content">
-					<div style={{textAlign: 'center'}}>
-						<img src="/safari-pinned-tab-light.svg" style={{width: '50%', maxWidth: 200}} />
-					</div>
-					<form method="GET" action="/search">
-						<input
-							type="search"
-							size="14"
-							name="query"
-							placeholder="Search"
-							onChange={(e) => {
-								let value = e.target.value;
-								clearTimeout(intervalTimer);
-								intervalTimer = setTimeout(() => {
-									setSearch(value);
-								}, 100);
-							}}
-						/>
-						<select
-							name="neighborhood"
-							onChange={(e) => {
-								let value = e.target.value;
-								clearTimeout(intervalTimer);
-								intervalTimer = setTimeout(() => {
-									setNeighborhood(value);
-								}, 100);
-							}}
-						>
-							<option value="">Select a neighorhood</option>
-							<option value="">Browse all neighborhoods</option>
-							{neighborhoods.map((option) => {
-								return (
-									<option
-										key={option}
-										value={option.toLowerCase()}
-									>
-										{option}
-									</option>
-								);
-							})}
-						</select>
-						<input type="submit" value="GO" />
-					</form>
-					<div
-						style={{
-							margin: "10px auto 0 auto",
-							textAlign: "left",
-							maxWidth: 900,
-						}}
-					>
-						<h3 className="browseHeader">Browse Cuisines</h3>
-						{cuisines.map((option) => {
-							return (
-								<a
-									className="link"
-									key={option}
-									href={
-										"/search?query=" +
-										encodeURIComponent(option.toLowerCase())
-									}
-								>
-									{option}
-								</a>
-							);
-						})}
-					</div>
-					<div
-						style={{
-							margin: "10px auto 0 auto",
-							textAlign: "left",
-							maxWidth: 900,
-						}}
-					>
-						<h3 className="browseHeader">Browse Neighborhoods</h3>
-						{neighborhoods.map((option) => {
-							return (
-								<a
-									className="link"
-									key={option}
-									href={
-										"/search?neighborhood=" +
-										encodeURIComponent(option.toLowerCase())
-									}
-								>
-									{option}
-								</a>
-							);
-						})}
-					</div>
-					<div style={{marginTop: 40, color: '#fff'}}>
-						Cake by Arielle Batson <a style={{color: '#fff', textDecoration: 'none'}} href="https://instagram.com/arry829">@arry829</a>
+			<section className={home_styles.hero}>
+				<div className={home_styles.heroContent}>
+					<h1 className={home_styles.heroText}>
+						Spicy Green Book
+					</h1>
+					<div className={home_styles.heroCredit}>
+						Cake by Arielle Batson<br />
+						<a style={{color: '#fff', textDecoration: 'none'}} href="https://instagram.com/arry829">@arry829</a>
 					</div>
 				</div>
+			</section>
+			<div className="content" style={{padding: '40px 20px'}}>
+				<p>
+					{content.home_page_text.map((text, i) => (
+						<span key={i}>{text} <br /></span>
+					))}
+				</p>
+				<center>
+					<a className="button" href="/search">Show Me The Results</a>
+				</center>
 			</div>
+            <div className={scrollableList.wrapper}>
+	            <div className={scrollableList.container}>
+	                {listings && listings.map((listing, i) => (
+	                    <a
+                            key={i}
+	                        className={scrollableList.item}
+	                        href={'/biz/' + listing._slug}
+	                    >
+	                    	<div
+		                        className={scrollableList.media}
+		                        style={{ backgroundImage: `url(${listing.primary_image.url})` }}
+	                    	/>
+	                    	<div className={scrollableList.title}>{listing.name}</div>
+	                    	<div className={scrollableList.subTitle}>{listing.cuisines.join(', ')}</div>
+	                    </a>
+	                ))}
+	            </div>
+	        </div>
 		</div>
 	);
 };
 
 export async function getStaticProps(context) {
-	let data = await getListings({ saveImages: false });
-	const rows = data.rows.map((row) => {
-		return {
-			Neighborhood: row.Neighborhood || "",
-			_neighborhoods: row._neighborhoods || "",
-			Cuisine: row.Cuisine || "",
-			_cuisines: row._cuisines || "",
-		};
-	});
+
+	let data = await getListings();
+	let get_content = await getContent({type: 'home_page'});
+
 	return {
 		props: {
-			list: rows,
-			neighborhoods: data.neighborhoods,
-			cuisines: data.cuisines,
+			listings: data.listings,
+			content: get_content.content
 		},
 	};
 }

@@ -13,6 +13,16 @@ export default (props) => {
         console.log("props", props);
     }
 
+    useEffect(
+        () => {
+            getUpdatedData({name: content._slug}).then(res => {
+                content = res;
+            });
+            console.log('updated content', content)
+        },
+        []
+    );
+
     return (
         <div>
             <Head>
@@ -37,7 +47,7 @@ export default (props) => {
                             {content.address}
                         </p>
                         <p>
-                            {content.phone_number}
+                            <a href={'tel:' + content.phone_number}>{content.phone_number}</a>
                         </p>
                         {content.website_url && (
                             <p>
@@ -74,13 +84,30 @@ export default (props) => {
                         </p>
                     </div>
                     <div className={listing.col}>
-                        <Map list={[content]} />
+                        {content.geolocation && <Map list={[content]} />}
                     </div>
                 </div>
             </div>
         </div>
     );
 };
+
+async function getUpdatedData(params) {
+    let data = await getListings({});
+    let content = {};
+    console.log('params', params)
+    data.listings.forEach(item => {
+        if(item._slug === params.name) {
+            content = item;
+        }
+    })
+
+    return {
+        props: {
+            content: content
+        }
+    };
+}
 
 export async function getStaticPaths() {
 
@@ -96,20 +123,6 @@ export async function getStaticPaths() {
     };
 }
 
-export async function getStaticProps({ params }) {
-
-    let data = await getListings({});
-    let content = {};
-    console.log('params', params)
-    data.listings.forEach(item => {
-        if(item._slug === params.name) {
-            content = item;
-        }
-    })
-
-    return {
-        props: {
-            content: content
-        },
-    };
+export async function getStaticProps({params}) {
+    return getUpdatedData(params)
 }

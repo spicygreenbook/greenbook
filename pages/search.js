@@ -22,7 +22,8 @@ const fuzzySearch = (string, srch) => {
 };
 
 export default (props) => {
-	const { listings, cuisines } = props;
+	let { listings, cuisines } = props;
+
 	console.log("props", props);
 	let query = {};
 	if (typeof window !== "undefined") {
@@ -47,6 +48,17 @@ export default (props) => {
 	const [filteredList, setFilteredList] = useState(
 		listings.filter(filter)
 	);
+
+    useEffect(
+        () => {
+			getListings({}).then(data => {
+				listings = data.listings;
+				cuisines = data.cuisines;
+			})
+        },
+        []
+    );
+
 
 	console.log("listings", listings);
 	return (

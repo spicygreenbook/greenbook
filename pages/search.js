@@ -49,6 +49,7 @@ export default (props) => {
 		listings.filter(filter)
 	);
 
+	/*
     useEffect(
         () => {
 			getListings({}).then(data => {
@@ -60,7 +61,7 @@ export default (props) => {
         },
         []
     );
-
+	*/
 
 	console.log("listings", listings);
 	return (
@@ -179,7 +180,7 @@ export default (props) => {
 	);
 };
 
-export async function getStaticProps(context) {
+export async function getServerSideProps(context) {
 	let data = await getListings({});
 
 	console.log("data is", data);

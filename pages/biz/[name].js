@@ -8,20 +8,22 @@ import listing from "../../css/listing.module.css";
 
 export default (props) => {
 
-    let content = props.content;
-    const [ content, setContent ] = useEffect(props.content);
+
+    const [ content, setContent ] = useState(props.content);
     if (typeof window !== "undefined") {
         console.log("props", props);
 
+        /*
         useEffect(
             () => {
                 getUpdatedData({name: content._slug}).then(res => {
-                    content = setContent(res.props.content);
+                    setContent(res.props.content);
                     console.log('updated content', content)
                 });
             },
             [ ]
         );
+        */
     }
 
 
@@ -110,7 +112,7 @@ async function getUpdatedData(params) {
         }
     };
 }
-
+/*
 export async function getStaticPaths() {
 
     let data = await getListings({});
@@ -124,7 +126,7 @@ export async function getStaticPaths() {
         fallback: false,
     };
 }
-
-export async function getStaticProps({params}) {
+*/
+export async function getServerSideProps({params}) {
     return getUpdatedData(params)
 }

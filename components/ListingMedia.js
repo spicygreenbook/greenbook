@@ -25,23 +25,44 @@ export default function Header(props) {
 
     const [ mode, setMode ] = useState('normal');
     const [ mediaIndex, setMediaIndex ] = useState(null);
+    const [ scrolledMediaIndex, setScrolledMediaIndex ] = useState(mediaIndex);
+    const [ scrollIgnore, setScrollIgnore ] = useState(false);
 
     useEffect(
         () => {
             if (images[mediaIndex] && images[mediaIndex].ref) {
                 if (typeof window !== 'undefined') {
-                    scrollToRef(fullContainerRef, images[mediaIndex].ref)
+                    if (!scrollIgnore) {
+                        scrollToRef(fullContainerRef, images[mediaIndex].ref)
+                    }
                 }
             }
         },
-        [ mode, mediaIndex, images ]
+        [ mode, mediaIndex ]
     );
+
+    let timer;
+    const scrollFunc = (e) => {
+        if (!scrollIgnore) {
+            let left = e.target.scrollLeft;
+            let curIndex = 0;
+            images.forEach((image, i) => {
+                if ((image.ref.current.offsetLeft - Math.floor(window.innerWidth * 0.5)) <= left) {
+                    curIndex = i
+                    console.log('hit')
+                }
+                console.log('image', i, 'offsetleft', image.ref.current.offsetLeft, 'scroll left', left)
+            })
+            console.log('now scrolled to', curIndex)
+            setScrolledMediaIndex(curIndex);
+        }
+    }
 
     return (
         <div>
             {(mediaIndex || mediaIndex === 0) && images[mediaIndex] && 
                 <div className={listingMedia.wrapperFull}>
-                    <div className={listingMedia.containerFull} ref={fullContainerRef}>
+                    <div className={listingMedia.containerFull} ref={fullContainerRef} onScroll={scrollFunc}>
                         {images && images.map((image, i) => (
                             <span
                                 key={i}
@@ -52,22 +73,25 @@ export default function Header(props) {
                         ))}
                     </div>
                     <div className={listingMedia.leftArrow} onClick={(e) => {
-                        let next_i = mediaIndex > 0 ? (mediaIndex - 1) : images.length-1
+                        let next_i = scrolledMediaIndex > 0 ? (scrolledMediaIndex - 1) : images.length-1
                         setMediaIndex(next_i);
+                        setScrolledMediaIndex(next_i);
                     }}>
                         <Icons type="left" color="#fff" />
                     </div>
                     <div className={listingMedia.rightArrow} onClick={(e) => {
-                        let next_i = (mediaIndex+1);
+                        let next_i = (scrolledMediaIndex+1);
                         if (!images[next_i]) {
                             next_i = 0
                         }
                         setMediaIndex(next_i);
+                        setScrolledMediaIndex(next_i);
                     }}>
                         <Icons type="right" color="#fff" />
                     </div>
                     <div className={listingMedia.close} onClick={(e) => {
                         setMediaIndex(null);
+                        setScrolledMediaIndex(null);
                         setMode('normal')
                     }}>
                         <Icons type="close" color="#fff" />
@@ -80,11 +104,14 @@ export default function Header(props) {
                         <span
                             key={i}
                             className={listingMedia.item}
-                            style={{ backgroundImage: `url(${image.url})` }}
+                            data-active={scrolledMediaIndex === i ? '1' : ''}
+                            style={{ backgroundImage: `url(${image.url})`}}
                             data-mode={mode}
                             onClick={(e) => {
                                 setMode('full')
                                 setMediaIndex(i);
+                                setScrolledMediaIndex(i);
+                                console.log('click index', i)
                             }}
                         />
                     ))}

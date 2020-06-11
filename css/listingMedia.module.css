@@ -28,6 +28,7 @@
   background-size: cover;
   background-repeat: no-repeat;
   transition: all 0.25s ease-in-out;
+  position: relative;
 }
 .item:after{
   content: '';
@@ -94,6 +95,20 @@ div.showClose[data-mode="grid"] {
 span.item[data-mode="grid"] {
   margin: 10px;
   width: calc(10% - 20px);
+}
+span.item:before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  border: 2px solid white;
+  transition: opacity 0.25s ease-in-out;
+  opacity: 0;
+}
+span.item[data-active="1"]:before {
+  opacity: 1;
 }
 
 @media all and (max-width: 1600px) {

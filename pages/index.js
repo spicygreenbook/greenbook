@@ -62,7 +62,7 @@ export default (props) => {
 	);
 };
 
-export async function getStaticProps(context) {
+export async function getServerSideProps(context) {
 
 	let data = await getListings();
 	let get_content = await getContent({type: 'home_page'});

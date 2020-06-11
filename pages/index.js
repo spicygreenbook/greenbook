@@ -23,9 +23,7 @@ export default (props) => {
 			</Head>
 			<section className={home_styles.hero}>
 				<div className={home_styles.heroContent}>
-					<h1 className={home_styles.heroText}>
-						Spicy Green Book
-					</h1>
+					<img src="/images/logo_stacked.png" style={{width: '100%', maxWidth: 300}}/>
 					<div className={home_styles.heroCredit}>
 						Cake by Arielle Batson<br />
 						<a style={{color: '#fff', textDecoration: 'none'}} href="https://instagram.com/arry829">@arry829</a>

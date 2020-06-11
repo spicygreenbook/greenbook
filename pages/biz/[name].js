@@ -39,6 +39,30 @@ export default (props) => {
                         <p>
                             {content.phone_number}
                         </p>
+                        {content.website_url && (
+                            <p>
+                                <a
+                                    href={
+                                        content.website_url
+                                    }
+                                    target="_blank"
+                                >
+                                    {content.website_url
+                                        .replace(
+                                            "https://",
+                                            ""
+                                        )
+                                        .replace(
+                                            "http://",
+                                            ""
+                                        )
+                                        .replace(
+                                            "www.",
+                                            ""
+                                        )}
+                                </a>
+                            </p>
+                        )}
                         <p>
                             { content.description }
                         </p>

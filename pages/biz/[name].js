@@ -16,9 +16,10 @@ export default (props) => {
     useEffect(
         () => {
             getUpdatedData({name: content._slug}).then(res => {
-                content = res;
+                content = res.props.content;
+                console.log('updated content', content)
             });
-            console.log('updated content', content)
+            
         },
         []
     );

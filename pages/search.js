@@ -52,8 +52,10 @@ export default (props) => {
     useEffect(
         () => {
 			getListings({}).then(data => {
+				console.log('got updated data', data)
 				listings = data.listings;
 				cuisines = data.cuisines;
+				setFilteredList(listings.filter(filter))
 			})
         },
         []

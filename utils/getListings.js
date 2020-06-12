@@ -57,14 +57,19 @@ const getPrismicValue = (ref, key) => {
 }
 
 async function getListings(config) {
-	var masterRef = await fetch('https://spicygreenbook.prismic.io/api/v2');
-	var masterRef_json = await masterRef.json();
-	var master_ref;
-	masterRef_json.refs.forEach(line => {
-		if(line.id === 'master') {
-			master_ref = line.ref;
-		}
-	})
+	if (config.ref_id) {
+		console.log('using custom master ref', config.ref_id)
+		var master_ref = config.ref_id;
+	} else {
+		var masterRef = await fetch('https://spicygreenbook.prismic.io/api/v2');
+		var masterRef_json = await masterRef.json();
+		var master_ref;
+		masterRef_json.refs.forEach(line => {
+			if(line.id === 'master') {
+				master_ref = line.ref;
+			}
+		})
+	}
 
 	var url = 'https://spicygreenbook.prismic.io/api/v1/documents/search?ref='+master_ref+'&q=%5B%5Bat(document.type%2C+%22listing%22)%5D%5D#format=json';
 	let data = await fetch(url);
@@ -84,6 +89,7 @@ async function getListings(config) {
 		})
 
 		let listing = {
+			id: doc.id,
 			_slug: doc.uid,
 			_singleRef: doc.href,
 			name: getPrismicValue(doc.data.listing.name),
@@ -114,14 +120,19 @@ async function getListings(config) {
 }
 
 async function getContent(config) {
-	var masterRef = await fetch('https://spicygreenbook.prismic.io/api/v2');
-	var masterRef_json = await masterRef.json();
-	var master_ref;
-	masterRef_json.refs.forEach(line => {
-		if(line.id === 'master') {
-			master_ref = line.ref;
-		}
-	})
+	if (config.ref_id) {
+		console.log('using custom master ref', config.ref_id)
+		var master_ref = config.ref_id;
+	} else {
+		var masterRef = await fetch('https://spicygreenbook.prismic.io/api/v2');
+		var masterRef_json = await masterRef.json();
+		var master_ref;
+		masterRef_json.refs.forEach(line => {
+			if(line.id === 'master') {
+				master_ref = line.ref;
+			}
+		})
+	}
 
 	var url = `https://spicygreenbook.prismic.io/api/v1/documents/search?ref=${master_ref}&q=%5B%5Bat(document.type%2C+%22${config.type}%22)%5D%5D`;
 	let data = await fetch(url);

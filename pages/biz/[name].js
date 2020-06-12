@@ -8,22 +8,31 @@ import listing from "../../css/listing.module.css";
 
 export default (props) => {
 
-
     const [ content, setContent ] = useState(props.content);
-    if (typeof window !== "undefined") {
-        console.log("props", props);
 
-        /*
-        useEffect(
-            () => {
-                getUpdatedData({name: content._slug}).then(res => {
-                    setContent(res.props.content);
-                    console.log('updated content', content)
-                });
-            },
-            [ ]
-        );
-        */
+    let query = {};
+    if (typeof window !== "undefined") {
+        let params = (window.location.search || "")
+            .substr(1)
+            .split("&")
+            .forEach((pair) => {
+                var spl = pair.split("=");
+                query[decodeURIComponent(spl[0])] = decodeURIComponent(spl[1]);
+            });
+        console.log("props", props, "query", query);
+
+        if (query.preview) {
+            console.log('execute preview ref_id', query.preview)
+            useEffect(
+                () => {
+                    getUpdatedData({preview: query.preview, name: content._slug}).then(res => {
+                        setContent(res.props.content);
+                        console.log('updated content', content)
+                    });
+                },
+                [ ]
+            );
+        }
     }
 
 
@@ -97,7 +106,11 @@ export default (props) => {
 };
 
 async function getUpdatedData(params) {
-    let data = await getListings({});
+    let config = {};
+    if (params.preview){
+        config.ref_id = params.preview
+    }
+    let data = await getListings(config);
     let content = {};
     console.log('params', params)
     data.listings.forEach(item => {

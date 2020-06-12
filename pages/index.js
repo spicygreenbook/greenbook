@@ -26,7 +26,7 @@ export default (props) => {
 			<section className={home_styles.hero}>
 				<div className={home_styles.hero_image} style={{backgroundImage: `url(${content.home_images && content.home_images[0] && content.home_images[0].image.url || ''}&w=1920)`}} />
 				<div className={home_styles.heroContent}>
-					<img src="/images/logo_stacked.png" style={{width: '100%', maxWidth: 300}}/>
+					<img src={content.logo_image.url + '&w=400'} style={{width: '100%', maxWidth: 300}} alt="Spicy Green Book" />
 					<div className={home_styles.heroCredit}>
 						Cake by Arielle Batson<br />
 						<a style={{color: '#fff', textDecoration: 'none'}} href="https://instagram.com/arry829">@arry829</a>

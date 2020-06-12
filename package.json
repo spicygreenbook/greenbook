@@ -15,7 +15,6 @@
   "dependencies": {
     "next": "latest",
     "react": "latest",
-    "react-dom": "latest",
-    "react-google-maps": "^9.4.5"
+    "react-dom": "latest"
   }
 }

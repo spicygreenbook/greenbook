@@ -1,4 +1,4 @@
-.hero:before {
+.hero_image {
   content: '';
   position: absolute;
   z-index: 0;
@@ -6,7 +6,6 @@
   top: 0;
   right: 0;
   bottom: 0;
-  background-image: url('/images/bg2.jpg');
   background-size: cover;
   background-position: center top;
 }
@@ -18,8 +17,8 @@
   top: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0,0,0,0.35);
-
+  background: rgb(0,0,0);
+  background: linear-gradient(126deg, rgba(0,0,0,0.45) 0%, rgba(255,255,255,0) 54%, rgba(255,255,255,0) 100%);
 }
 .hero {
   position: relative;

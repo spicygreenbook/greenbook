@@ -1,4 +1,14 @@
 
+function getPrismicGroupAdvanced(ref) {
+	return ref.value.map(line => {
+		let ret = {};
+		let passValue = line;
+		Object.keys(line).forEach(key => {
+			ret[key] = getPrismicValue(line[key], key);
+		})
+		return ret;
+	})
+}
 const getPrismicGroup = (ref, key) => {
 	//console.log('ref', ref, 'key', key)
 	if (ref[key] && ref[key].type === 'Text') {
@@ -41,7 +51,7 @@ const getPrismicValue = (ref, key) => {
 			}).filter(item => item)
 		}
 	} else {
-		console.log('tried passing empty ref', ref, 'with key', key)
+		//console.log('tried passing empty ref', ref, 'with key', key)
 	}
 	return '';
 }
@@ -121,7 +131,11 @@ async function getContent(config) {
 	let listings = parsed_data.results.map((doc, i) => {
 		if (config.type === 'home_page' && doc.data.home_page) {
 			Object.keys(doc.data.home_page).forEach(key => {
-				content[key] = getPrismicValue(doc.data.home_page[key], key);
+				if (doc.data.home_page[key].type === 'Group') {
+					content[key] = getPrismicGroupAdvanced(doc.data.home_page[key]);
+				} else {
+					content[key] = getPrismicValue(doc.data.home_page[key]);
+				}
 			})
 		}
 	})

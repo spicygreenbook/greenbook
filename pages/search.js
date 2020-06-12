@@ -121,7 +121,7 @@ export default (props) => {
 													backgroundImage:
 														"url(" +
 														row.primary_image.url +
-														")",
+														"&w=400)",
 												}}
 											/>
 											<div className={list.boxContent}>
@@ -180,7 +180,7 @@ export default (props) => {
 	);
 };
 
-export async function getServerSideProps(context) {
+export async function getStaticProps(context) {
 	let data = await getListings({});
 
 	console.log("data is", data);

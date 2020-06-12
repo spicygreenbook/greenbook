@@ -112,7 +112,7 @@ async function getUpdatedData(params) {
         }
     };
 }
-/*
+
 export async function getStaticPaths() {
 
     let data = await getListings({});
@@ -126,7 +126,7 @@ export async function getStaticPaths() {
         fallback: false,
     };
 }
-*/
-export async function getServerSideProps({params}) {
+
+export async function getStaticProps({params}) {
     return getUpdatedData(params)
 }

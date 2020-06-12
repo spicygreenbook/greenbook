@@ -10,7 +10,9 @@ export default (props) => {
 
 	const {content, listings} = props
 
-	console.log('props', props)
+	if (typeof window !== 'undefined') {
+		console.log('props', props)
+	}
 
 	return (
 		<div className="page-home">
@@ -18,10 +20,11 @@ export default (props) => {
 				<title>Spicy Green Book</title>
 				<meta
 					name="description"
-					content=""
+					content={content.description}
 				/>
 			</Head>
 			<section className={home_styles.hero}>
+				<div className={home_styles.hero_image} style={{backgroundImage: `url(${content.home_images && content.home_images[0] && content.home_images[0].image.url || ''}&w=1920)`}} />
 				<div className={home_styles.heroContent}>
 					<img src="/images/logo_stacked.png" style={{width: '100%', maxWidth: 300}}/>
 					<div className={home_styles.heroCredit}>
@@ -50,7 +53,7 @@ export default (props) => {
 	                    >
 	                    	<div
 		                        className={scrollableList.media}
-		                        style={{ backgroundImage: `url(${listing.primary_image.url})` }}
+		                        style={{ backgroundImage: `url(${listing.primary_image.url}&w=400)` }}
 	                    	/>
 	                    	<div className={scrollableList.title}>{listing.name}</div>
 	                    	<div className={scrollableList.subTitle}>{listing.cuisines.join(', ')}</div>
@@ -62,7 +65,7 @@ export default (props) => {
 	);
 };
 
-export async function getServerSideProps(context) {
+export async function getStaticProps(context) {
 
 	let data = await getListings();
 	let get_content = await getContent({type: 'home_page'});

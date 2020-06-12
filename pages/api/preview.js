@@ -40,8 +40,11 @@ module.exports = async (req, res) => {
             })
         }
 
+        console.log(Object.keys(req));
+        //let base_url = req.hostname;
+        var base_url = req.headers.host.indexOf('localhost:3000') > -1 ? 'http://localhost:3000' : 'https://spicygreenbook.com';
         res.writeHead(302, {
-          'Location': (req.url.indexOf('spicygrenbook.com') > -1 ? 'https://spicygreenbook.com/biz/' + _slug : 'http://localhost:3000/biz/' + _slug) + '?preview='+ref_id
+          'Location': base_url + '/biz/' + _slug  + '?preview=' + ref_id
         });
         return res.end();
     } else {

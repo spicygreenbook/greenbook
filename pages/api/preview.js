@@ -43,7 +43,7 @@ module.exports = async (req, res) => {
         res.writeHead(302, {
           'Location': (req.url.indexOf('spicygrenbook.com') > -1 ? 'https://spicygreenbook.com/biz/' + _slug : 'http://localhost:3000/biz/' + _slug) + '?preview='+ref_id
         });
-        res.end();
+        return res.end();
     } else {
         res.statusCode = 200;
         res.setHeader('Content-Type', 'text/html');

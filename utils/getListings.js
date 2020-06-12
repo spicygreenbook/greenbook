@@ -57,6 +57,7 @@ const getPrismicValue = (ref, key) => {
 }
 
 async function getListings(config) {
+	if (!config){ config = {}; }
 	if (config.ref_id) {
 		console.log('using custom master ref', config.ref_id)
 		var master_ref = config.ref_id;
@@ -120,6 +121,7 @@ async function getListings(config) {
 }
 
 async function getContent(config) {
+	if (!config){ config = {}; }
 	if (config.ref_id) {
 		console.log('using custom master ref', config.ref_id)
 		var master_ref = config.ref_id;

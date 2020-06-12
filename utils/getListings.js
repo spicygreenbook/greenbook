@@ -30,7 +30,7 @@ const getPrismicValue = (ref, key) => {
 	if (ref) {
 		if (ref.type === 'StructuredText') {
 			return ref.value.map(line => line.text)
-		} else if (ref.type === 'Text') {
+		} else if (ref.type === 'Text' || ref.type === 'Number') {
 			return Array.isArray(ref.value) ? ref.value.map(line => line.text).join('') : ref.value
 		} else if (ref.type === 'Link.web') {
 			return ref.value.url
@@ -88,7 +88,7 @@ async function getListings(config) {
 		cuisines.forEach(cuisine => {
 			allCuisines.add(cuisine);
 		})
-
+		console.log(doc.data.listing.home_page_order);
 		let listing = {
 			id: doc.id,
 			_slug: doc.uid,
@@ -106,6 +106,7 @@ async function getListings(config) {
 			geocoordinates: getPrismicValue(doc.data.listing.geocoordinates),
 			address: getPrismicValue(doc.data.listing.address),
 			description: getPrismicValue(doc.data.listing.description),
+			home_page_order: getPrismicValue(doc.data.listing.home_page_order),
 			images: images
 		};
 

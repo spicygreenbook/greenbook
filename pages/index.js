@@ -45,7 +45,11 @@ export default (props) => {
 			</div>
             <div className={scrollableList.wrapper}>
 	            <div className={scrollableList.container}>
-	                {listings && listings.map((listing, i) => (
+	                {listings && listings.sort((a,b) => {
+					    if (a.home_page_order < b.home_page_order) { return -1; }
+					    if (a.home_page_order > b.home_page_order) { return 1; }
+					    return 0;
+	                }).map((listing, i) => (
 	                    <a
                             key={i}
 	                        className={scrollableList.item}

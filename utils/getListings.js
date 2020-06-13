@@ -151,6 +151,15 @@ async function getContent(config) {
 					content[key] = getPrismicValue(doc.data.home_page[key]);
 				}
 			})
+		} else if (config.type === 'content' && config.uid) {
+			Object.keys(doc.data.content).forEach(key => {
+				if (doc.data.content[key].type === 'Group') {
+					content[key] = getPrismicGroupAdvanced(doc.data.content[key]);
+				} else {
+					content[key] = getPrismicValue(doc.data.content[key]);
+				}
+				content['_' + key] = doc.data.content[key];
+			})
 		}
 	})
 

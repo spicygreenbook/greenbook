@@ -135,7 +135,7 @@ export default (props) => {
 													{row.name}
 												</h3>
 												<p>{row.cuisines.join(", ")}</p>
-												<p>{row.description}</p>
+												<p className={list.description}>{row.description}</p>
 												<div
 													className={
 														list.boxContentRight
@@ -146,30 +146,12 @@ export default (props) => {
 															{row.phone_number}
 														</p>
 													)}
-													{row.website_url && (
+													{row.address && (
 														<p>
-															<a
-																href={
-																	row.website_url
-																}
-																target="_blank"
-															>
-																{row.website_url
-																	.replace(
-																		"https://",
-																		""
-																	)
-																	.replace(
-																		"http://",
-																		""
-																	)
-																	.replace(
-																		"www.",
-																		""
-																	)}
-															</a>
+															{row.address}
 														</p>
 													)}
+
 												</div>
 											</div>
 										</div>

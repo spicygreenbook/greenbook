@@ -37,16 +37,23 @@
   text-align: right;
 }
 .boxContent p {
-  margin: 4px 0;
+  color: #777;
+  font-size: 14px;
+  margin: 0 0 12px 0;
+}
+.boxContent p.description {
+  color: #333;
+  font-size: 16px;
 }
 .boxContentRight {
   position: absolute;
   right: 0;
   top: 0;
   width: 200px;
+  color: #777;
 }
 .boxTitle {
-  margin: 0;
+  margin: 0 0 12px 0;
 }
 
 

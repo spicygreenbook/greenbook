@@ -43,6 +43,9 @@ img {
   boz-sizing: border-box;
   margin: 0 auto;
 }
+.content p{
+  margin: 10px 0;
+}
 footer {
   box-sizing: border-box;
   max-width: 800px;

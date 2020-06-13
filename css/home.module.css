@@ -28,13 +28,14 @@
   right: 0;
   bottom: 0;
   background: rgb(0,0,0);
-  background: linear-gradient(126deg, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.5) 54%, rgba(0,0,0,0) 100%);
+  background: linear-gradient(126deg, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.65) 54%, rgba(0,0,0,0) 100%);
 }
 .hero {
   position: relative;
   box-sizing: border-box;
-  padding-top: 46%;
-  min-height: 380px;
+  padding-top: 42%;
+  min-height: 420px;
+  max-height: 600px;
 }
 .hero h3 {
   color: #fff;

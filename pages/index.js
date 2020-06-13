@@ -35,11 +35,11 @@ export default (props) => {
                 <div className={home_styles.hero_image}  style={{backgroundImage: `url(${content.home_images && content.home_images[0] && content.home_images[0].image.url || ''}&w=1920)`}} />
                 <div className={home_styles.heroContent}>
                     <h1>Support Black Owned Business</h1>
-                    <p>
+                    <p style={{fontSize: 20, maxWidth: 900}}>
                         Help be the change.<br />
                         We're building a list of businesses that you can support in <b>Southern California</b>.
                     </p>
-                    <p style={{marginTop: 20}}>
+                    <p style={{marginTop: 40}}>
                         <a className={"button "+home_styles.button + " " + home_styles.buttonBlue} href="/about" style={{whiteSpace: 'nowrap'}} onClick={(e) => {
                             e.preventDefault();
                             scrollToRef(ref);

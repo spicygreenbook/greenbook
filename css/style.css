@@ -14,8 +14,13 @@ input, select, button, .button {
   vertical-align: middle;
   text-decoration: none;
   margin-right: 10px;
-  line-height: 100%;
-  min-height: 19px;
+}
+select {
+  min-height: 20px;
+}
+
+button, .button {
+  font-weight: bold;
 }
 
 input[type="submit"] {
@@ -39,9 +44,10 @@ img {
 }
 
 .content {
-  max-width: 800px;
+  max-width: 1040px;
   boz-sizing: border-box;
   margin: 0 auto;
+  padding: 0 20px;
 }
 .content p{
   margin: 10px 0;
@@ -81,10 +87,6 @@ footer .col:first-child {
   }
   .heroText {
     font-size: 60px;
-  }
-  input, select {
-    margin: 4px;
-    padding: 4px;
   }
 }
 @media all and (max-width: 600px) {

@@ -5,6 +5,7 @@ import { getListings } from "../utils/getListings";
 import Map from "../components/Map";
 import Header from "../components/Header";
 import list from "../css/list.module.css";
+import Icons from "../components/Icons.js";
 
 const fuzzySearch = (string, srch) => {
 	return (string || "").match(
@@ -80,8 +81,11 @@ export default (props) => {
 				/>
 			</Head>
 			<div style={{ padding: "20px 20px 0 20px" }}>
-				<a className="button" href="/">
-					&lt; Home
+				<a className="button" href="/" style={{padding: '4px 6px'}}>
+					<Icons type="scrollDown" color="#fff" style={{display: 'inline-block', width: 14, height: 14, verticalAlign: 'middle', transform: 'rotate(90deg)'}} />
+                    <span style={{display: 'inline-block', verticalAlign: 'middle', marginLeft: 6}}>
+                        Home
+                    </span>
 				</a>
 				<select
 					name="cuisine"

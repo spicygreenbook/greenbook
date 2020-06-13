@@ -37,7 +37,7 @@ export default (props) => {
                     <h1>Support Black Owned Business</h1>
                     <p style={{fontSize: 20, maxWidth: 900}}>
                         Help be the change.<br />
-                        We're building a list of businesses that you can support in <b>Southern California</b>.
+                        We're building a list of <b>Food & Beverage</b> businesses that you can support in <b>Southern California</b>.
                     </p>
                     <p style={{marginTop: 40}}>
                         <a className={"button "+home_styles.button + " " + home_styles.buttonBlue} href="/about" style={{whiteSpace: 'nowrap'}} onClick={(e) => {

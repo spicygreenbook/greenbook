@@ -8,7 +8,7 @@ import scrollableList from '../css/scrollableList.module.css';
 import Icons from "../components/Icons";
 
 const scrollToRef = (ref) => {
-    let scrollTop = ref.current.offsetTop
+    let scrollTop = ref.current.offsetTop - 20
     window.scrollTo({top: scrollTop, left: 0, behavior: 'smooth'})
 }
 
@@ -54,7 +54,7 @@ export default (props) => {
                 </div>
             </section>
             <section className="content" style={{marginTop: 60}} ref={ref} >
-                <h1>More About Us</h1>
+                <h2>More About Us</h2>
                 <p>
                     We are gathering a growing list of volunteers to help build a list of black owned businesses. 
                     {' '}
@@ -73,7 +73,7 @@ export default (props) => {
                 </p>
             </section>
             <section className="content" style={{marginTop: 60}}>
-                <h1>Find a Place</h1>
+                <h2>Find a Place</h2>
             </section>
             <div className={scrollableList.wrapper}>
                 <div className={scrollableList.container}>

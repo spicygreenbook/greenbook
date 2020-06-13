@@ -36,7 +36,7 @@ export default (props) => {
                 <div className={home_styles.heroContent}>
                     <h1>Support Black Owned Business</h1>
                     <p>
-                        Help make be the change.<br />
+                        Help be the change.<br />
                         We're building a list of businesses that you can support in <b>Southern California</b>.
                     </p>
                     <p style={{marginTop: 20}}>

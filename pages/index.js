@@ -35,7 +35,7 @@ export default (props) => {
                 <div className={home_styles.hero_image}  style={{backgroundImage: `url(${content.home_images && content.home_images[0] && content.home_images[0].image.url || ''}&w=1920)`}} />
                 <div className={home_styles.heroContent}>
                     <h1>Support Black Owned Business</h1>
-                    <p style={{fontSize: 20, maxWidth: 900}}>
+                    <p style={{fontSize: 20, maxWidth: 500, lineHeight: '160%'}}>
                         Help be the change.<br />
                         We're building a list of <b>Food & Beverage</b> businesses that you can support in <b>Southern California</b>.
                     </p>

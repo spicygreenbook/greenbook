@@ -47,19 +47,9 @@
   right: 0;
   z-index: 2;
   position: absolute;
-  top: 30%;
+  top: 20%;
   padding: 20px;
   color: #fff;
-}
-.heroText {
-  font-size: 80px;
-  font-weight: 300;
-  line-height: 120%;
-  text-transform: uppercase;
-  color: #fff;
-  position: relative;
-  z-index: 2;
-  text-shadow: 0 0 10px #000;
 }
 .heroCredit {
     text-align: right;
@@ -72,19 +62,13 @@
     font-size: 12px;
 }
 
-@media all and (max-width: 900px) {
+@media all and (max-width: 1040px) {
   .heroContent {
-    top: 20%;
-  }
-  .heroText {
-    font-size: 60px;
+    top: 10%;
   }
 }
 @media all and (max-width: 600px) {
   .heroContent {
-    top: 10%;
-  }
-  .heroText {
-    font-size: 30px;
+    top: 6%;
   }
 }

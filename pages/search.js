@@ -62,6 +62,12 @@ export default (props) => {
         []
     );
 	*/
+    useEffect(
+        () => {
+			setFilteredList(listings.filter(filter))
+        },
+        [ cuisine ]
+    );
 
 	console.log("listings", listings);
 	return (
@@ -99,7 +105,7 @@ export default (props) => {
 				</select>
 			</div>
 			<div className={list.layoutMap}>
-				<Map list={listings} />
+				<Map list={filteredList} />
 			</div>
 			<div className={list.layoutList}>
 				<div className={list.overallContainer}>

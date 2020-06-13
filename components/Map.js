@@ -69,7 +69,7 @@ export default function Map({ list, options, onMount, className, onMountProps })
       script.addEventListener(`load`, onLoad)
       return () => script.removeEventListener(`load`, onLoad)
     } else onLoad()
-  }, [options])
+  }, [options, list])
 
   if (map && typeof onMount === `function`) onMount(map, onMountProps)
 

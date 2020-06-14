@@ -97,7 +97,7 @@ export default (props) => {
                         </p>
                     </div>
                     <div className={listing.col}>
-                        {content.geolocation && <Map list={[content]} />}
+                        {content.geocoordinates && <Map list={[content]} />}
                     </div>
                 </div>
             </div>

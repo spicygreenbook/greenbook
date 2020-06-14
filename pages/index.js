@@ -103,6 +103,14 @@ export default (props) => {
                     From 1936 to 1964, in the midst of the Jim Crow era, black men and women were under the persistent threat of violence after sunset in the form of lynchings and other very real hate crimes. To help many escape this violence, Victor Green created the <a href="https://savingplaces.org/stories/green-book-historic-travel-guide-for-black-america#.XuVK1J5Kjlx">Negro Motorist Green Book</a>. This book listed vital places of refuge during the segregation era that included hotels, gas stations, grocery stores, night clubs, restaurants, and “tourist homes” where homeowners welcomed travelers who had nowhere else to go. This valuable note of history not only shows us the racial discrimination that existed but also black entrepreneurship. Today we continue to push forward with today’s black innovation and invite you to be a part of it.
                 </p>
             </section>
+            <section className="content" style={{marginTop: 60, marginBottom: 60}}>
+                <p style={{fontSize: 24, maxWidth: 600, margin: '0 auto'}}>
+                    “It is certain, in any case, that ignorance, allied with power, is the most ferocious enemy justice can have.”
+                </p>
+                <p style={{fontSize: 18, maxWidth: 600, margin: '0 auto'}}>
+                 - James Baldwin
+                </p>
+            </section>
         </div>
     );
 };

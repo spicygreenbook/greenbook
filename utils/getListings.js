@@ -72,13 +72,23 @@ async function getListings(config) {
 		})
 	}
 
+	let results = [];
 	var url = 'https://spicygreenbook.prismic.io/api/v1/documents/search?ref='+master_ref+'&q=%5B%5Bat(document.type%2C+%22listing%22)%5D%5D#format=json';
 	let data = await fetch(url);
-	let parsed_data = await data.json();
+	let getLoop = async (nextInfo) => {
+		nextInfo.results.map((doc, i) => {
+			results.push(doc);
+		})
+		if (nextInfo.next_page) {
+			console.log('fetching', nextInfo.next_page)
+			let data = await fetch(nextInfo.next_page);
+			getLoop(await data.json());
+		}
+	}
+	await getLoop(await data.json());
 
 	let allCuisines = new Set();
-
-	let listings = parsed_data.results.map((doc, i) => {
+	let listings = results.map((doc, i) => {
 
 		let images = getPrismicValue(doc.data.listing.images, 'image');
 		let primary_image = getPrismicValue(doc.data.listing.primary_image);
@@ -88,7 +98,7 @@ async function getListings(config) {
 		cuisines.forEach(cuisine => {
 			allCuisines.add(cuisine);
 		})
-		console.log(doc.data.listing.home_page_order);
+
 		let listing = {
 			id: doc.id,
 			_slug: doc.uid,

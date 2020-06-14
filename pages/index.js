@@ -52,6 +52,10 @@ export default (props) => {
                         <a className={"button "+home_styles.button} href="/search">Show Me The List</a>
                     </p>
                 </div>
+                <div style={{position: 'absolute', right: 10, bottom: 10, color: '#fff', fontSize: 10, zIndex:2, textAlign: 'right'}}>
+                    Cake by Arielle Batson<br />
+                    <a href="https://instagram.com/arry829" style={{color: '#fff', textDecoration: 'none'}}>@arry829</a>
+                </div>
             </section>
             <section className="content" style={{marginTop: 60}} ref={ref} >
                 <h2>More About Us</h2>

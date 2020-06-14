@@ -25,7 +25,6 @@ const fuzzySearch = (string, srch) => {
 export default (props) => {
 	let { listings, cuisines } = props;
 
-	console.log("props", props);
 	let query = {};
 	if (typeof window !== "undefined") {
 		let params = (window.location.search || "")
@@ -70,7 +69,6 @@ export default (props) => {
         [ cuisine ]
     );
 
-	console.log("listings", listings);
 	return (
 		<div>
 			<Head>
@@ -175,7 +173,6 @@ export default (props) => {
 export async function getStaticProps(context) {
 	let data = await getListings({});
 
-	console.log("data is", data);
 	return {
 		props: { listings: data.listings, cuisines: data.cuisines },
 	};

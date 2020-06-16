@@ -23,6 +23,7 @@ const fuzzySearch = (string, srch) => {
 	);
 };
 
+
 export default (props) => {
 	let { listings, cuisines, content } = props;
 
@@ -33,42 +34,45 @@ export default (props) => {
 			.split("&")
 			.forEach((pair) => {
 				var spl = pair.split("=");
-				query[decodeURIComponent(spl[0])] = decodeURIComponent(spl[1]);
+				if (spl[0] && spl[1]) {
+					query[decodeURIComponent(spl[0])] = decodeURIComponent(spl[1]);
+				}
 			});
 	}
 	const filter = (row) => {
 		var go = true;
-		if (cuisine && row._cuisines.indexOf(cuisine) < 0) {
+
+
+		if (search) {
+			if (!fuzzySearch(row._search, search)) {
+				go = false;
+			}
+		}
+		if (cuisine && row.cuisines.indexOf(cuisine) < 0) {
+			console.log('no go')
 			go = false;
 		}
 		return go;
 	};
 
 	const [cuisine, setCuisine] = useState(query.cuisine || '');
+	const [filterConfig, setFilterConfig] = useState({search: query.search || '', cuisine: query.cuisine || ''});
 	const [search, setSearch] = useState("");
 	const [filteredList, setFilteredList] = useState(
 		listings.filter(filter)
 	);
 
-	/*
     useEffect(
         () => {
-			getListings({}).then(data => {
-				console.log('got updated data', data)
-				listings = data.listings;
-				cuisines = data.cuisines;
+        	if (filterConfig.cuisine !== cuisine || filterConfig.search !== search) {
 				setFilteredList(listings.filter(filter))
-			})
+				setFilterConfig({search: search, cuisine: cuisine})
+			}
         },
-        []
+        [ cuisine, search ]
     );
-	*/
-    useEffect(
-        () => {
-			setFilteredList(listings.filter(filter))
-        },
-        [ cuisine ]
-    );
+
+    console.log('map render')
 
 	return (
 		<div>
@@ -203,6 +207,10 @@ export default (props) => {
 export async function getStaticProps(context) {
 	let data = await getListings({});
     let get_content = await getContent({type: 'home_page'});
+
+    data.listings.forEach(row => {
+    	row._search = JSON.stringify(row)
+    })
 
 	return {
 		props: { listings: data.listings, cuisines: data.cuisines, content: get_content.content },

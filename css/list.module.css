@@ -30,7 +30,7 @@
   white-space: normal;
   display: inline-block;
   box-sizing: border-box;
-  padding: 20px 200px 20px 20px;
+  padding: 20px 240px 20px 20px;
   vertical-align: top;
   width: 74%;
   position: relative;
@@ -52,7 +52,7 @@
 }
 .boxContentRight {
   position: absolute;
-  right: 0;
+  right: 20px;
   top: 20px;
   width: 200px;
   color: #777;

@@ -88,7 +88,6 @@ export default (props) => {
 	        [ ]
 	    );
 	}
-    console.log('map render')
 
 	return (
 		<div>

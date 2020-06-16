@@ -11,6 +11,12 @@ body {
 .bg1 {
     background-color: #B56230;
 }
+.ib {
+  display: inline-block;
+}
+.middle {
+  vertical-align: middle;
+}
 
 input, select, button, .button {
   border: 1px solid #E0E0E0;

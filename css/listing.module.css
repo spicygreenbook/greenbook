@@ -1,3 +1,21 @@
+
+.layoutMap {
+  position: fixed;
+  right: 0;
+  width: 40%;
+  top: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.layoutList {
+  position: relative;
+  width: 60%;
+  box-sizing: border-box;
+  padding: 20px;
+  box-shadow: 5px 0px 10px rgba(0, 0, 0, 0.0634014);
+  z-index: 1;
+}
+
 .cols {
     white-space: nowrap;
 }
@@ -14,6 +32,10 @@
 }
 .col:last-child {
     width: 40%;
+}
+.layoutList a {
+    text-decoration: none;
+    color: #828282;
 }
 @media all and (max-width: 600px) {
     .col:first-child {

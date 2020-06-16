@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Head from "next/head";
-import { getListings } from "../utils/getListings";
+import { getListings, getContent } from "../utils/getListings";
 import Map from "../components/Map";
 import Header from "../components/Header";
 import list from "../css/list.module.css";
 import Icons from "../components/Icons.js";
+import home_styles from '../css/home.module.css';
 
 const fuzzySearch = (string, srch) => {
 	return (string || "").match(
@@ -23,7 +24,7 @@ const fuzzySearch = (string, srch) => {
 };
 
 export default (props) => {
-	let { listings, cuisines } = props;
+	let { listings, cuisines, content } = props;
 
 	let query = {};
 	if (typeof window !== "undefined") {
@@ -78,35 +79,58 @@ export default (props) => {
 					content="Support local black owned businesses with our free directory"
 				/>
 			</Head>
-			<div style={{ padding: "20px 20px 0 20px" }}>
-				<a className="button" href="/" style={{padding: '4px 6px'}}>
-					<Icons type="scrollDown" color="#fff" style={{display: 'inline-block', width: 14, height: 14, verticalAlign: 'middle', transform: 'rotate(90deg)'}} />
-                    <span style={{display: 'inline-block', verticalAlign: 'middle', marginLeft: 6}}>
-                        Home
-                    </span>
-				</a>
-				<select
-					name="cuisine"
-					value={cuisine.toLowerCase().trim()}
-					onChange={(e) => {
-						let value = e.target.value;
-						setCuisine(value);
-					}}
-				>
-					<option value="">Show all cuisines</option>
-					{cuisines.map((option) => {
-						return (
-							<option
-								key={option}
-								value={option.toLowerCase().trim()}
-							>
-								{option}
-							</option>
-						);
-					})}
-				</select>
-			</div>
-			<div className={list.layoutMap}>
+            <section className={home_styles.hero}>
+                <div className={home_styles.hero_image}  style={{backgroundImage: `url(${content.home_images && content.home_images[0] && content.home_images[0].image.url || ''}&w=1920)`}} />
+                <div className={home_styles.heroContainer}>
+
+                    <a href="/" className={home_styles.logo}>Spicy Green Book.</a>
+                    <a className={home_styles.buttonHero}>List Your Business</a>
+
+                    <div className={home_styles.heroContent} style={{paddingBottom: 40}}>
+                        <h3 style={{color: '#fff', fontSize: 24}}>Find A Business Close To You</h3>
+	                </div>
+                    <div style={{position: 'absolute', right: 10, bottom: 10, color: '#fff', fontSize: 10, zIndex:2, textAlign: 'right'}}>
+                        Cake by Arielle Batson<br />
+                        <a href="https://instagram.com/arry829" style={{color: '#fff', textDecoration: 'none'}}>@arry829</a>
+                    </div>
+                </div>
+            </section>
+            <div style={{textAlign: 'center', marginTop: -40, marginBottom: 20}}>
+                <div className={home_styles.searchBox} style={{textAlign: 'left', position: 'relative', zIndex: 2, boxShadow: '0px 5px 5px rgba(0, 0, 0, 0.15)'}}>
+                    <form method="GET" action="/search">
+                        <div className={home_styles.searchBoxItem}>
+                            <label>
+                                <div>Search</div>
+                                <div style={{marginTop:17}}>
+                                    <input className={home_styles.select} name="search" value={search} placeholder="Enter Location or keywords"  onChange={(e) => setSearch(e.target.value)} />
+                                </div>
+                            </label>
+                        </div>
+                        <div className={home_styles.searchBoxItem}>
+                            <label>
+                                <div>Food Category</div>
+                                <div style={{marginTop:17}}>
+                                    <select className={home_styles.select} name="cuisine" value={cuisine} onChange={(e) => setCuisine(e.target.value)}>
+                                        <option value="">Show all</option>
+                                        {cuisines.map(cuisine => (
+                                            <option key={cuisine} value={cuisine}>{cuisine}</option>
+                                        ))}
+                                    </select>
+                                </div>
+                            </label>
+                        </div>
+                        <div className={home_styles.searchBoxItem}>
+                            <label>
+                                <div>{'\u00A0'}</div>
+                                <div style={{marginTop:17}}>
+                                    <input type="submit" value="Search" />
+                                </div>
+                            </label>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div className={list.layoutMap}>
 				<Map list={filteredList} />
 			</div>
 			<div className={list.layoutList}>
@@ -136,8 +160,14 @@ export default (props) => {
 												<h3 className={list.boxTitle}>
 													{row.name}
 												</h3>
-												<p>{row.cuisines.join(", ")}</p>
 												<p className={list.description}>{row.description}</p>
+	                                            <Icons type="tag" color="#CF9052" style={{width: 14, height: 14, marginRight: 6}} />
+	                                            {row.cuisines.map((line, i , ar) => (
+	                                            	<span key={line} style={{color: '#CF9052',display: 'inline-block', 'vertical-align': 'middle'}}>
+	                                                	<span>{line}</span>
+	                                                	{ar[i+1] && (<span>,{'\u00A0'}</span>)}
+	                                                </span>
+	                                            ))}
 												<div
 													className={
 														list.boxContentRight
@@ -172,8 +202,9 @@ export default (props) => {
 
 export async function getStaticProps(context) {
 	let data = await getListings({});
+    let get_content = await getContent({type: 'home_page'});
 
 	return {
-		props: { listings: data.listings, cuisines: data.cuisines },
+		props: { listings: data.listings, cuisines: data.cuisines, content: get_content.content },
 	};
 }

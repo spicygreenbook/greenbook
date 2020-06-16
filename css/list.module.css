@@ -1,18 +1,21 @@
 .box {
-  padding: 10px;
   background-color: #fff;
-  border-radius:4px;
+
   overflow: hidden;
   vertical-align: top;
-  box-shadow: 0 0 2px rgba(0,0,0,0.2);
   white-space:nowrap;
   margin-bottom: 20px;
+  border-radius: 5px;
+  box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.15);
+  transition: box-shadow 0.25s ease-in-out;
+}
+.box:hover {
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.15);
 }
 .boxImage{
   display:inline-block;
   vertical-align: top;
-  width: 200px;
-  max-width: 20%;
+  width: 26%;
   height: auto;
   background-size: cover;
   background-position: center center;
@@ -27,10 +30,9 @@
   white-space: normal;
   display: inline-block;
   box-sizing: border-box;
-  padding-left: 20px;
-  padding-right: 200px;
+  padding: 20px 200px 20px 20px;
   vertical-align: top;
-  width: 80%;
+  width: 74%;
   position: relative;
 }
 .boxContent-right{
@@ -40,6 +42,9 @@
   color: #777;
   font-size: 14px;
   margin: 0 0 12px 0;
+  max-height: 80px;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 .boxContent p.description {
   color: #333;
@@ -48,12 +53,13 @@
 .boxContentRight {
   position: absolute;
   right: 0;
-  top: 0;
+  top: 20px;
   width: 200px;
   color: #777;
 }
 .boxTitle {
   margin: 0 0 12px 0;
+  color: #3D2A1F;
 }
 
 
@@ -84,19 +90,33 @@
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   }
 }
-@media all and (max-width: 600px) {
-  .boxContainer{
-    grid-template-columns: minmax(0, 1fr);
-  }
+@media all and (max-width: 700px) {
+
   .boxImage {
-    max-width: 30%;
+    width: 40%;
   }
   .boxContent {
     padding-right: 20px;
-    width: 70%;
+    width: 60%;
   }
   .boxContentRight {
     position: static;
     text-align: left;
+    padding-top: 20px;
   }
+}
+@media all and (max-width: 500px) {
+  .box {
+    white-space: normal;
+  }
+  .boxImage {
+    width: 100%;
+  }
+  .boxContent {
+    width: 100%;
+  }
+  .boxContent p {
+    max-height: none;
+  }
+
 }

@@ -181,8 +181,11 @@ export default (props) => {
                                         <div className={scrollableList.title}>{listing.name}</div>
                                         <div className={scrollableList.subTitle}>
                                             <Icons type="tag" color="#CF9052" style={{width: 14, height: 14, marginRight: 6}} />
-                                            {listing.cuisines.map(line => (
-                                                <span key={line} style={{display: 'inline-block', 'vertical-align': 'middle'}}>{line}</span>
+                                            {listing.cuisines.map((line, i , ar) => (
+                                                <span key={line} style={{color: '#CF9052',display: 'inline-block', 'vertical-align': 'middle'}}>
+                                                    <span >{line}</span>
+                                                    {ar[i+1] && (<span>,{'\u00A0'}</span>)}
+                                                </span>
                                             ))}
                                         </div>
                                     </a>

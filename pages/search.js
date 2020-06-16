@@ -28,7 +28,9 @@ export default (props) => {
 	let { listings, cuisines, content } = props;
 
 	let query = {};
+	let get_width = 1000;
 	if (typeof window !== "undefined") {
+		get_width = window.innerWidth;
 		let params = (window.location.search || "")
 			.substr(1)
 			.split("&")
@@ -58,6 +60,7 @@ export default (props) => {
 	const [cuisine, setCuisine] = useState(query.cuisine || '');
 	const [filterConfig, setFilterConfig] = useState({search: query.search || '', cuisine: query.cuisine || ''});
 	const [search, setSearch] = useState("");
+	const [width, setWidth] = useState(get_width);
 	const [filteredList, setFilteredList] = useState(
 		listings.filter(filter)
 	);
@@ -72,6 +75,19 @@ export default (props) => {
         [ cuisine, search ]
     );
 
+    if (typeof window !== 'undefined') {
+	    useEffect(
+	        () => {
+			    function handleResize() {
+			      setWidth(window.innerWidth)
+			    }
+
+			    window.addEventListener('resize', handleResize);
+			    return () => window.removeEventListener('resize', handleResize);
+  	        },
+	        [ ]
+	    );
+	}
     console.log('map render')
 
 	return (
@@ -83,24 +99,13 @@ export default (props) => {
 					content="Support local black owned businesses with our free directory"
 				/>
 			</Head>
-            <section className={home_styles.hero}>
-                <div className={home_styles.hero_image}  style={{backgroundImage: `url(${content.home_images && content.home_images[0] && content.home_images[0].image.url || ''}&w=1920)`}} />
-                <div className={home_styles.heroContainer}>
-
-                    <a href="/" className={home_styles.logo}>Spicy Green Book.</a>
-                    <a className={home_styles.buttonHero}>List Your Business</a>
-
-                    <div className={home_styles.heroContent} style={{paddingBottom: 40}}>
-                        <h3 style={{color: '#fff', fontSize: 24}}>Find A Business Close To You</h3>
-	                </div>
-                    <div style={{position: 'absolute', right: 10, bottom: 10, color: '#fff', fontSize: 10, zIndex:2, textAlign: 'right'}}>
-                        Cake by Arielle Batson<br />
-                        <a href="https://instagram.com/arry829" style={{color: '#fff', textDecoration: 'none'}}>@arry829</a>
-                    </div>
-                </div>
-            </section>
-            <div style={{textAlign: 'center', marginTop: -40, marginBottom: 20}}>
-                <div className={home_styles.searchBox} style={{textAlign: 'left', position: 'relative', zIndex: 2, boxShadow: '0px 5px 5px rgba(0, 0, 0, 0.15)'}}>
+			{width > 900 && 
+	            <div className={list.layoutMap}>
+					<Map list={filteredList} mode="d" />
+				</div>
+			}
+			<div className={list.layoutList} style={{backgroundColor: '#fff'}}>
+                <div className={home_styles.searchBox} style={{textAlign: 'left', position: 'relative', zIndex: 2, padding: '20px 0'}}>
                     <form method="GET" action="/search">
                         <div className={home_styles.searchBoxItem}>
                             <label>
@@ -133,11 +138,11 @@ export default (props) => {
                         </div>
                     </form>
                 </div>
-            </div>
-            <div className={list.layoutMap}>
-				<Map list={filteredList} />
-			</div>
-			<div className={list.layoutList}>
+
+				<h3>{cuisine ? cuisine : 'All Businesses'} ({filteredList && filteredList.length})</h3>
+
+				{width <= 900 && <Map list={filteredList} mode="m" />}
+
 				<div className={list.overallContainer}>
 					<div className={list.boxContainer}>
 						{filteredList && filteredList.length ? (

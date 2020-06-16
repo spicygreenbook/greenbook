@@ -1,12 +1,11 @@
 .box {
   background-color: #fff;
-
   overflow: hidden;
   vertical-align: top;
   white-space:nowrap;
   margin-bottom: 20px;
   border-radius: 5px;
-  box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.15);
+  border: 1px solid #DAE1F5;
   transition: box-shadow 0.25s ease-in-out;
 }
 .box:hover {
@@ -64,13 +63,15 @@
 
 
 .layoutMap {
-  width: 30%;
-  float: right;
-  padding: 0 20px 0 0;
+  position: fixed;
+  right: 0;
+  width: 40%;
+  top: 0;
+  padding: 0;
   box-sizing: border-box;
 }
 .layoutList {
-  width: 70%;
+  width: 60%;
   box-sizing: border-box;
   padding: 20px;
 }
@@ -78,9 +79,7 @@
 @media all and (max-width: 900px) {
 
   .layoutMap {
-    float: none;
-    padding: 0;
-    width: auto;
+    display: none;
   }
   .layoutList {
     width: auto;

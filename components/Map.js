@@ -8,6 +8,7 @@ function num(num) {
 
 export default function Map({
   list,
+  mode,
   options,
   onMount,
   className,
@@ -81,13 +82,13 @@ export default function Map({
       script.addEventListener(`load`, onLoad);
       return () => script.removeEventListener(`load`, onLoad);
     } else onLoad();
-  }, [options, list]);
+  }, [options, list, mode]);
 
   if (map && typeof onMount === `function`) onMount(map, onMountProps);
 
   return (
     <div
-      style={{ height: `50vh`, margin: `20px 0`, borderRadius: `0.5em` }}
+      style={{ height: mode === 'd' ? `100vh` : '50vh', margin: mode === 'd' ? 0 : '20px 0', borderRadius: mode === 'd' ? 0 : 5 }}
       {...{ ref, className }}
     />
   );

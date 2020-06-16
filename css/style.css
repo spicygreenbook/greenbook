@@ -79,6 +79,10 @@ footer {
 }
 footer .link {
   display:block;
+  color: #B56230;
+  text-decoration: none;
+  font-size: 24px;
+  font-weight: 600;
 }
 footer .col {
   vertical-align: top;

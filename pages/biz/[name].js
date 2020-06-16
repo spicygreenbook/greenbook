@@ -71,10 +71,10 @@ export default (props) => {
             <div className={listing.layoutList} style={{backgroundColor: '#fff'}}>
 
                 <div style={{margin: '20px 0'}}>
-                    <a className="buttonBack" href="/" style={{whiteSpace: 'nowrap', marginBottom: 40}}>
+                    <a className="buttonBack" href="/search" style={{whiteSpace: 'nowrap', marginBottom: 40}}>
                         <Icons type="left" color="#B56230" style={{display: 'inline-block', width: 16, height: 16, verticalAlign: 'middle', marginRight: 20}} />
                         <span style={{display: 'inline-block', verticalAlign: 'middle'}}>
-                            Back To Home
+                            Back To List
                         </span>
                     </a>
                 </div>

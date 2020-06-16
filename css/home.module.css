@@ -8,6 +8,96 @@
 .buttonBlue {
   background-color: #2F75FA;
 }
+.buttonHero {
+  border-radius: 5px;
+  border: 1px solid #fff;
+  text-decoration: none;
+  color: #fff;
+  position: absolute;
+  top: 60px;
+  right: 0px;
+  padding: 12px 20px;
+  display: inline-block;
+}
+.logo {
+  text-decoration: none;
+  color: #fff;
+  position: absolute;
+  top: 60px;
+  left: 0px;
+  padding: 12px 20px;
+  font-size: 24px;
+  font-weight:bold;
+}
+.searchBox{
+  display: inline-block;
+  border-radius: 5px;
+  background-color: #fff;
+  padding: 20px;
+  color: #828282;;
+}
+.searchBoxItem {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 10px;
+}
+.searchBoxItem label {
+  font-size: 14px;
+}
+.select {
+  background-color: #fff;
+  color: #828282;
+}
+
+.leftCol, .rightCol {
+  display: inline-block;
+  box-sizing: border-box;
+  vertical-align: middle;
+}
+.leftCol {
+  width: 60%;
+  padding-right: 40px;
+}
+.rightCol {
+  width: 40%;
+}
+
+.offsetDiv {
+  text-align: center;
+  background-color: #EFEDEA;
+  z-index: 0;
+  padding: 300px 20px 80px 20px;
+}
+.leftArrow, .rightArrow {
+  display: inline-block;
+  border-radius: 50%;
+  border: 1px solid #B56230;
+  background-color: #fff;
+  position: absolute;
+  top: 178px;
+  width: 40px;
+  height: 40px;
+  display: inline-block;
+  text-align: center;
+  line-height: 200%;
+  cursor: pointer;
+}
+.leftArrow svg, .rightArrow svg {
+  position: absolute;
+  top: 50%;
+  margin-top: -8px;
+  left: 50%;
+  margin-left: -8px;
+
+}
+.leftArrow{
+  left: -20px;
+}
+.rightArrow {
+  right: -20px;
+}
+
+
 .hero_image {
   content: '';
   position: absolute;
@@ -33,22 +123,21 @@
 .hero {
   position: relative;
   box-sizing: border-box;
-  padding-top: 42%;
-  min-height: 440px;
-  max-height: 600px;
 }
 .hero h3 {
   color: #fff;
 }
-.heroContent {
+.heroContainer {
   max-width: 1040px;
   margin: 0 auto;
-  left: 0;
-  right: 0;
+  position: relative;
   z-index: 2;
-  position: absolute;
-  top: 20%;
   padding: 20px;
+  box-sizing: border-box;
+  font-size: 24px;
+}
+.heroContent {
+  padding: 200px 0 100px 0;
   color: #fff;
 }
 .heroCredit {
@@ -62,13 +151,29 @@
     font-size: 12px;
 }
 
-@media all and (max-width: 1040px) {
-  .heroContent {
-    top: 10%;
+@media all and (max-width: 700px) {
+  .buttonHero {
+    top: 140px;
+    left: 20px;
+    right: auto;
+  }
+  .leftCol {
+    display: block;
+    width: auto;
+    padding-right: 0;
+    padding-bottom: 20px;
+  }
+  .rightCol {
+    display: block;
+    width: auto;
+    padding-right: 0;
+  }
+  .searchBoxItem {
+    display: block;
+    width: auto;
+  }
+  .searchBoxItem:nth-child(2) {
+    margin-top: 20px;
   }
 }
-@media all and (max-width: 600px) {
-  .heroContent {
-    top: 6%;
-  }
-}
+  

@@ -5,6 +5,11 @@ export default function MyApp({ Component, pageProps }) {
   return (
     <div>
         <Component {...pageProps} />
+
+        <footer style={{maxWidth: 1040, padding: 20}}>
+            <h3>Spicy Green Book.</h3>
+        </footer>
+
         {/*
         <footer style={{maxWidth: 800, margin: '20px auto', backgroundColor: '#fff', padding: 20, boxSizing: 'border-box'}}>
             <div className="col">

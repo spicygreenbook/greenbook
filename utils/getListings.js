@@ -62,7 +62,7 @@ async function getListings(config) {
 		console.log('using custom master ref', config.ref_id)
 		var master_ref = config.ref_id;
 	} else {
-		var masterRef = await fetch('https://spicygreenbook.prismic.io/api/v2');
+		var masterRef = await fetch('https://spicygreenbook.cdn.prismic.io/api/v2');
 		var masterRef_json = await masterRef.json();
 		var master_ref;
 		masterRef_json.refs.forEach(line => {
@@ -73,7 +73,7 @@ async function getListings(config) {
 	}
 
 	let results = [];
-	var url = 'https://spicygreenbook.prismic.io/api/v1/documents/search?ref='+master_ref+'&q=%5B%5Bat(document.type%2C+%22listing%22)%5D%5D#format=json';
+	var url = 'https://spicygreenbook.cdn.prismic.io/api/v1/documents/search?ref='+master_ref+'&q=%5B%5Bat(document.type%2C+%22listing%22)%5D%5D';
 	let data = await fetch(url);
 	let getLoop = async (nextInfo) => {
 		nextInfo.results.map((doc, i) => {
@@ -131,13 +131,15 @@ async function getListings(config) {
 	}
 }
 
+
+
 async function getContent(config) {
 	if (!config){ config = {}; }
 	if (config.ref_id) {
 		console.log('using custom master ref', config.ref_id)
 		var master_ref = config.ref_id;
 	} else {
-		var masterRef = await fetch('https://spicygreenbook.prismic.io/api/v2');
+		var masterRef = await fetch('https://spicygreenbook.cdn.prismic.io/api/v2');
 		var masterRef_json = await masterRef.json();
 		var master_ref;
 		masterRef_json.refs.forEach(line => {
@@ -147,11 +149,12 @@ async function getContent(config) {
 		})
 	}
 
-	var url = `https://spicygreenbook.prismic.io/api/v1/documents/search?ref=${master_ref}&q=%5B%5Bat(document.type%2C+%22${config.type}%22)%5D%5D`;
+	var url = `https://spicygreenbook.cdn.prismic.io/api/v1/documents/search?ref=${master_ref}&q=%5B%5Bat(document.type%2C+%22${config.type}%22)%5D%5D`;
 	let data = await fetch(url);
 	let parsed_data = await data.json();
 
 	let content = {};
+	console.log('parsed', parsed_data)
 	let listings = parsed_data.results.map((doc, i) => {
 		if (config.type === 'home_page' && doc.data.home_page) {
 			Object.keys(doc.data.home_page).forEach(key => {

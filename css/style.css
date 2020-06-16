@@ -33,6 +33,10 @@ button, .button {
   font-weight: bold;
   padding: 12px 20px;
 }
+.buttonBack {
+  background-color: none;
+  color: #B56230;
+}
 
 input[type="submit"] {
   background-color: #B56230;

@@ -73,8 +73,10 @@ export default function Map({
         }
       );
     };
-    if (!window.google) {
+    if (!window.google && !document.querySelector('gmaps')) {
+      console.log("include script again", window.google);
       const script = document.createElement(`script`);
+      script.id = 'gmaps';
       script.src =
         `https://maps.googleapis.com/maps/api/js?key=` +
         "AIzaSyBhSDubH6DP0BV3MOyV8hTWmaifQxA1Jn8";
@@ -88,7 +90,11 @@ export default function Map({
 
   return (
     <div
-      style={{ height: mode === 'd' ? `100vh` : '50vh', margin: mode === 'd' ? 0 : '20px 0', borderRadius: mode === 'd' ? 0 : 5 }}
+      style={{
+        height: mode === "d" ? `100vh` : "50vh",
+        margin: mode === "d" ? 0 : "20px 0",
+        borderRadius: mode === "d" ? 0 : 5,
+      }}
       {...{ ref, className }}
     />
   );
@@ -261,36 +267,3 @@ Map.defaultProps = {
     ],
   },
 };
-
-/*
-      var infoWindowMarkup = '<table style="color:#000; border:0;" cellspacing=0 cellpadding=2><tr><td colspan=2 align=left><a href="'+(location.url_org || location.url)+'"><b>' + location.title + '</b></a></td><tr><td valign=top align=right><b>Address:</b></td><td>' + location.address + '</td></tr>';
-      extraDisplay.forEach(function(item) {
-        if (location[item]) {
-          infoWindowMarkup += '<tr><td valign=top align=right><b>' + (item.charAt(0).toUpperCase() + item.slice(1)) + ':</b></td><td valign=top align=left>' + location[item] + '</td></tr>';
-        }
-      });
-      infoWindowMarkup += '</table>';
-    
-      if (location.link) {
-        infoWindowMarkup = '<a href="' + location.link + '" target="_blank" style="color:inherit !important; text-decoration:none">' + infoWindowMarkup + '</a>';
-      }
-    
-      var infoWindow = new google.maps.InfoWindow({
-        content: infoWindowMarkup
-      });
-    
-      var marker = new google.maps.Marker({
-        map: map,
-        position: location.geocode,
-        title: location.title
-      });
-      markerRef[location.title] = marker;
-      google.maps.event.addListener(marker, 'click', function() {
-        if (lastInfoWindow) {
-          lastInfoWindow.close();
-        }
-        infoWindow.open(map, marker);
-        lastInfoWindow = infoWindow;
-      });
-
-*/

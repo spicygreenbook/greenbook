@@ -71,9 +71,12 @@
   box-sizing: border-box;
 }
 .layoutList {
+  position: relative;
   width: 60%;
   box-sizing: border-box;
   padding: 20px;
+  box-shadow: 5px 0px 10px rgba(0, 0, 0, 0.0634014);
+  z-index: 1;
 }
 
 @media all and (max-width: 900px) {

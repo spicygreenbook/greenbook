@@ -5,6 +5,7 @@ import { getListings } from "../../utils/getListings";
 import ListingMedia from "../../components/ListingMedia";
 import Map from "../../components/Map";
 import listing from "../../css/listing.module.css";
+import Icons from "../../components/Icons.js";
 
 export default (props) => {
 
@@ -45,8 +46,13 @@ export default (props) => {
                     content="Support local black owned businesses with our free directory"
                 />
             </Head>
-            <div style={{padding: '20px'}}>
-                <a className="button" href="/search">&lt; Return To Listings</a>
+            <div style={{margin: '20px 0'}}>
+                <a className="buttonBack" href="/" style={{whiteSpace: 'nowrap', marginBottom: 40}}>
+                    <Icons type="left" color="#B56230" style={{display: 'inline-block', width: 16, height: 16, verticalAlign: 'middle', marginRight: 20}} />
+                    <span style={{display: 'inline-block', verticalAlign: 'middle'}}>
+                        Back To Home
+                    </span>
+                </a>
             </div>
             <ListingMedia content={content} />
             <div style={{maxWidth: 800, margin: '0 auto', padding: 20}}>

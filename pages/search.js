@@ -59,7 +59,7 @@ export default (props) => {
 
 	const [cuisine, setCuisine] = useState(query.cuisine || '');
 	const [filterConfig, setFilterConfig] = useState({search: query.search || '', cuisine: query.cuisine || ''});
-	const [search, setSearch] = useState("");
+	const [search, setSearch] = useState(query.search);
 	const [width, setWidth] = useState(get_width);
 	const [filteredList, setFilteredList] = useState(
 		listings.filter(filter)
@@ -105,6 +105,14 @@ export default (props) => {
 				</div>
 			}
 			<div className={list.layoutList} style={{backgroundColor: '#fff'}}>
+				<div>
+	                <a className="buttonBack" href="/" style={{whiteSpace: 'nowrap', marginBottom: 40}}>
+	                    <Icons type="left" color="#B56230" style={{display: 'inline-block', width: 16, height: 16, verticalAlign: 'middle', marginRight: 20}} />
+	                    <span style={{display: 'inline-block', verticalAlign: 'middle'}}>
+	                        Back To Home
+	                    </span>
+	                </a>
+	            </div>
                 <div className={home_styles.searchBox} style={{textAlign: 'left', position: 'relative', zIndex: 2, padding: '20px 0'}}>
                     <form method="GET" action="/search">
                         <div className={home_styles.searchBoxItem}>

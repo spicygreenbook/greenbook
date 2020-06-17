@@ -179,7 +179,7 @@ export default (props) => {
 												<p className={list.description}>{row.description}</p>
 	                                            <Icons type="tag" color="#CF9052" style={{width: 14, height: 14, marginRight: 6}} />
 	                                            {row.cuisines.map((line, i , ar) => (
-	                                            	<span key={line} style={{color: '#CF9052',display: 'inline-block', 'vertical-align': 'middle'}}>
+	                                            	<span key={line} style={{color: '#CF9052',display: 'inline-block', 'verticalAlign': 'middle'}}>
 	                                                	<span>{line}</span>
 	                                                	{ar[i+1] && (<span>,{'\u00A0'}</span>)}
 	                                                </span>

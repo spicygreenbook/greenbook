@@ -18,7 +18,13 @@ export default function Map({
   const [map, setMap] = useState();
 
   useEffect(() => {
+    console.log('use effect');
     const onLoad = () => {
+      document.querySelector('#gmaps').setAttribute('data-ready', '1')
+      if (!window.google && !window.google.maps) {
+        setTimeout(onLoad, 100)
+        return;
+      }
       const map = new window.google.maps.Map(ref.current, options);
       const bounds = new google.maps.LatLngBounds();
       setMap(map);
@@ -73,8 +79,8 @@ export default function Map({
         }
       );
     };
-    if (!window.google && !document.querySelector('gmaps')) {
-      console.log("include script again", window.google);
+    if (!window.google && !document.querySelector('#gmaps')) {
+      console.log('add maps and execute');
       const script = document.createElement(`script`);
       script.id = 'gmaps';
       script.src =
@@ -83,7 +89,22 @@ export default function Map({
       document.head.append(script);
       script.addEventListener(`load`, onLoad);
       return () => script.removeEventListener(`load`, onLoad);
-    } else onLoad();
+    } else {
+      const script = document.querySelector('#gmaps');
+      if (script) {
+        if (script.getAttribute('data-ready')) {
+          onLoad();
+        } else {
+          script.addEventListener(`load`, onLoad);
+          return () => script.removeEventListener(`load`, onLoad);
+        }
+      } else {
+        console.log('do nothing')
+        onLoad()
+      }
+
+    }
+    console.log('zz');
   }, [options, list, mode]);
 
   if (map && typeof onMount === `function`) onMount(map, onMountProps);

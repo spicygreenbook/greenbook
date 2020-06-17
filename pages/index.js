@@ -129,9 +129,11 @@ export default (props) => {
                 <div className={home_styles.leftCol}>
                     <h2>More About Us</h2>
                     <p>
-                        We are gathering a growing list of volunteers to help build a list of black owned businesses. 
+                        We are gathering a growing list of volunteers to help compile a directory of black owned businesses.
                         {' '}
-                        <b>Our mission</b> is to create a space for people to easily help create change. 
+                        <b>Our mission</b> is to establish a space to help people who seek to create change within their communities.
+                    </p>
+                    <p>
                         Support for these businesses will:
                     </p>
                     <ul>
@@ -143,7 +145,7 @@ export default (props) => {
                     </ul>
                     <p>
                         We have a hard-working and <b>growing</b> team of volunteers to help provide this service with skills in writing, 
-                        photography, and other professional services. We will do our best to <b>represent everyone in our list with high quality photography, videography and story-telling</b> so everyone can enjoy discovering and learning more about businesses in their area.
+                        photography, and other professional services. We will do our best to <b>represent everyone in our list with high quality photography and story-telling</b> so everyone can enjoy discovering and learning more about businesses in their area.
                     </p>
                 </div>
                 <div className={home_styles.rightCol}>
@@ -216,7 +218,7 @@ export default (props) => {
                 <div className={home_styles.leftCol}>
                     <h2>A Peek Back To Look Forward</h2>
                     <p>
-                        From 1936 to 1964, in the midst of the Jim Crow era, black men and women were under the persistent threat of violence after sunset in the form of lynchings and other very real hate crimes. To help many escape this violence, Victor Green created the <a href="https://savingplaces.org/stories/green-book-historic-travel-guide-for-black-america#.XuVK1J5Kjlx">Negro Motorist Green Book</a>. This book listed vital places of refuge during the segregation era that included hotels, gas stations, grocery stores, night clubs, restaurants, and “tourist homes” where homeowners welcomed travelers who had nowhere else to go. This valuable note of history not only shows us the racial discrimination that existed but also black entrepreneurship. Today we continue to push forward with today’s black innovation and invite you to be a part of it.
+                        From 1936 to 1964, in the midst of the Jim Crow era, black men and women were under the persistent threat of violence after sunset in the form of lynchings and other very real hate crimes. To help many escape this violence, Victor Green created the <a href="https://savingplaces.org/stories/green-book-historic-travel-guide-for-black-america#.XuVK1J5Kjlx" target="_blank">Negro Motorist Green Book</a>. This book listed vital places of refuge during the segregation era that included hotels, gas stations, grocery stores, night clubs, restaurants, and “tourist homes” where homeowners welcomed travelers who had nowhere else to go. This valuable note of history not only shows us the racial discrimination that existed, but also the importance and ingenuity of black entrepreneurship. Today we continue to push forward with today’s black innovation and invite you to be a part of it.
                     </p>
                 </div>
                 <div className={home_styles.rightCol}>

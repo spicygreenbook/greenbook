@@ -160,7 +160,7 @@ async function getContent(config) {
 	let parsed_data = await data.json();
 
 	let content = {};
-	console.log('parsed', parsed_data)
+	//console.log('parsed', parsed_data)
 	let listings = parsed_data.results.map((doc, i) => {
 		if (config.type === 'home_page' && doc.data.home_page) {
 			Object.keys(doc.data.home_page).forEach(key => {
@@ -170,7 +170,8 @@ async function getContent(config) {
 					content[key] = getPrismicValue(doc.data.home_page[key]);
 				}
 			})
-		} else if (config.type === 'content' && config.uid) {
+		} else if (config.type === 'content' && config.uid && doc.uid === config.uid) {
+			console.log('doc', doc)
 			Object.keys(doc.data.content).forEach(key => {
 				if (doc.data.content[key].type === 'Group') {
 					content[key] = getPrismicGroupAdvanced(doc.data.content[key]);

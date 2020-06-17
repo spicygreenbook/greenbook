@@ -7,7 +7,7 @@ export default function Header(props) {
                 <a className="buttonBack" href="/" style={{whiteSpace: 'nowrap', marginBottom: 40}}>
                     <Icons type="left" color="#B56230" style={{display: 'inline-block', width: 16, height: 16, verticalAlign: 'middle', marginRight: 20}} />
                     <span style={{display: 'inline-block', verticalAlign: 'middle'}}>
-                        Back To Home
+                        Spicy Green Book
                     </span>
                 </a>
             </div>

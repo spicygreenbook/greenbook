@@ -89,11 +89,13 @@ export default (props) => {
                     <div className={listing.cols}>
                         <div className={listing.col}>
                             <h1 style={{color: '#29293E', fontSize: 30, fontWeight: 'normal', margin: 0}}>{content.name}</h1>
-                            <p style={{whiteSpace: 'pre'}}>
-                                <a href={`https://www.google.com/maps/dir//${content.address.join(' ').split(/\s/g).join('+')}`} target="_blank" style={{textDecoration: 'none', color: 'inherit'}}>
-                                    {content.address}
-                                </a>
-                            </p>
+                            {content.address && !!content.address.length && 
+                                <p style={{whiteSpace: 'pre'}}>
+                                    <a href={`https://www.google.com/maps/dir//${content.address.join(' ').split(/\s/g).join('+')}`} target="_blank" style={{textDecoration: 'none', color: 'inherit'}}>
+                                        {content.address}
+                                    </a>
+                                </p>
+                            }
                         </div>
                         <div className={listing.col}>
                             {content.phone_number && 

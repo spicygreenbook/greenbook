@@ -6,26 +6,22 @@ export default function MyApp({ Component, pageProps }) {
     <div>
         <Component {...pageProps} />
 
-        <footer className="content">
-            <a href="/" className="link">Spicy Green Book.</a>
-        </footer>
-
         {/*
-        <footer style={{maxWidth: 800, margin: '20px auto', backgroundColor: '#fff', padding: 20, boxSizing: 'border-box'}}>
+        <footer className="content" style={{padding: '40px 20px'}}>
             <div className="col">
-                <a className="link" href="/contact">Contact Us</a>
-                <a className="link" href="/search">Browse by Neighborhood</a>
-                <a className="link" href="/search">Browse By Cuisine</a>
+                <a href="/" className="link" style={{fontSize: 24}}>Spicy Green Book.</a>
             </div>
             <div className="col">
-                <a className="link" href="/donate">Donate</a>
                 <a className="link" href="/volunteer">Volunteer</a>
                 <a className="link" target="_blank" href="https://docs.google.com/forms/d/e/1FAIpQLSdWxF-zHhh76WjEu1T1EM-2NAeE7Y3NHTGMLruJe_oXeSrkRQ/viewform?usp=sf_link">Add Your Listing</a>
-                <a className="link" href="/press">Press</a>
-                <a className="link" href="/about">About Us</a>
             </div>
         </footer>
-        */}
+    */}
+
+        <footer className="content" style={{padding: '40px 20px'}}>
+            <a href="/" className="link" style={{fontSize: 24}}>Spicy Green Book.</a>
+        </footer>
+
     </div>
     );
 }

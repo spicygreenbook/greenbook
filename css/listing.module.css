@@ -37,6 +37,16 @@
     text-decoration: none;
     color: #828282;
 }
+@media all and (max-width: 900px) {
+    .layoutMap {
+      display: none;
+    }
+    .layoutList {
+      display: block;
+      width: auto;
+      box-shadow: none;
+    }
+}
 @media all and (max-width: 600px) {
     .col:first-child {
         width: auto;

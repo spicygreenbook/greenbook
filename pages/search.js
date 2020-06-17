@@ -3,7 +3,6 @@ import Link from "next/link";
 import Head from "next/head";
 import { getListings, getContent } from "../utils/getListings";
 import Map from "../components/Map";
-import Header from "../components/Header";
 import list from "../css/list.module.css";
 import Icons from "../components/Icons.js";
 import home_styles from '../css/home.module.css';
@@ -98,11 +97,13 @@ export default (props) => {
 					content="Support local black owned businesses with our free directory"
 				/>
 			</Head>
+            <div>
 			{width > 900 && 
 	            <div className={list.layoutMap}>
 					<Map list={filteredList} mode="d" />
 				</div>
 			}
+            </div>
 			<div className={list.layoutList} style={{backgroundColor: '#fff'}}>
 				<div>
 	                <a className="buttonBack" href="/" style={{whiteSpace: 'nowrap', marginBottom: 40}}>

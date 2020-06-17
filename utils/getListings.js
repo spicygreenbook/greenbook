@@ -118,6 +118,7 @@ async function getListings(config) {
 			address: getPrismicValue(doc.data.listing.address),
 			description: getPrismicValue(doc.data.listing.description),
 			bio: getPrismicValue(doc.data.listing.bio),
+			_bio: doc.data.listing.bio || {},
 			home_page_order: getPrismicValue(doc.data.listing.home_page_order),
 			images: images
 		};

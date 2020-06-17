@@ -9,6 +9,7 @@ function num(num) {
 export default function Map({
   list,
   mode,
+  single,
   options,
   onMount,
   className,
@@ -18,7 +19,6 @@ export default function Map({
   const [map, setMap] = useState();
 
   useEffect(() => {
-    console.log('use effect');
     const onLoad = () => {
       document.querySelector('#gmaps').setAttribute('data-ready', '1')
       if (!window.google && !window.google.maps) {
@@ -80,7 +80,6 @@ export default function Map({
       );
     };
     if (!window.google && !document.querySelector('#gmaps')) {
-      console.log('add maps and execute');
       const script = document.createElement(`script`);
       script.id = 'gmaps';
       script.src =
@@ -99,13 +98,11 @@ export default function Map({
           return () => script.removeEventListener(`load`, onLoad);
         }
       } else {
-        console.log('do nothing')
         onLoad()
       }
 
     }
-    console.log('zz');
-  }, [options, list, mode]);
+  }, [options, list, mode, single]);
 
   if (map && typeof onMount === `function`) onMount(map, onMountProps);
 

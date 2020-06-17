@@ -6,6 +6,7 @@ import ListingMedia from "../../components/ListingMedia";
 import Map from "../../components/Map";
 import listing from "../../css/listing.module.css";
 import Icons from "../../components/Icons.js";
+import {RichText} from 'prismic-reactjs';
 
 export default (props) => {
 
@@ -63,17 +64,21 @@ export default (props) => {
                     content="Support local black owned businesses with our free directory"
                 />
             </Head>
+
+            <div>
             {width > 900 && 
                 <div className={listing.layoutMap}>
-                    <Map list={[content]} mode="d" />
+                    <Map list={[content]} mode="d" single="true" />
                 </div>
             }
+            </div>
+
             <div className={listing.layoutList} style={{backgroundColor: '#fff'}}>
 
                 <div style={{margin: '20px 0'}}>
                     <a className="buttonBack" href="/search" style={{whiteSpace: 'nowrap', marginBottom: 40}}>
                         <Icons type="left" color="#B56230" style={{display: 'inline-block', width: 16, height: 16, verticalAlign: 'middle', marginRight: 20}} />
-                        <span style={{display: 'inline-block', verticalAlign: 'middle'}}>
+                        <span className="ib middle">
                             Back To List
                         </span>
                     </a>
@@ -125,13 +130,12 @@ export default (props) => {
                                     </a>
                                 </p>
                             }
-
                         </div>
                     </div>
                     <div>
                         <Icons type="tag" color="#CF9052" style={{width: 14, height: 14, marginRight: 6}} />
                         {content.cuisines.map((line, i , ar) => (
-                            <span key={line} style={{color: '#CF9052',display: 'inline-block', 'vertical-align': 'middle'}}>
+                            <span key={line} className="ib middle" style={{color: '#CF9052'}}>
                                 <span>{line}</span>
                                 {ar[i+1] && (<span>,{'\u00A0'}</span>)}
                             </span>
@@ -140,7 +144,7 @@ export default (props) => {
                     <div>
                         <Icons type="services" color="#CF9052" style={{width: 14, height: 14, marginRight: 6}} />
                         {content.services.map((line, i , ar) => (
-                            <span key={line} style={{color: '#CF9052',display: 'inline-block', 'vertical-align': 'middle'}}>
+                            <span key={line} className="ib middle" style={{color: '#CF9052'}}>
                                 <span>{line}</span>
                                 {ar[i+1] && (<span>,{'\u00A0'}</span>)}
                             </span>
@@ -149,12 +153,13 @@ export default (props) => {
                     <p>
                         { content.hours.map((line, l) => (<span key={l}>{line}<br /></span>)) }
                     </p>
+
+                    {width <= 900 && <Map list={[content]} mode="m" single="true" />}
+
                     {content.bio && 
                         <div style={{marginTop: 40}}>
                             <h3 style={{color: '#29293E', fontSize: 18, fontWeight: 'normal', margin: 0}}>About {content.name}</h3>
-                            {content.bio.map((line, l) => (
-                                <p key={l}>{line}</p>
-                            ))}
+                            {RichText.render(content._bio.value)}
                         </div>
                     }
                 </div>

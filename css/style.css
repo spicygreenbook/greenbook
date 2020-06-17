@@ -67,7 +67,7 @@ h1 {
   display: inline-block;
   box-sizing: border-box;
   vertical-align: middle;
-  padding: 8px;
+  padding: 8px 0;
   border-radius: 2px;
   font-weight: bold;
   text-decoration: none;
@@ -75,7 +75,7 @@ h1 {
 
 .content {
   max-width: 1040px;
-  boz-sizing: border-box;
+  box-sizing: border-box;
   margin: 0 auto;
   padding: 0 20px;
 }

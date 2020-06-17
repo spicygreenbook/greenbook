@@ -1,11 +1,10 @@
 .wrapper, .wrapperFull {
   width: 100%;
-  height: 200px;
+  height: 80px;
   overflow: hidden;
   position: relative;
   background-color: #000;
   font-size: 0;
-  transition: all 0.25s ease-in-out;
 }
 .container, .containerFull {
   white-space: nowrap;
@@ -17,10 +16,9 @@
   padding-right: 17px;
   padding-bottom: 17px;
   transition: all 0.25s ease-in-out;
-
 }
 .wrapperFull {
-  height: calc(100vh - 200px);
+  height: calc(100vh - 80px);
 }
 .item, .itemFull {
   display:inline-block;
@@ -33,7 +31,7 @@
 .item:after{
   content: '';
   display:block;
-  padding-top: 100%;
+  padding-top: 75%;
 }
 .itemFull {
   width: 100%;
@@ -42,6 +40,28 @@
   background-size: contain;
   background-position: center center;
 }
+
+.normalLeft {
+  width: 77.5%;
+}
+.normalRight {
+  width: 22.5%;
+}
+.primaryImage, .subImage {
+  border-radius: 5px;
+  padding-top: 56%;
+  background-size: cover;
+  background-position: center center;
+  cursor: pointer;
+}
+
+.subImage {
+  margin: 0 0 20px 20px;
+}
+.subImage:last-child {
+  margin-bottom: 0;
+}
+
 .showAll, .showClose {
     font-size: 18px;
     position: absolute;
@@ -75,13 +95,18 @@
   right: 20px;
 }
 div.wrapper[data-mode="grid"] {
-  height: auto;
+  height: 100%;
   padding: 10px;
   box-sizing: border-box;
 }
 div.container[data-mode="grid"] {
   overflow: visible;
   white-space: normal;
+}
+div.overallContainer[data-mode="grid"], div.overallContainer[data-mode="full"] {
+  position: fixed;
+  z-index: 3;
+  left: 0; top: 0; right: 0; bottom: 0;
 }
 div.showAll[data-mode="grid"], div.showAll[data-mode="full"] {
   display: none;
@@ -92,7 +117,7 @@ div.showClose[data-mode="normal"], div.showClose[data-mode="full"] {
 div.showClose[data-mode="grid"] {
   display: inline-block;
 }
-span.item[data-mode="grid"] {
+span.item {
   margin: 10px;
   width: calc(10% - 20px);
 }
@@ -111,32 +136,7 @@ span.item[data-active="1"]:before {
   opacity: 1;
 }
 
-@media all and (max-width: 1600px) {
-  span.item[data-mode="grid"] {
-    width: calc(20% - 20px);
-  }
+span.item {
+  width: 80px;
 }
 
-@media all and (max-width: 800px) {
-  span.item[data-mode="grid"] {
-    width: calc(25% - 20px);
-  }
-}
-
-@media all and (max-width: 600px) {
-  .item {
-    width: 140px;
-  }
-  .wrapper {
-    height: 140px;
-  }
-  span.item[data-mode="grid"] {
-    width: calc(33% - 20px);
-  }
-}
-
-@media all and (max-width: 400px) {
-  span.item[data-mode="grid"] {
-    width: calc(50% - 20px);
-  }
-}

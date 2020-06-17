@@ -6,7 +6,7 @@ export default function MyApp({ Component, pageProps }) {
     <div>
         <Component {...pageProps} />
 
-        <footer style={{maxWidth: 1040, padding: 20}}>
+        <footer className="content">
             <a href="/" className="link">Spicy Green Book.</a>
         </footer>
 

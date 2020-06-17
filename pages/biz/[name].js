@@ -68,7 +68,7 @@ export default (props) => {
             <div>
             {width > 900 && 
                 <div className={listing.layoutMap}>
-                    <Map list={[content]} mode="d" single="true" />
+                    <Map list={[content]} mode="d" single />
                 </div>
             }
             </div>
@@ -90,7 +90,9 @@ export default (props) => {
                         <div className={listing.col}>
                             <h1 style={{color: '#29293E', fontSize: 30, fontWeight: 'normal', margin: 0}}>{content.name}</h1>
                             <p style={{whiteSpace: 'pre'}}>
-                                {content.address}
+                                <a href={`https://www.google.com/maps/dir//${content.address.join(' ').split(/\s/g).join('+')}`} target="_blank" style={{textDecoration: 'none', color: 'inherit'}}>
+                                    {content.address}
+                                </a>
                             </p>
                         </div>
                         <div className={listing.col}>
@@ -141,20 +143,22 @@ export default (props) => {
                             </span>
                         ))}
                     </div>
-                    <div>
-                        <Icons type="services" color="#CF9052" style={{width: 14, height: 14, marginRight: 6}} />
-                        {content.services.map((line, i , ar) => (
-                            <span key={line} className="ib middle" style={{color: '#CF9052'}}>
-                                <span>{line}</span>
-                                {ar[i+1] && (<span>,{'\u00A0'}</span>)}
-                            </span>
-                        ))}
-                    </div>
+                    {content.services && !!content.services.length &&
+                        <div>
+                            <Icons type="services" color="#CF9052" style={{width: 14, height: 14, marginRight: 6}} />
+                            {content.services.map((line, i , ar) => (
+                                <span key={line} className="ib middle" style={{color: '#CF9052'}}>
+                                    <span>{line}</span>
+                                    {ar[i+1] && (<span>,{'\u00A0'}</span>)}
+                                </span>
+                            ))}
+                        </div>
+                    }
                     <p>
                         { content.hours.map((line, l) => (<span key={l}>{line}<br /></span>)) }
                     </p>
 
-                    {width <= 900 && <Map list={[content]} mode="m" single="true" />}
+                    {width <= 900 && <Map list={[content]} mode="m" single />}
 
                     {content.bio && 
                         <div style={{marginTop: 40}}>

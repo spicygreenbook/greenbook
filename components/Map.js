@@ -33,17 +33,30 @@ export default function Map({
 
       list.forEach((row) => {
         if (row.geocoordinates) {
-          var infoWindowMarkup = `
-          <a href="/biz/${row._slug}" style="color:#000;text-decoration:none">
-          <img src="${row.primary_image.url}" width="${
-            row.primary_image.width
-          }" height="${
-            row.primary_image.height
-          }" style="max-width:100%;height:auto" />
-          <div style="font-size:18px; margin:8px 0"><b>${row.name}</b></div>
-          ${row.cuisines.join(", ")}
-          </a>
-          `;
+          if (single) {
+            var infoWindowMarkup = `
+            <div style="font-size:18px; margin:8px 0"><b>${row.name}</b></div>
+            `;
+            if (row.address) {
+              infoWindowMarkup += `
+                <a href="https://www.google.com/maps/dir//${row.address.join(' ').split(/\s/g).join('+')}" target="_blank" style="text-decoration:none, color: inherit">
+                  Get Directions
+                </a>
+              `;
+            }
+          } else {
+            var infoWindowMarkup = `
+            <a href="/biz/${row._slug}" style="color:#000;text-decoration:none">
+            <img src="${row.primary_image.url}" width="${
+              row.primary_image.width
+            }" height="${
+              row.primary_image.height
+            }" style="max-width:100%;height:auto" />
+            <div style="font-size:18px; margin:8px 0"><b>${row.name}</b></div>
+            ${row.cuisines.join(", ")}
+            </a>
+            `;
+          }
           var infoWindow = new google.maps.InfoWindow({
             content: infoWindowMarkup,
           });

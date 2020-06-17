@@ -42,10 +42,10 @@
 }
 
 .normalLeft {
-  width: 77.5%;
+  width: 76.1%;
 }
 .normalRight {
-  width: 22.5%;
+  width: 23.9%;
 }
 .primaryImage, .subImage {
   border-radius: 5px;
@@ -56,7 +56,7 @@
 }
 
 .subImage {
-  margin: 0 0 20px 20px;
+  margin: 0 0 5% 5%;
 }
 .subImage:last-child {
   margin-bottom: 0;

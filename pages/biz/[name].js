@@ -54,6 +54,10 @@ export default (props) => {
         );
     }
 
+    let layoutStyle = {backgroundColor: '#fff'};
+    if (!content.geocoordinates) {
+        layoutStyle = {backgroundColor: '#fff', width: '100%', maxWidth: 1040, padding: 20, boxSizing: 'border-box', boxShadow: 'none', margin: '0 auto'}
+    }
 
     return (
         <div>
@@ -66,14 +70,14 @@ export default (props) => {
             </Head>
 
             <div>
-            {width > 900 && 
+            {content.geocoordinates && width > 900 && 
                 <div className={listing.layoutMap}>
                     <Map list={[content]} mode="d" single />
                 </div>
             }
             </div>
 
-            <div className={listing.layoutList} style={{backgroundColor: '#fff'}}>
+            <div className={listing.layoutList} style={layoutStyle}>
 
                 <div style={{margin: '20px 0'}}>
                     <a className="buttonBack" href="/search" style={{whiteSpace: 'nowrap', marginBottom: 40}}>
@@ -160,7 +164,7 @@ export default (props) => {
                         { content.hours.map((line, l) => (<span key={l}>{line}<br /></span>)) }
                     </p>
 
-                    {width <= 900 && <Map list={[content]} mode="m" single />}
+                    {content.geocoordinates && width <= 900 && <Map list={[content]} mode="m" single />}
 
                     {content.bio && 
                         <div style={{marginTop: 40}}>

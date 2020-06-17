@@ -35,9 +35,13 @@ const getPrismicValue = (ref, key) => {
 		} else if (ref.type === 'Link.web') {
 			return ref.value.url
 		} else if (ref.type === 'GeoPoint') {
-			return {
-				lat: ref.value.latitude,
-				lng: ref.value.longitude
+			if (!ref.value.latitude &&  !ref.value.longitude) {
+				return '';
+			} else {
+				return {
+					lat: ref.value.latitude,
+					lng: ref.value.longitude
+				}
 			}
 		} else if(ref.type === 'Image') {
 			return {

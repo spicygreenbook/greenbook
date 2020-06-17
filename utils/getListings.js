@@ -120,6 +120,7 @@ async function getListings(config) {
 			bio: getPrismicValue(doc.data.listing.bio),
 			_bio: doc.data.listing.bio || {},
 			home_page_order: getPrismicValue(doc.data.listing.home_page_order),
+			service_area_radius: getPrismicValue(doc.data.listing.service_area_radius),
 			images: images
 		};
 		console.log('possible missing keys', Object.keys(doc.data.listing).filter(key => {

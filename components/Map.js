@@ -61,11 +61,23 @@ export default function Map({
             content: infoWindowMarkup,
           });
 
-          var marker = new google.maps.Marker({
-            map: map,
-            position: row.geocoordinates,
-            title: row.name,
-          });
+          if (row.service_area_radius && single) {
+            var marker = new google.maps.Circle({
+                map: map,
+                center: row.geocoordinates,
+                title: 'Service Area',
+                strokeColor: '#B56230',
+                fillColor: '#B56230',
+                fillOpacity: 0.5,
+                radius: row.service_area_radius * 500
+              });
+          } else {
+            var marker = new google.maps.Marker({
+              map: map,
+              position: row.geocoordinates,
+              title: row.name,
+            });
+          }
           //console.log('marker', marker)
           google.maps.event.addListener(marker, "click", function () {
             if (lastInfoWindow) {

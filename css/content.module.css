@@ -1,1 +1,3 @@
-content.module.css
+.content h3:not(first-child) {
+    margin-top: 40px
+}

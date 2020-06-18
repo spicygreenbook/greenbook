@@ -77,7 +77,8 @@ export default (props) => {
                 <div className={home_styles.heroContainer}>
 
                     <a href="/" className={home_styles.logo}>Spicy Green Book.</a>
-                    <a href="/donate" className={home_styles.buttonHero}>Donate To Change</a>
+                    <a href="/volunteer" className={home_styles.buttonHero + ' ' + home_styles.buttonHero2}>Volunteer</a>
+                    <a href="/donate" className={home_styles.buttonHero}>Donate</a>
 
                     <div className={home_styles.heroContent}>
                         <h1 style={{color: '#fff'}}>Support Black Owned Business</h1>

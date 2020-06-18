@@ -19,6 +19,9 @@
   padding: 12px 20px;
   display: inline-block;
 }
+.buttonHero2 {
+  right: 160px;
+}
 .logo {
   text-decoration: none;
   color: #fff;
@@ -155,6 +158,11 @@
   .buttonHero {
     top: 140px;
     left: 20px;
+    right: auto;
+  }
+  .buttonHero2 {
+    top: 140px;
+    left: 200px;
     right: auto;
   }
   .leftCol {

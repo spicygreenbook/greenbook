@@ -16,6 +16,7 @@
     "next": "latest",
     "prismic-reactjs": "^1.3.1",
     "react": "latest",
-    "react-dom": "latest"
+    "react-dom": "latest",
+    "stripe": "^8.63.0"
   }
 }

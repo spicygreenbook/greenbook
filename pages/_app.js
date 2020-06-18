@@ -11,8 +11,10 @@ export default function MyApp({ Component, pageProps }) {
                 <a href="/" className="link" style={{fontSize: 24}}>Spicy Green Book.</a>
             </div>
             <div className="col">
+                <a className="link" href="/donate">Donate</a>
+                {/*<a className="link" href="/our-process">Our Process</a>*/}
                 <a className="link" href="/volunteer">Volunteer</a>
-                <a className="link" target="_blank" href="https://docs.google.com/forms/d/e/1FAIpQLSdWxF-zHhh76WjEu1T1EM-2NAeE7Y3NHTGMLruJe_oXeSrkRQ/viewform?usp=sf_link">Add Your Listing</a>
+                <a className="link" target="_blank" href="/add">Add Your Listing</a>
             </div>
         </footer>
 

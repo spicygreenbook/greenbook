@@ -56,7 +56,9 @@ export default (props) => {
                 {RichText.render(content._body.value)}
 
                 {/*<Stripe form="donate" />*/}
-
+                <p>
+                    <a class="button" href="https://www.paypal.me/batson19" target="_blank">Donate With Paypal</a>
+                </p>
             </div>
 
             

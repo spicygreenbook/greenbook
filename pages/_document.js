@@ -14,8 +14,6 @@ export default class MyDocument extends Document {
             <meta name="theme-color" content="#eaeaea" />
             <link rel="preconnect" href="https://www.google-analytics.com" />
 
-            <meta property="og:title" content="Support black owned business at the Spicy Green Book"/>
-            <meta property="og:image" content="https://images.prismic.io/spicygreenbook/dc763f72-1950-4fcc-a17f-1d8c4dfa5b4a_Selection_812.png?auto=compress,format&w=200"/>
             <meta property="og:type" content="website"/>
             <meta property="og:locale" content="en_IE"/>
             <meta property="og:site_name" content="Spicy Green Book"/>

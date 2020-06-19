@@ -41,6 +41,8 @@ export default (props) => {
         console.log('props', props)
     }
 
+    console.log('donate rerender')
+
     return (
         <div className="page-home">
             <Head>
@@ -55,10 +57,7 @@ export default (props) => {
                 <h1>{content.page_title}</h1>
                 {RichText.render(content._body.value)}
 
-                {/*<Stripe form="donate" />*/}
-                <p>
-                    <a class="button" href="https://www.paypal.me/batson19" target="_blank">Donate With Paypal</a>
-                </p>
+                <Stripe form="donate" />
             </div>
 
             

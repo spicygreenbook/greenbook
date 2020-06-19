@@ -1,5 +1,23 @@
 import React, { useEffect, useState } from "react";
 import stripe_css from "../css/stripe.module.css";
+import { loadStripe } from "@stripe/stripe-js";
+import {
+	CardElement,
+	useStripe,
+	Elements,
+	useElements,
+} from "@stripe/react-stripe-js";
+
+let pk =
+	"pk_test_51GvEQwLe7hUMH3W59ROr76MUKnm9Bowt8lZ4QMnGLaALu41kXuF1qX47mtjSLfwfVwuiBnP4PuI36ReryayJE02C008ouVbLzs";
+if (typeof window !== "undefined") {
+	if (window.location.host.indexOf("spicygreenbook") > -1) {
+		pk =
+			"pk_live_51GvEQwLe7hUMH3W5kV9rWA1fDMDLPDVI0j8wtanT09j2hoWTGb5z48VJ8M3Kuu8Rc5P3yP3Rjldad9MQwohN96td00LjNcA16c";
+	}
+}
+
+const stripePromise = loadStripe(pk);
 
 function format(x) {
 	return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -8,12 +26,22 @@ function num(num) {
 	return (((num || "") + "").replace(/[^0-9\.\-]/gi, "") || 0) * 1;
 }
 
-export default function Map(props) {
+const CheckoutForm = (props) => {
+	const stripe = useStripe();
+	const elements = useElements();
+
+	console.log("state reset for some reason");
+
+	const [success, setSuccess] = useState(false);
+	const [sending, setSending] = useState(0);
 	const [useCustomAmount, setUseCustomAmount] = useState(false);
 	const [fields, setFields] = useState({
 		amount: 50,
+		//name: "Dan Yo",
+		//email: "pleaseshutup@gmail.com",
+		//address: "6051 Calle Cortez",
+		//zip: "92886",
 	});
-	const [response, setResponse] = useState({});
 
 	const setValue = (key, value) => {
 		let updateFields = { ...fields };
@@ -22,101 +50,91 @@ export default function Map(props) {
 		console.log("fields are", fields);
 	};
 
-	useEffect(() => {
-		const onLoad = () => {
-			console.log("exec stripe on form");
-			document
-				.querySelector("#stripeElements")
-				.setAttribute("data-ready", "1");
+	const sendApi = (token) => {
+		console.log("sending fields", { token: token, ...fields });
 
-			let pk =
-				process.env.STRIPE_PUBLIC ||
-				"pk_test_51GvEQwLe7hUMH3W59ROr76MUKnm9Bowt8lZ4QMnGLaALu41kXuF1qX47mtjSLfwfVwuiBnP4PuI36ReryayJE02C008ouVbLzs";
+		const card = elements.getElement(CardElement);
 
-			let stripe = Stripe(pk);
-			let elements = stripe.elements();
-			let style = {
-				base: {
-					color: "#828282",
-					fontFamily:
-						'"noto sans", "Helvetica Neue", Helvetica, sans-serif',
-					fontSmoothing: "antialiased",
-					fontSize: "16px",
-					borderRadius: "5px",
-					"::placeholder": {
-						color: "#aab7c4",
-					},
-				},
-				invalid: {
-					color: "#fa755a",
-					iconColor: "#fa755a",
-				},
-			};
-			let card = elements.create("card", {
-				style: style,
-				cssSrc: "https://fonts.googleapis.com/css?family=Noto+Sans",
-			});
-			card.mount("#card-element");
+		fetch("/api/donation", {
+			method: "post",
+			body: JSON.stringify({ token: token, ...fields }),
+		})
+			.then(function (res) {
+				console.log("response is", res);
+				return res.json();
+			})
+			.then(async function (data) {
+				console.log("response is", data);
 
-			document
-				.querySelector("#payment-form")
-				.addEventListener("submit", (e) => {
-					e.preventDefault();
-					stripe.createToken(card).then(function (result) {
-						if (result.error) {
-							// Inform the customer that there was an error.
-							var errorElement = document.getElementById(
-								"card-errors"
-							);
-							errorElement.textContent = result.error.message;
-						} else {
-							setValue("token", result.token.id);
-							sendApi();
-						}
-					});
-				});
-
-			const sendApi = () => {
-				console.log('sending fields', fields)
-				fetch("/api/donation", {
-					method: "post",
-					body: JSON.stringify(fields)
-				})
-					.then(function (response) {
-						console.log('response is', response);
-						return response.json();
-					})
-					.then(function (data) {
-						setResponse(data);
-						console.log("response is", response);
-					});
-			};
-
-		};
-
-		if (!document.querySelector("#stripeElements")) {
-			const script = document.createElement(`script`);
-			script.id = "stripeElements";
-			script.src = `https://js.stripe.com/v3/`;
-			document.head.append(script);
-			script.addEventListener(`load`, onLoad);
-			return () => script.removeEventListener(`load`, onLoad);
-		} else {
-			const script = document.querySelector("#stripeElements");
-			if (script) {
-				if (script.getAttribute("data-ready")) {
-					onLoad();
+				if (data.error) {
+					document.getElementById("card-errors").textContent =
+						data.error;
+					return false;
 				} else {
-					script.addEventListener(`load`, onLoad);
-					return () => script.removeEventListener(`load`, onLoad);
+					try {
+						const result = await stripe.confirmCardPayment(
+							data.intentSecret,
+							{
+								payment_method: {
+									card: card,
+									billing_details: { name: fields.name },
+								},
+							}
+						);
+						if (result.error) {
+							console.log('z2');
+							console.log(err);
+							document.getElementById("card-errors").textContent =
+								result.error.message;
+							return false;
+						} else {
+							setSuccess(true);
+						}
+					} catch (err) {
+						console.log('z1');
+						console.log(err);
+						document.getElementById("card-errors").textContent =
+							err.message;
+						return false;
+					}
 				}
-			} else {
-				onLoad();
-			}
-		}
-	}, []);
+			});
+			setSending(0);
+	};
 
-	useEffect(() => {}, [fields]);
+
+
+	const handleSubmit = async (event) => {
+		// Block native form submission.
+		event.preventDefault();
+
+		if (!stripe || !elements) {
+			// Stripe.js has not loaded yet. Make sure to disable
+			// form submission until Stripe.js has loaded.
+			return;
+		}
+
+		// Get a reference to a mounted CardElement. Elements knows how
+		// to find your CardElement because there can only ever be one of
+		// each type of element.
+		const card = elements.getElement(CardElement);
+
+		setSending(1);
+
+		stripe.createToken(card).then(function (result) {
+			if (result.error) {
+				// Inform the customer that there was an error.
+				var errorElement = document.getElementById("card-errors");
+				errorElement.textContent = result.error.message;
+				setSending(0);
+			} else {
+				//setValue("token", result.token.id);
+				sendApi(result.token.id);
+			}
+		});
+	};
+
+	useEffect(() => {}, [fields, useCustomAmount]);
 
 	let amounts = [15, 25, 50, 100, 150, 200, 300, 500, 750, 1000];
 
@@ -124,117 +142,185 @@ export default function Map(props) {
 
 	return (
 		<div className={stripe_css.stripe}>
-			<form
-				action="/api/donation"
-				method="post"
-				id="payment-form"
-				onSubmit={(e) => {
-					e.preventDefault();
-				}}
-			>
-				<div className={stripe_css.formRow}>
-					<label htmlFor="card-name">Name On Card</label>
-					<input
-						type="text"
-						name="name"
-						id="card-name"
-						placeholder="Name On Card"
-						onChange={(e) => setValue("name", e.target.value)}
-					/>
+			{success ? (
+				<div style={{ margin: "80px 0" }}>
+					<h2>We have received your donation. Thank You!</h2>
+					<p>You should be receiving an email receipt shortly.</p>
 				</div>
-				<div className={stripe_css.formRow}>
-					<label htmlFor="card-email">Email Address</label>
-					<div className={stripe_css.subLabel}>
-						For an email receipt
+			) : (
+				<form
+					onSubmit={handleSubmit}
+					disabled={!sending}
+					action="/api/donation"
+					method="post"
+					id="payment-form"
+				>
+					<div className={stripe_css.formRow}>
+						<label htmlFor="card-name">Name On Card</label>
+						<input
+							type="text"
+							name="name"
+							id="card-name"
+							placeholder="John Doe"
+							value={fields.name}
+							onChange={(e) => setValue("name", e.target.value)}
+							required
+						/>
 					</div>
-					<input
-						type="text"
-						name="email"
-						id="card-email"
-						value={fields.name || ""}
-						placeholder="my@email.com"
-						onChange={(e) => setValue("name", e.target.value)}
-					/>
-				</div>
-				<div className={stripe_css.formRow}>
-					<label htmlFor="card-donate-name">
-						Name For Donation Shout Out
-					</label>
-					<div className={stripe_css.subLabel}>
-						You can leave this blank to donate anonymously
+					<div className={stripe_css.formRow}>
+						<label htmlFor="card-address">Billing Address</label>
+						<div className="ib middle">
+							<div className={stripe_css.subLabel}>
+								Street Address
+							</div>
+							<input
+								type="text"
+								name="name"
+								id="card-address"
+								placeholder="123 Dover St."
+								value={fields.address}
+								onChange={(e) =>
+									setValue("address", e.target.value)
+								}
+								required
+							/>
+						</div>
+						<div className="ib middle">
+							<div className={stripe_css.subLabel}>Zip Code</div>
+							<input
+								type="text"
+								name="name"
+								id="card-zip"
+								placeholder="92561"
+								size="5"
+								value={fields.zip}
+								onChange={(e) =>
+									setValue("zip", e.target.value)
+								}
+								required
+							/>
+						</div>
 					</div>
-					<input
-						type="text"
-						name="donate-name"
-						id="card-donate-name"
-						value={fields.email || ""}
-						placeholder="e.g. John Doe"
-						onChange={(e) => setValue("donateName", e.target.value)}
-					/>
-				</div>
-				<div className={stripe_css.formRow}>
-					<label htmlFor="card-name">Donation Amount</label>
-					{amounts.map((n) => (
+					<div className={stripe_css.formRow}>
+						<label htmlFor="card-email">Email Address</label>
+						<div className={stripe_css.subLabel}>
+							For an email receipt
+						</div>
+						<input
+							type="text"
+							name="email"
+							id="card-email"
+							value={fields.email || ""}
+							placeholder="my@email.com"
+							onChange={(e) => setValue("email", e.target.value)}
+							required
+						/>
+					</div>
+					<div className={stripe_css.formRow}>
+						<label htmlFor="card-amount">Donation Amount</label>
+						{amounts.map((n) => (
+							<span
+								key={n}
+								className={
+									stripe_css.amount_box +
+									" " +
+									(fields.amount === n
+										? stripe_css.amount_selected
+										: "")
+								}
+								onClick={(e) => {
+									setValue("amount", n);
+									setUseCustomAmount(false);
+								}}
+							>
+								${format(n)}
+							</span>
+						))}
 						<span
-							key={n}
 							className={
 								stripe_css.amount_box +
 								" " +
-								(fields.amount === n
+								(useCustomAmount
 									? stripe_css.amount_selected
 									: "")
 							}
 							onClick={(e) => {
-								setValue("amount", n);
+								if (!useCustomAmount) {
+									setValue("amount", 5000);
+									setUseCustomAmount(true);
+								} else {
+									// do nothing its already custom
+								}
 							}}
 						>
-							${format(n)}
+							Custom
 						</span>
-					))}
-					<span
-						className={
-							stripe_css.amount_box +
-							" " +
-							(useCustomAmount ? stripe_css.amount_selected : "")
-						}
-						onClick={(e) => {
-							if (!useCustomAmount) {
-								setValue("amount", 5000);
-								setUseCustomAmount(true);
-							} else {
-								// do nothing its already custom
-							}
-						}}
-					>
-						Custom
-					</span>
-					{useCustomAmount && (
-						<div>
-							<input
-								type="number"
-								name="custom-amount"
-								placeholder="Amount"
-								value={fields.amount || ""}
-								onChange={(e) =>
-									setValue("amount", num(e.target.value))
-								}
+						{useCustomAmount && (
+							<div>
+								<input
+									type="number"
+									name="custom-amount"
+									placeholder="Amount"
+									value={fields.amount || ""}
+									onChange={(e) =>
+										setValue("amount", num(e.target.value))
+									}
+								/>
+							</div>
+						)}
+					</div>
+					<div className={stripe_css.formRow}>
+						<label htmlFor="card-element">
+							Credit or Debit Card
+						</label>
+						<div
+							id="card-element"
+							className={stripe_css.card_element}
+							style={{ margin: "20px 0" }}
+						>
+							<CardElement
+								options={{
+									style: {
+										base: {
+											color: "#828282",
+											fontFamily:
+												'"noto sans", "Helvetica Neue", Helvetica, sans-serif',
+											fontSmoothing: "antialiased",
+											fontSize: "16px",
+											borderRadius: "5px",
+											"::placeholder": {
+												color: "#aab7c4",
+											},
+										},
+										invalid: {
+											color: "#fa755a",
+											iconColor: "#fa755a",
+										},
+									},
+								}}
 							/>
 						</div>
-					)}
-				</div>
-				<div className={stripe_css.formRow}>
-					<label htmlFor="card-element">Credit or debit card</label>
-					<div
-						id="card-element"
-						className={stripe_css.card_element}
-						style={{ margin: "20px 0" }}
-					></div>
-					<div id="card-errors" role="alert"></div>
-				</div>
-				<div className="form-row">
-					<button>Donate ${format(fields.amount)}</button>
-				</div>
-			</form>
+						<div id="card-errors" role="alert"></div>
+					</div>
+					<div className="form-row">
+						<button id="card-button" disabled={!stripe && !sending} className={stripe_css.button} sending={sending}>
+							{sending ? 
+								(<span>Processing Donation...</span>) : 
+								(<span>Donate ${format(fields.amount)}</span>)
+							}
+						</button>
+					</div>
+				</form>
+			)}
 		</div>
 	);
-}
+};
+
+const Striper = (props) => {
+	return (
+		<Elements stripe={stripePromise}>
+			<CheckoutForm />
+		</Elements>
+	);
+};
+export default Striper;

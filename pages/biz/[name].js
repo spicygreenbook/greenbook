@@ -67,6 +67,7 @@ export default (props) => {
                     name="description"
                     content={content.description || 'Support local black owned businesses with our free directory'}
                 />
+                <meta property="og:title" content={content.name + " - Spicy Green Book"} />
                 <meta
                     name="og:image"
                     content={content.primary_image.url + '&w=1200'}

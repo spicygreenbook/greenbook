@@ -82,7 +82,6 @@ const CheckoutForm = (props) => {
 							}
 						);
 						if (result.error) {
-							console.log('z2');
 							console.log(err);
 							document.getElementById("card-errors").textContent =
 								result.error.message;
@@ -91,15 +90,15 @@ const CheckoutForm = (props) => {
 							setSuccess(true);
 						}
 					} catch (err) {
-						console.log('z1');
 						console.log(err);
 						document.getElementById("card-errors").textContent =
 							err.message;
 						return false;
 					}
 				}
+				setSending(0);
 			});
-			setSending(0);
+			
 	};
 
 

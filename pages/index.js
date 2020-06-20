@@ -228,7 +228,7 @@ export default (props) => {
             </section>
             <section className="content" style={{marginTop: 60}}>
                 <h2 style={{marginBottom: 40}}>What We've Been Up To Lately</h2>
-                {updates.slice(0,6).map(update => (
+                {updates.map(update => (
                     <div className="grid-2" style={{position: 'relative'}}>
                         <a className="link-fill" href={update.link}></a>
                         <div className="ibb top" style={{width: '20%'}}>
@@ -262,7 +262,7 @@ export async function getStaticProps(context) {
 
     let data = await getListings();
     let get_content = await getContent({type: 'home_page'});
-    let updates = await getUpdates({type: 'updates'});
+    let updates = await getUpdates({type: 'updates', limit: 6});
 
     return {
         props: {

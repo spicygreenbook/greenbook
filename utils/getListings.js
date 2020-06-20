@@ -226,7 +226,7 @@ async function getUpdates(config) {
 		})
 	}
 
-	var url = `https://spicygreenbook.cdn.prismic.io/api/v1/documents/search?ref=${master_ref}&q=%5B%5Bat(document.type%2C+%22${config.type}%22)%5D%5D&orderings=%5Bmy.updates.date%20desc%5D`;
+	var url = `https://spicygreenbook.cdn.prismic.io/api/v1/documents/search?ref=${master_ref}&q=%5B%5Bat(document.type%2C+%22${config.type}%22)%5D%5D&orderings=%5Bmy.updates.date%20desc%5D${config.limit ? ('&pageSize=' + config.limit) : ''}`;
 	let data = await fetch(url);
 	let parsed_data = await data.json();
 	//console.log('parsed_data', parsed_data)

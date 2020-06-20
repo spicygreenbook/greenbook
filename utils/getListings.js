@@ -32,6 +32,13 @@ const getPrismicValue = (ref, key) => {
 			return ref.value.map(line => line.text)
 		} else if (ref.type === 'Text' || ref.type === 'Number') {
 			return Array.isArray(ref.value) ? ref.value.map(line => line.text).join('') : ref.value
+		} else if (ref.type === 'Date') {
+			let val = Array.isArray(ref.value) ? ref.value.map(line => line.text).join('') : ref.value;
+			if (val) {
+				var prts = val.split('-');
+				val = prts[1] + '/' + prts[2] + '/' + prts[0];
+			}
+			return val;
 		} else if (ref.type === 'Link.web') {
 			return ref.value.url
 		} else if (ref.type === 'GeoPoint') {
@@ -193,7 +200,45 @@ async function getContent(config) {
 	}
 }
 
+async function getUpdates(config) {
+	if (!config){ config = {}; }
+	if (config.ref_id) {
+		console.log('using custom master ref', config.ref_id)
+		var master_ref = config.ref_id;
+	} else {
+		var masterRef = await fetch('https://spicygreenbook.cdn.prismic.io/api/v2');
+		var masterRef_json = await masterRef.json();
+		var master_ref;
+		masterRef_json.refs.forEach(line => {
+			if(line.id === 'master') {
+				master_ref = line.ref;
+			}
+		})
+	}
+
+	var url = `https://spicygreenbook.cdn.prismic.io/api/v1/documents/search?ref=${master_ref}&q=%5B%5Bat(document.type%2C+%22${config.type}%22)%5D%5D&orderings=%5Bmy.updates.date%20desc%5D`;
+	let data = await fetch(url);
+	let parsed_data = await data.json();
+	console.log('parsed_data', parsed_data)
+
+	//console.log('parsed', parsed_data)
+	let updates = parsed_data.results.map((doc, i) => {
+		let content = {};
+		Object.keys(doc.data.updates).forEach(key => {
+			if (doc.data.updates[key].type === 'Group') {
+				content[key] = getPrismicGroupAdvanced(doc.data.updates[key]);
+			} else {
+				content[key] = getPrismicValue(doc.data.updates[key]);
+			}
+		})
+		return content;
+	})
+
+	return updates
+}
+
 module.exports = {
 	getListings: getListings,
-	getContent: getContent
+	getContent: getContent,
+	getUpdates: getUpdates
 }

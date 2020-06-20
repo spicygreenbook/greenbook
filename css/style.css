@@ -14,8 +14,15 @@ body {
 .ib {
   display: inline-block;
 }
+.ibb {
+  display: inline-block;
+  box-sizing: border-box;
+}
 .middle {
   vertical-align: middle;
+}
+.top {
+  vertical-align: top;
 }
 
 input, select, button, .button {

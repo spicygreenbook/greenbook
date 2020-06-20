@@ -24,8 +24,17 @@ body {
 .top {
   vertical-align: top;
 }
+.grid-2 {
+  margin: 0 20px 20px 0;
+  display: inline-block;
+  box-sizing: border-box;
+  width: calc(50% - 10px);
+}
+.grid-2:nth-child(2n-1) {
+  margin: 0;
+}
 
-input, select, button, .button {
+input, select, button, .button, .buttonSmall {
   border: 1px solid #E0E0E0;
   border-radius: 5px;
   padding: 12px 20px;
@@ -46,6 +55,14 @@ button, .button {
   font-weight: bold;
   padding: 12px 20px;
 }
+
+.buttonSmall {
+  border: none;
+  background: transparent;
+  color: #B56230;
+  padding: 0;
+}
+
 .buttonBack {
   background-color: none;
   color: #B56230;
@@ -79,7 +96,13 @@ h1 {
   font-weight: bold;
   text-decoration: none;
 }
-
+.link-fill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom:0;
+  right: 0;
+}
 .content {
   max-width: 1040px;
   box-sizing: border-box;
@@ -116,6 +139,14 @@ footer .col:first-child {
 
   h1 {
     font-size: 32px;
+  }
+}
+@media all and (max-width: 600px) {
+
+  .grid-2 {
+    margin: 0 !important;
+    display: block;
+    width: auto;
   }
 }
 

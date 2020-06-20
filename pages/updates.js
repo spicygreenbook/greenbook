@@ -65,6 +65,11 @@ export default (props) => {
                             <h3 style={{margin: '0 0 20px 0'}}>{update.title}</h3>
                             <p>{update.date}</p>
                             <p>{update.body}</p>
+                           {!!update.action_text && <p>
+                                <a className="buttonSmall" href={update.link}>
+                                    {update.action_text}
+                                </a>
+                            </p>}
                         </div>
                     </div>
                 ))}

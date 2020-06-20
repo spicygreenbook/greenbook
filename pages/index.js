@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Head from "next/head";
 import Router from "next/router";
-import { getContent, getListings } from "../utils/getListings";
+import { getContent, getListings, getUpdates } from "../utils/getListings";
 import home_styles from '../css/home.module.css';
 import scrollableList from '../css/scrollableList.module.css';
 import Icons from "../components/Icons";
@@ -14,7 +14,7 @@ const scrollToRef = (fullContainerRef, ref) => {
 
 export default (props) => {
 
-    const {content, listings, cuisines} = props
+    const {content, listings, cuisines, updates} = props
 
     const [ search, setSearch ] = useState('');
     const [ cuisine, setCuisine ] = useState('');
@@ -226,6 +226,24 @@ export default (props) => {
                     <img src="/images/home2.png" />
                 </div>
             </section>
+            <section className="content" style={{marginTop: 60}}>
+                <h2 style={{marginBottom: 40}}>What We've Been Up To Lately</h2>
+                {updates.slice(0,6).map(update => (
+                    <div className="grid-2" style={{position: 'relative'}}>
+                        <a className="link-fill" href={update.link}></a>
+                        <div className="ibb top" style={{width: '20%'}}>
+                            <img src={update.image.url + '&w=200'} />
+                        </div>
+                        <div className="ibb top" style={{width: '80%', paddingLeft: 20}}>
+                            <h3 style={{margin: '0 0 20px 0'}}>{update.title}</h3>
+                            <p >{update.body}</p>
+                        </div>
+                    </div>
+                ))}
+                <div style={{marginTop: 20}}>
+                    <a class="button" href="/updates">See All Updates</a>
+                </div>
+            </section>
             <div style={{backgroundColor: '#EFEDEA', marginTop: 60, marginBottom: 60}}>
                 <section className="content fg1" style={{padding: '80px 20px'}}>
                     <p style={{fontSize: 24, maxWidth: 700, margin: '0 auto'}}>
@@ -244,6 +262,7 @@ export async function getStaticProps(context) {
 
     let data = await getListings();
     let get_content = await getContent({type: 'home_page'});
+    let updates = await getUpdates({type: 'updates'});
 
     return {
         props: {
@@ -253,7 +272,8 @@ export async function getStaticProps(context) {
                 return 0;
             }),
             cuisines: data.cuisines,
-            content: get_content.content
+            content: get_content.content,
+            updates: updates
         },
     };
 }

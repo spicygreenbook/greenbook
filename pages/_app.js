@@ -8,7 +8,7 @@ export default function MyApp({ Component, pageProps }) {
 
         <footer className="content" style={{padding: '40px 20px'}}>
             <div className="col">
-                <a href="/" className="link" style={{fontSize: 24}}>Spicy Green Book.</a>
+                <a href="/" className="link" style={{fontSize: 24}}>Spicy Green Book</a>
             </div>
             <div className="col">
                 <a className="link" href="/donate">Donate</a>

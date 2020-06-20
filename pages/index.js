@@ -229,15 +229,14 @@ export default (props) => {
             <section className="content" style={{marginTop: 60}}>
                 <h2 style={{marginBottom: 40}}>What We've Been Up To Lately</h2>
                 {updates.map(update => (
-                    <div className="grid-2" style={{position: 'relative'}}>
+                    <div className="grid-3" style={{position: 'relative'}}>
                         <a className="link-fill" href={update.link}></a>
-                        <div className="ibb top" style={{width: '20%'}}>
-                            <img src={update.image.url + '&w=200'} />
+                        <div>
+                            <img src={update.image.url + '&w=600'} style={{borderRadius: 5, border: '1px solid #DAE1F5'}}/>
                         </div>
-                        <div className="ibb top" style={{width: '80%', paddingLeft: 20}}>
-                            <h3 style={{margin: '0 0 20px 0'}}>{update.title}</h3>
-                            <p >{update.body}</p>
-                        </div>
+                        <h3>{update.title}</h3>
+                        <p>{update.date}</p>
+                        <p style={{paddingBottom: 40}}>{update.body}</p>
                     </div>
                 ))}
                 <div style={{marginTop: 20}}>

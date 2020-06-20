@@ -15,12 +15,12 @@
   color: #fff;
   position: absolute;
   top: 60px;
-  right: 0px;
+  right: 20px;
   padding: 12px 20px;
   display: inline-block;
 }
 .buttonHero2 {
-  right: 160px;
+  right: 180px;
 }
 .logo {
   text-decoration: none;

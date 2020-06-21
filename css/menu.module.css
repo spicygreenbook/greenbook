@@ -1,0 +1,33 @@
+.menu {
+    display: none;
+    position: fixed;
+    top: 0;
+    right: -200px;
+    bottom: 0;
+    width: 200px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    transition: transform 0.25s ease-in-out;
+    box-sizing: border-box;
+    padding: 20px;
+}
+.menu[data-menu="1"] {
+    display: block;
+}
+.pageCover {
+    position: fixed;
+    z-index: 3;
+    left: 0;
+    top: 0;
+    right: 0;
+    height: 100%;
+    background-color: rgba(0,0,0,0.55);
+    
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease-in-out;
+}
+.pageCover[data-menu="1"] {
+    pointer-events: fill;
+    opacity: 1;
+}

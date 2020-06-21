@@ -1,3 +1,8 @@
+/*
+############################
+TO ADD ICONS I JUST COPY THE SVG AND CLEAN IT UP A BIT FROM
+https://feathericons.com/
+*/
 
 export default function Icons(props) {
     if (props.type === 'right') {
@@ -17,14 +22,8 @@ export default function Icons(props) {
          );
     } else if (props.type === 'close') {
          return (
-           <svg viewBox="0 0 14 14">
-            <g style={props.style || {}} fill="none" fillRule="evenodd"  stroke="none" strokeWidth="1">
-                <g fill={props.color || '#000'} transform="translate(-341.000000, -89.000000)">
-                    <g id="close" transform="translate(341.000000, 89.000000)">
-                        <path d="M14,1.4 L12.6,0 L7,5.6 L1.4,0 L0,1.4 L5.6,7 L0,12.6 L1.4,14 L7,8.4 L12.6,14 L14,12.6 L8.4,7 L14,1.4 Z" />
-                    </g>
-                </g>
-            </g>
+            <svg style={props.style || {}} viewBox="0 0 24 24" fill="none" stroke={props.color || '#000'} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line>
             </svg>
          );
     } else if (props.type === 'scrollDown') {
@@ -68,6 +67,12 @@ export default function Icons(props) {
          return (
             <svg style={props.style || {}} viewBox="0 0 24 24" fill="none" stroke={props.color || '#000'} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+            </svg>
+         );
+    } else if (props.type === 'menu') {
+         return (
+            <svg style={props.style || {}} viewBox="0 0 24 24" fill="none" stroke={props.color || '#000'} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line>
             </svg>
          );
     } else {

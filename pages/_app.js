@@ -3,7 +3,7 @@ import '../css/style.css'
 // This default export is required in a new `pages/_app.js` file.
 export default function MyApp({ Component, pageProps }) {
   return (
-    <div>
+    <div id="page">
         <Component {...pageProps} />
 
         <footer className="content" style={{padding: '40px 20px'}}>

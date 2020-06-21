@@ -6,6 +6,7 @@ import { getContent, getListings, getUpdates } from "../utils/getListings";
 import home_styles from '../css/home.module.css';
 import scrollableList from '../css/scrollableList.module.css';
 import Icons from "../components/Icons";
+import Menu from "../components/Menu";
 
 const scrollToRef = (fullContainerRef, ref) => {
     let scrollAmount = (ref.current.offsetLeft - fullContainerRef.current.scrollLeft);
@@ -72,7 +73,8 @@ export default (props) => {
                     content={content.description}
                 />
             </Head>
-            <section className={home_styles.hero}>
+            <header className={home_styles.hero}>
+                <Menu mode="home" />
                 <div className={home_styles.hero_image}  style={{backgroundImage: `url(${content.home_images && content.home_images[0] && content.home_images[0].image.url || ''}&w=1920)`}} />
                 <div className={home_styles.heroContainer}>
 
@@ -125,7 +127,7 @@ export default (props) => {
                         <a href="https://instagram.com/arry829" style={{color: '#fff', textDecoration: 'none'}}>@arry829</a>
                     </div>
                 </div>
-            </section>
+            </header>
             <section className="content" style={{marginTop: 60}} >
                 <div className={home_styles.leftCol}>
                     <h2>More About Us</h2>

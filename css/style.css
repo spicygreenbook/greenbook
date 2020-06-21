@@ -24,6 +24,13 @@ body {
 .top {
   vertical-align: top;
 }
+#page {
+  transition: transform 0.25s ease-in-out;
+}
+#page[data-menu="1"] {
+  transform: translate3d(-200px, 0, 0);
+}
+
 .grid-2 {
   margin: 0 20px 20px 0;
   display: inline-block;
@@ -134,7 +141,7 @@ footer {
   max-width: 800px;
   margin: 40px auto;
 }
-footer .link {
+footer .link, header .link {
   display:block;
   color: #B56230;
   text-decoration: none;

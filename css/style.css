@@ -28,7 +28,7 @@ body {
   transition: transform 0.25s ease-in-out;
 }
 #page[data-menu="1"] {
-  transform: translate3d(-200px, 0, 0);
+  transform: translate3d(-200px, 0, 0) scale(1);
 }
 
 .grid-2 {

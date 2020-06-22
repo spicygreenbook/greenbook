@@ -37,6 +37,10 @@ export default function Header(props) {
                     }
                 }
             }
+            let mc = document.getElementById('menuContainer');
+            if (mc) {
+                mc.setAttribute('data-layer', mode === 'full' ? '1' : '')
+            }
         },
         [ mode, mediaIndex ]
     );

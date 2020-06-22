@@ -38,7 +38,7 @@ export default function Header(props) {
     };
 
     return (
-        <div className={menu.container} data-menu={open ? "1" : ""}>
+        <div id="menuContainer" className={menu.container} data-menu={open ? "1" : ""}>
             <span
                 className={menu.iconOpened}
                 data-menu={open ? "1" : ""}

@@ -1,5 +1,8 @@
 .container {
 }
+.container[data-layer="1"] {
+    display: none;
+}
 .menu {
     position: fixed;
     top: 0;

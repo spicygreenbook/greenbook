@@ -1,22 +1,50 @@
+.container {
+}
 .menu {
-    display: none;
     position: fixed;
     top: 0;
-    right: -200px;
+    right: -250px;
     bottom: 0;
-    width: 200px;
+    width: 250px;
     overflow-y: auto;
-    overflow-x: hidden;
+    overflow-x: visible;
     transition: transform 0.25s ease-in-out;
     box-sizing: border-box;
-    padding: 20px;
+    padding: 80px 20px 40px 20px;
+    z-index: 10;
+    background-color: #F7F7F7;
+    box-shadow: 5px 0px 10px rgba(0, 0, 0, 0.0634014);
+    margin: 0;
+}
+
+.menu li {
+    display: block;
 }
 .menu[data-menu="1"] {
     display: block;
+    transition-delay: 0.01s;
+    pointer-events:fill;
+    transform: translate3d(-250px, 0, 0);
+    opacity: 1;
 }
+.iconClosed, .iconOpened {
+    transition: transform 0.25s ease-in-out;
+    transform: translate3d(0,0,0) scale(1);
+    z-index: 11;
+}
+.iconOpened {
+    transform: scale(0);
+}
+.iconOpened[data-menu="1"] {
+    transform: scale(1);
+}
+.iconClosed[data-menu="1"] {
+    transform: scale(0);
+}
+
 .pageCover {
     position: fixed;
-    z-index: 3;
+    z-index: 9;
     left: 0;
     top: 0;
     right: 0;

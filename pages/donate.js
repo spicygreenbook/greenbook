@@ -6,6 +6,8 @@ import { getContent, getListings } from "../utils/getListings";
 import ContentPageHeader from "../components/ContentPageHeader";
 import Stripe from "../components/Stripe";
 import {RichText} from 'prismic-reactjs';
+import Menu from "../components/Menu";
+import Footer from "../components/Footer";
 
 export default (props) => {
 
@@ -44,7 +46,7 @@ export default (props) => {
     console.log('donate rerender')
 
     return (
-        <div className="page-home">
+        <div>
             <Head>
                 <title>{content.page_title} | Spicy Green Book</title>
                 <meta
@@ -52,16 +54,19 @@ export default (props) => {
                     content={content.description || ''}
                 />
             </Head>
-            <ContentPageHeader />
-            <div className="content" style={{padding: '40px 20px'}}>
-                <h1>{content.page_title}</h1>
-                {RichText.render(content._body.value)}
+            <header>
+                <Menu mode="content" />
+            </header>
+            <div id="page">
+                <ContentPageHeader />
+                <div className="content" style={{padding: '40px 20px'}}>
+                    <h1>{content.page_title}</h1>
+                    {RichText.render(content._body.value)}
 
-                <Stripe form="donate" />
+                    <Stripe form="donate" />
+                </div>
+                <Footer />
             </div>
-
-            
-
         </div>
     );
 };

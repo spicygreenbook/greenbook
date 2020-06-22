@@ -5,6 +5,8 @@ import css_content from '../css/home.module.css';
 import { getContent, getListings } from "../utils/getListings";
 import ContentPageHeader from "../components/ContentPageHeader";
 import {RichText} from 'prismic-reactjs';
+import Menu from "../components/Menu";
+import Footer from "../components/Footer";
 
 export default (props) => {
 
@@ -41,7 +43,7 @@ export default (props) => {
     }
 
     return (
-        <div className="page-home">
+        <div>
             <Head>
                 <title>{content.page_title} | Spicy Green Book</title>
                 <meta
@@ -49,13 +51,19 @@ export default (props) => {
                     content={content.description || ''}
                 />
             </Head>
-            <ContentPageHeader />
-            <div className="content" style={{padding: '40px 20px'}}>
-                <h1>{content.page_title}</h1>
-                {RichText.render(content._body.value)}
-                <p>
-                    <a class="button" href="https://docs.google.com/forms/d/e/1FAIpQLSdWxF-zHhh76WjEu1T1EM-2NAeE7Y3NHTGMLruJe_oXeSrkRQ/viewform" target="_blank">Add Listing Form</a>
-                </p>
+            <header>
+                <Menu mode="content" />
+            </header>
+            <div id="page">
+                <ContentPageHeader />
+                <div className="content" style={{padding: '40px 20px'}}>
+                    <h1>{content.page_title}</h1>
+                    {RichText.render(content._body.value)}
+                    <p>
+                        <a class="button" href="https://docs.google.com/forms/d/e/1FAIpQLSdWxF-zHhh76WjEu1T1EM-2NAeE7Y3NHTGMLruJe_oXeSrkRQ/viewform" target="_blank">Add Listing Form</a>
+                    </p>
+                </div>
+                <Footer />
             </div>
         </div>
     );

@@ -4,6 +4,8 @@ import Head from "next/head";
 import css_content from '../css/home.module.css';
 import { getContent, getUpdates } from "../utils/getListings";
 import ContentPageHeader from "../components/ContentPageHeader";
+import Menu from "../components/Menu";
+import Footer from "../components/Footer";
 
 export default (props) => {
 
@@ -49,30 +51,36 @@ export default (props) => {
                     content={content.description || ''}
                 />
             </Head>
-            <ContentPageHeader />
-            <div className="content" style={{padding: '40px 20px 20px 20px'}}>
-                {content.body.map((text, i) => (
-                    <p key={i}>{text}</p>
-                ))}
-            </div>
-            <div className="content" style={{padding: '20px 20px 40px 20px'}}>
-                {updates.map(update => (
-                    <div style={{marginBottom: 40}}>
-                        <div className="ibb top" style={{width: '20%'}}>
-                            <a href={update.image.url} target="_blank"><img src={update.image.url + '&w=200'} /></a>
+            <header>
+                <Menu mode="content" />
+            </header>
+            <div id="page">
+                <ContentPageHeader />
+                <div className="content" style={{padding: '40px 20px 20px 20px'}}>
+                    {content.body.map((text, i) => (
+                        <p key={i}>{text}</p>
+                    ))}
+                </div>
+                <div className="content" style={{padding: '20px 20px 40px 20px'}}>
+                    {updates.map(update => (
+                        <div style={{marginBottom: 40}}>
+                            <div className="ibb top" style={{width: '20%'}}>
+                                <a href={update.image.url} target="_blank"><img src={update.image.url + '&w=200'} /></a>
+                            </div>
+                            <div className="ibb top" style={{width: '80%', paddingLeft: 20}}>
+                                <h3 style={{margin: '0 0 20px 0'}}>{update.title}</h3>
+                                <p>{update.date}</p>
+                                <p>{update.body}</p>
+                               {!!update.action_text && <p>
+                                    <a className="buttonSmall" href={update.link}>
+                                        {update.action_text}
+                                    </a>
+                                </p>}
+                            </div>
                         </div>
-                        <div className="ibb top" style={{width: '80%', paddingLeft: 20}}>
-                            <h3 style={{margin: '0 0 20px 0'}}>{update.title}</h3>
-                            <p>{update.date}</p>
-                            <p>{update.body}</p>
-                           {!!update.action_text && <p>
-                                <a className="buttonSmall" href={update.link}>
-                                    {update.action_text}
-                                </a>
-                            </p>}
-                        </div>
-                    </div>
-                ))}
+                    ))}
+                </div>
+                <Footer />
             </div>
         </div>
     );

@@ -6,6 +6,8 @@ import Map from "../components/Map";
 import list from "../css/list.module.css";
 import Icons from "../components/Icons.js";
 import home_styles from '../css/home.module.css';
+import Menu from "../components/Menu";
+import Footer from "../components/Footer";
 
 const fuzzySearch = (string, srch) => {
 	return (string || "").match(
@@ -97,122 +99,128 @@ export default (props) => {
 					content="Support local black owned businesses with our free directory"
 				/>
 			</Head>
-            <div>
-			{width > 900 && 
-	            <div className={list.layoutMap}>
-					<Map list={filteredList} mode="d" />
-				</div>
-			}
-            </div>
-			<div className={list.layoutList} style={{backgroundColor: '#fff'}}>
-				<div>
-	                <a className="buttonBack" href="/" style={{whiteSpace: 'nowrap', marginBottom: 40}}>
-	                    <Icons type="left" color="#B56230" style={{display: 'inline-block', width: 16, height: 16, verticalAlign: 'middle', marginRight: 20}} />
-	                    <span style={{display: 'inline-block', verticalAlign: 'middle'}}>
-	                        Back To Home
-	                    </span>
-	                </a>
-	            </div>
-                <div className={home_styles.searchBox} style={{textAlign: 'left', position: 'relative', zIndex: 2, padding: '20px 0'}}>
-                    <form method="GET" action="/search">
-                        <div className={home_styles.searchBoxItem}>
-                            <label>
-                                <div>Search</div>
-                                <div style={{marginTop:17}}>
-                                    <input className={home_styles.select} name="search" value={search} placeholder="Enter Location or keywords"  onChange={(e) => setSearch(e.target.value)} />
-                                </div>
-                            </label>
-                        </div>
-                        <div className={home_styles.searchBoxItem}>
-                            <label>
-                                <div>Food Category</div>
-                                <div style={{marginTop:17}}>
-                                    <select className={home_styles.select} name="cuisine" value={cuisine} onChange={(e) => setCuisine(e.target.value)}>
-                                        <option value="">Show all</option>
-                                        {cuisines.map(cuisine => (
-                                            <option key={cuisine} value={cuisine}>{cuisine}</option>
-                                        ))}
-                                    </select>
-                                </div>
-                            </label>
-                        </div>
-                        <div className={home_styles.searchBoxItem}>
-                            <label>
-                                <div>{'\u00A0'}</div>
-                                <div style={{marginTop:17}}>
-                                    <input type="submit" value="Search" />
-                                </div>
-                            </label>
-                        </div>
-                    </form>
+            <header>
+                <Menu mode="content" />
+            </header>
+            <div id="page">
+                <div>
+    			{width > 900 && 
+    	            <div className={list.layoutMap}>
+    					<Map list={filteredList} mode="d" />
+    				</div>
+    			}
                 </div>
+    			<div className={list.layoutList} style={{backgroundColor: '#fff'}}>
+    				<div>
+    	                <a className="buttonBack" href="/" style={{whiteSpace: 'nowrap', marginBottom: 40}}>
+    	                    <Icons type="left" color="#B56230" style={{display: 'inline-block', width: 16, height: 16, verticalAlign: 'middle', marginRight: 20}} />
+    	                    <span style={{display: 'inline-block', verticalAlign: 'middle'}}>
+    	                        Back To Home
+    	                    </span>
+    	                </a>
+    	            </div>
+                    <div className={home_styles.searchBox} style={{textAlign: 'left', position: 'relative', zIndex: 2, padding: '20px 0'}}>
+                        <form method="GET" action="/search">
+                            <div className={home_styles.searchBoxItem}>
+                                <label>
+                                    <div>Search</div>
+                                    <div style={{marginTop:17}}>
+                                        <input className={home_styles.select} name="search" value={search} placeholder="Enter Location or keywords"  onChange={(e) => setSearch(e.target.value)} />
+                                    </div>
+                                </label>
+                            </div>
+                            <div className={home_styles.searchBoxItem}>
+                                <label>
+                                    <div>Food Category</div>
+                                    <div style={{marginTop:17}}>
+                                        <select className={home_styles.select} name="cuisine" value={cuisine} onChange={(e) => setCuisine(e.target.value)}>
+                                            <option value="">Show all</option>
+                                            {cuisines.map(cuisine => (
+                                                <option key={cuisine} value={cuisine}>{cuisine}</option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                </label>
+                            </div>
+                            <div className={home_styles.searchBoxItem}>
+                                <label>
+                                    <div>{'\u00A0'}</div>
+                                    <div style={{marginTop:17}}>
+                                        <input type="submit" value="Search" />
+                                    </div>
+                                </label>
+                            </div>
+                        </form>
+                    </div>
 
-				<h3>{cuisine ? cuisine : 'All Businesses'} ({filteredList && filteredList.length})</h3>
+    				<h3>{cuisine ? cuisine : 'All Businesses'} ({filteredList && filteredList.length})</h3>
 
-				{width <= 900 && <Map list={filteredList} mode="m" />}
+    				{width <= 900 && <Map list={filteredList} mode="m" />}
 
-				<div className={list.overallContainer}>
-					<div className={list.boxContainer}>
-						{filteredList && filteredList.length ? (
-							<React.Fragment>
-								{filteredList.map((row, i) => (
-									<Link
-										href={"/biz/" + row._slug}
-										key={"item" + i}
-									>
-										<div
-											className={list.box}
-											style={{ cursor: "pointer" }}
-										>
-											<div
-												className={list.boxImage}
-												style={{
-													backgroundImage:
-														"url(" +
-														row.primary_image.url +
-														"&w=400)",
-												}}
-											/>
-											<div className={list.boxContent}>
-												<h3 className={list.boxTitle}>
-													{row.name}
-												</h3>
-												<p className={list.description}>{row.description}</p>
-	                                            <Icons type="tag" color="#CF9052" style={{width: 14, height: 14, marginRight: 6}} />
-	                                            {row.cuisines.map((line, i , ar) => (
-	                                            	<span key={line} style={{color: '#CF9052',display: 'inline-block', 'verticalAlign': 'middle'}}>
-	                                                	<span>{line}</span>
-	                                                	{ar[i+1] && (<span>,{'\u00A0'}</span>)}
-	                                                </span>
-	                                            ))}
-												<div
-													className={
-														list.boxContentRight
-													}
-												>
-													{row.phone_number && (
-														<p>
-															{row.phone_number}
-														</p>
-													)}
-													{row.address && (
-														<p>
-															{row.address}
-														</p>
-													)}
+    				<div className={list.overallContainer}>
+    					<div className={list.boxContainer}>
+    						{filteredList && filteredList.length ? (
+    							<React.Fragment>
+    								{filteredList.map((row, i) => (
+    									<Link
+    										href={"/biz/" + row._slug}
+    										key={"item" + i}
+    									>
+    										<div
+    											className={list.box}
+    											style={{ cursor: "pointer" }}
+    										>
+    											<div
+    												className={list.boxImage}
+    												style={{
+    													backgroundImage:
+    														"url(" +
+    														row.primary_image.url +
+    														"&w=400)",
+    												}}
+    											/>
+    											<div className={list.boxContent}>
+    												<h3 className={list.boxTitle}>
+    													{row.name}
+    												</h3>
+    												<p className={list.description}>{row.description}</p>
+    	                                            <Icons type="tag" color="#CF9052" style={{width: 14, height: 14, marginRight: 6}} />
+    	                                            {row.cuisines.map((line, i , ar) => (
+    	                                            	<span key={line} style={{color: '#CF9052',display: 'inline-block', 'verticalAlign': 'middle'}}>
+    	                                                	<span>{line}</span>
+    	                                                	{ar[i+1] && (<span>,{'\u00A0'}</span>)}
+    	                                                </span>
+    	                                            ))}
+    												<div
+    													className={
+    														list.boxContentRight
+    													}
+    												>
+    													{row.phone_number && (
+    														<p>
+    															{row.phone_number}
+    														</p>
+    													)}
+    													{row.address && (
+    														<p>
+    															{row.address}
+    														</p>
+    													)}
 
-												</div>
-											</div>
-										</div>
-									</Link>
-								))}
-							</React.Fragment>
-						) : (
-							<span>Sorry, nothing matches your search</span>
-						)}
-					</div>
-				</div>
-			</div>
+    												</div>
+    											</div>
+    										</div>
+    									</Link>
+    								))}
+    							</React.Fragment>
+    						) : (
+    							<span>Sorry, nothing matches your search</span>
+    						)}
+    					</div>
+    				</div>
+    			</div>
+                <Footer />
+            </div>
 		</div>
 	);
 };

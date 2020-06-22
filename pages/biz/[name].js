@@ -7,6 +7,8 @@ import Map from "../../components/Map";
 import listing from "../../css/listing.module.css";
 import Icons from "../../components/Icons.js";
 import {RichText} from 'prismic-reactjs';
+import Menu from "../../components/Menu";
+import Footer from "../../components/Footer";
 
 export default (props) => {
 
@@ -73,111 +75,117 @@ export default (props) => {
                     content={content.primary_image.url + '&w=1200'}
                 />
             </Head>
+            <header>
+                <Menu mode="content" />
+            </header>
+            <div id="page">
 
-            <div>
-            {content.geocoordinates && width > 900 && 
-                <div className={listing.layoutMap}>
-                    <Map list={[content]} mode="d" single />
-                </div>
-            }
-            </div>
-
-            <div className={listing.layoutList} style={layoutStyle}>
-
-                <div style={{margin: '20px 0'}}>
-                    <a className="buttonBack" href="/search" style={{whiteSpace: 'nowrap', marginBottom: 40}}>
-                        <Icons type="left" color="#B56230" style={{display: 'inline-block', width: 16, height: 16, verticalAlign: 'middle', marginRight: 20}} />
-                        <span className="ib middle">
-                            Back To List
-                        </span>
-                    </a>
-                </div>
-
-                <ListingMedia content={content} />
-                <div style={{marginTop: 20}}>
-                    <div className={listing.cols}>
-                        <div className={listing.col}>
-                            <h1 style={{color: '#29293E', fontSize: 30, fontWeight: 'normal', margin: 0}}>{content.name}</h1>
-                            {content.address && !!content.address.length && 
-                                <p style={{whiteSpace: 'pre'}}>
-                                    <a href={`https://www.google.com/maps/dir//${content.address.join(' ').split(/\s/g).join('+')}`} target="_blank" style={{textDecoration: 'none', color: 'inherit'}}>
-                                        {content.address}
-                                    </a>
-                                </p>
-                            }
-                        </div>
-                        <div className={listing.col}>
-                            {content.phone_number && 
-                                <p>
-                                    <a href={'tel:' + content.phone_number}>
-                                        <Icons type="phone" color="#B56230" style={{width: 16, height: 16, marginRight: 10}} />
-                                        <span className="ib middle">{content.phone_number}</span>
-                                    </a>
-                                </p>
-                            }
-                            {content.instagram && 
-                                <p>
-                                    <a href={'https://instagram.com/' + (content.instagram.indexOf('@') > -1 ? content.instagram.slice(1) : content.instagram)}>
-                                        <Icons type="instagram" color="#B56230" style={{width: 16, height: 16, marginRight: 10}} />
-                                        <span className="ib middle">{content.instagram.substr(1)}</span>
-                                    </a>
-                                </p>
-                            }
-                            {content.website_url && 
-                                <p>
-                                    <a href={content.website_url}>
-                                        <Icons type="link" color="#B56230" style={{width: 16, height: 16, marginRight: 10}} />
-                                        <span className="ib middle">{content.website_url
-                                            .replace(
-                                                "https://",
-                                                ""
-                                            )
-                                            .replace(
-                                                "http://",
-                                                ""
-                                            )
-                                            .replace(
-                                                "www.",
-                                                ""
-                                            )}</span>
-                                    </a>
-                                </p>
-                            }
-                        </div>
+                <div>
+                {content.geocoordinates && width > 900 && 
+                    <div className={listing.layoutMap}>
+                        <Map list={[content]} mode="d" single />
                     </div>
-                    <div>
-                        <Icons type="tag" color="#CF9052" style={{width: 14, height: 14, marginRight: 6}} />
-                        {content.cuisines.map((line, i , ar) => (
-                            <span key={line} className="ib middle" style={{color: '#CF9052'}}>
-                                <span>{line}</span>
-                                {ar[i+1] && (<span>,{'\u00A0'}</span>)}
+                }
+                </div>
+
+                <div className={listing.layoutList} style={layoutStyle}>
+
+                    <div style={{margin: '20px 0'}}>
+                        <a className="buttonBack" href="/search" style={{whiteSpace: 'nowrap', marginBottom: 40}}>
+                            <Icons type="left" color="#B56230" style={{display: 'inline-block', width: 16, height: 16, verticalAlign: 'middle', marginRight: 20}} />
+                            <span className="ib middle">
+                                Back To List
                             </span>
-                        ))}
+                        </a>
                     </div>
-                    {content.services && !!content.services.length &&
+
+                    <ListingMedia content={content} />
+                    <div style={{marginTop: 20}}>
+                        <div className={listing.cols}>
+                            <div className={listing.col}>
+                                <h1 style={{color: '#29293E', fontSize: 30, fontWeight: 'normal', margin: 0}}>{content.name}</h1>
+                                {content.address && !!content.address.length && 
+                                    <p style={{whiteSpace: 'pre'}}>
+                                        <a href={`https://www.google.com/maps/dir//${content.address.join(' ').split(/\s/g).join('+')}`} target="_blank" style={{textDecoration: 'none', color: 'inherit'}}>
+                                            {content.address}
+                                        </a>
+                                    </p>
+                                }
+                            </div>
+                            <div className={listing.col}>
+                                {content.phone_number && 
+                                    <p>
+                                        <a href={'tel:' + content.phone_number}>
+                                            <Icons type="phone" color="#B56230" style={{width: 16, height: 16, marginRight: 10}} />
+                                            <span className="ib middle">{content.phone_number}</span>
+                                        </a>
+                                    </p>
+                                }
+                                {content.instagram && 
+                                    <p>
+                                        <a href={'https://instagram.com/' + (content.instagram.indexOf('@') > -1 ? content.instagram.slice(1) : content.instagram)}>
+                                            <Icons type="instagram" color="#B56230" style={{width: 16, height: 16, marginRight: 10}} />
+                                            <span className="ib middle">{content.instagram.substr(1)}</span>
+                                        </a>
+                                    </p>
+                                }
+                                {content.website_url && 
+                                    <p>
+                                        <a href={content.website_url}>
+                                            <Icons type="link" color="#B56230" style={{width: 16, height: 16, marginRight: 10}} />
+                                            <span className="ib middle">{content.website_url
+                                                .replace(
+                                                    "https://",
+                                                    ""
+                                                )
+                                                .replace(
+                                                    "http://",
+                                                    ""
+                                                )
+                                                .replace(
+                                                    "www.",
+                                                    ""
+                                                )}</span>
+                                        </a>
+                                    </p>
+                                }
+                            </div>
+                        </div>
                         <div>
-                            <Icons type="services" color="#CF9052" style={{width: 14, height: 14, marginRight: 6}} />
-                            {content.services.map((line, i , ar) => (
+                            <Icons type="tag" color="#CF9052" style={{width: 14, height: 14, marginRight: 6}} />
+                            {content.cuisines.map((line, i , ar) => (
                                 <span key={line} className="ib middle" style={{color: '#CF9052'}}>
                                     <span>{line}</span>
                                     {ar[i+1] && (<span>,{'\u00A0'}</span>)}
                                 </span>
                             ))}
                         </div>
-                    }
-                    <p>
-                        { content.hours.map((line, l) => (<span key={l}>{line}<br /></span>)) }
-                    </p>
+                        {content.services && !!content.services.length &&
+                            <div>
+                                <Icons type="services" color="#CF9052" style={{width: 14, height: 14, marginRight: 6}} />
+                                {content.services.map((line, i , ar) => (
+                                    <span key={line} className="ib middle" style={{color: '#CF9052'}}>
+                                        <span>{line}</span>
+                                        {ar[i+1] && (<span>,{'\u00A0'}</span>)}
+                                    </span>
+                                ))}
+                            </div>
+                        }
+                        <p>
+                            { content.hours.map((line, l) => (<span key={l}>{line}<br /></span>)) }
+                        </p>
 
-                    {content.geocoordinates && width <= 900 && <Map list={[content]} mode="m" single />}
+                        {content.geocoordinates && width <= 900 && <Map list={[content]} mode="m" single />}
 
-                    {content.bio && 
-                        <div style={{marginTop: 40}}>
-                            <h3 style={{color: '#29293E', fontSize: 18, fontWeight: 'normal', margin: 0}}>About {content.name}</h3>
-                            {RichText.render(content._bio.value)}
-                        </div>
-                    }
+                        {content.bio && 
+                            <div style={{marginTop: 40}}>
+                                <h3 style={{color: '#29293E', fontSize: 18, fontWeight: 'normal', margin: 0}}>About {content.name}</h3>
+                                {RichText.render(content._bio.value)}
+                            </div>
+                        }
+                    </div>
                 </div>
+                <Footer />
             </div>
         </div>
     );

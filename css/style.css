@@ -26,9 +26,12 @@ body {
 }
 #page {
   transition: transform 0.25s ease-in-out;
+  max-width: 100%;
+  overflow-x: hidden;
+  position: relative;
 }
 #page[data-menu="1"] {
-  transform: translate3d(-200px, 0, 0) scale(1);
+  transform: translate3d(-250px, 0, 0) scale(1);
 }
 
 .grid-2 {

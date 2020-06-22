@@ -5,6 +5,8 @@ import css_content from '../css/content.module.css';
 import { getContent, getListings } from "../utils/getListings";
 import ContentPageHeader from "../components/ContentPageHeader";
 import {Link, RichText} from 'prismic-reactjs';
+import Menu from "../components/Menu";
+import Footer from "../components/Footer";
 
 export default (props) => {
 
@@ -49,31 +51,37 @@ export default (props) => {
                     content={content.description || ''}
                 />
             </Head>
-            <ContentPageHeader />
-            <div className="content" style={{padding: '40px 20px'}}>
-                <h1>{content.page_title}</h1>
-                <p>
-                    <a href="https://forms.gle/vJ114r7J3JkE8jrs9" class="button">Volunteer Form</a>
-                </p>
-                <div className={css_content.content}>
-                    {RichText.render(content._body.value, (doc) => {
-                        conole.log('doc', doc)
-                        return '/'
-                    })}
+            <header>
+                <Menu mode="content" />
+            </header>
+            <div id="page">
+                <ContentPageHeader />
+                <div className="content" style={{padding: '40px 20px'}}>
+                    <h1>{content.page_title}</h1>
+                    <p>
+                        <a href="https://forms.gle/vJ114r7J3JkE8jrs9" class="button">Volunteer Form</a>
+                    </p>
+                    <div className={css_content.content}>
+                        {RichText.render(content._body.value, (doc) => {
+                            conole.log('doc', doc)
+                            return '/'
+                        })}
+                    </div>
+                    <p>
+                        <a href="https://forms.gle/vJ114r7J3JkE8jrs9" class="button">Volunteer Form</a>
+                    </p>
                 </div>
-                <p>
-                    <a href="https://forms.gle/vJ114r7J3JkE8jrs9" class="button">Volunteer Form</a>
-                </p>
-            </div>
-            <div style={{backgroundColor: '#EFEDEA', marginTop: 60, marginBottom: 60}}>
-                <section className={"content fg1 " + css_content.content} style={{padding: '80px 20px'}}>
-                    <p style={{fontSize: 24, maxWidth: 700, margin: '0 auto'}}>
-                        <i>{content.quote}</i>
-                    </p>
-                    <p style={{fontSize: 18, maxWidth: 700, margin: '60px auto 0 auto'}}>
-                    <i>{content.quote_credit}</i>
-                    </p>
-                </section>
+                <div style={{backgroundColor: '#EFEDEA', marginTop: 60, marginBottom: 60}}>
+                    <section className={"content fg1 " + css_content.content} style={{padding: '80px 20px'}}>
+                        <p style={{fontSize: 24, maxWidth: 700, margin: '0 auto'}}>
+                            <i>{content.quote}</i>
+                        </p>
+                        <p style={{fontSize: 18, maxWidth: 700, margin: '60px auto 0 auto'}}>
+                        <i>{content.quote_credit}</i>
+                        </p>
+                    </section>
+                </div>
+                <Footer />
             </div>
         </div>
     );

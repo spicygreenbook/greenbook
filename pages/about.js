@@ -4,6 +4,8 @@ import Head from "next/head";
 import css_content from '../css/home.module.css';
 import { getContent, getListings } from "../utils/getListings";
 import ContentPageHeader from "../components/ContentPageHeader";
+import Menu from "../components/Menu";
+import Footer from "../components/Footer";
 
 export default (props) => {
 
@@ -40,7 +42,7 @@ export default (props) => {
     }
 
     return (
-        <div className="page-home">
+        <div>
             <Head>
                 <title>{content.page_title} | Spicy Green Book</title>
                 <meta
@@ -48,11 +50,17 @@ export default (props) => {
                     content={content.description || ''}
                 />
             </Head>
-            <ContentPageHeader />
-            <div className="content" style={{padding: '40px 20px'}}>
-                {content.body.map((text, i) => (
-                    <p key={i}>{text}</p>
-                ))}
+            <header>
+                <Menu mode="content" />
+            </header>
+            <div id="page">
+                <ContentPageHeader />
+                <div className="content" style={{padding: '40px 20px'}}>
+                    {content.body.map((text, i) => (
+                        <p key={i}>{text}</p>
+                    ))}
+                </div>
+                <Footer />
             </div>
         </div>
     );

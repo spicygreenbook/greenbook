@@ -23,7 +23,7 @@ export default function Header(props) {
                   top: 20,
                   width: 32,
                   cursor: "pointer",
-                  zIndex: 3
+                  zIndex: 3,
               };
 
     useEffect(() => {
@@ -39,13 +39,24 @@ export default function Header(props) {
 
     return (
         <div className={menu.container} data-menu={open ? "1" : ""}>
-            <span className={menu.iconOpened} data-menu={open ? "1" : ""}  style={{position: 'absolute', top: 20, right: 20, width: 32, cursor: 'pointer'}} onClick={toggleMenu}>
-                <Icons type="close" style={{width: 32}} color="#828282" />
+            <span
+                className={menu.iconOpened}
+                data-menu={open ? "1" : ""}
+                style={{
+                    position: "absolute",
+                    top: 20,
+                    right: 20,
+                    width: 32,
+                    cursor: "pointer",
+                }}
+                onClick={toggleMenu}
+            >
+                <Icons type="close" style={{ width: 32 }} color="#828282" />
             </span>
             {(open || !open) && (
                 <ul className={menu.menu} data-menu={open ? "1" : ""}>
                     <li>
-                        <a className="link" href="/" style={{fontSize: 24}}>
+                        <a className="link" href="/" style={{ fontSize: 24 }}>
                             Spicy Green Book
                         </a>
                     </li>
@@ -55,7 +66,9 @@ export default function Header(props) {
                         </a>
                     </li>
                     <li>
-                        {/*<a className="link" href="/our-process">Our Process</a>*/}
+                        <a className="link" href="/our-process">
+                            Our Process
+                        </a>
                     </li>
                     <li>
                         <a className="link" href="/volunteer">
@@ -79,8 +92,13 @@ export default function Header(props) {
                 onClick={toggleMenu}
                 data-menu={open ? "1" : ""}
             />
-            <span className={menu.iconClosed} data-menu={open ? "1" : ""} onClick={toggleMenu} style={style} >
-                <Icons type="menu" style={{width: 32}} color={style.color} />
+            <span
+                className={menu.iconClosed}
+                data-menu={open ? "1" : ""}
+                onClick={toggleMenu}
+                style={style}
+            >
+                <Icons type="menu" style={{ width: 32 }} color={style.color} />
             </span>
         </div>
     );

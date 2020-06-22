@@ -7,6 +7,7 @@ export default function Header(props) {
             </div>
             <div className="col">
                 <a className="link" href="/donate">Donate</a>
+                <a className="link" href="/about">About Us</a>
                 <a className="link" href="/our-process">Our Process</a>
                 <a className="link" href="/volunteer">Volunteer</a>
                 <a className="link" href="/updates">Latest Updates</a>

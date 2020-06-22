@@ -66,6 +66,11 @@ export default function Header(props) {
                         </a>
                     </li>
                     <li>
+                        <a className="link" href="/about">
+                            About Us
+                        </a>
+                    </li>
+                    <li>
                         <a className="link" href="/our-process">
                             Our Process
                         </a>

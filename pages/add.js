@@ -21,7 +21,7 @@ export default (props) => {
                 var spl = pair.split("=");
                 query[decodeURIComponent(spl[0])] = decodeURIComponent(spl[1]);
             });
-        console.log("props", props, "query", query);
+
 
         if (query.preview) {
             console.log('execute preview ref_id', query.preview)

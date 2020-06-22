@@ -4,6 +4,7 @@ import Head from "next/head";
 import css_content from '../css/home.module.css';
 import { getContent, getListings } from "../utils/getListings";
 import ContentPageHeader from "../components/ContentPageHeader";
+import {RichText} from 'prismic-reactjs';
 import Menu from "../components/Menu";
 import Footer from "../components/Footer";
 
@@ -56,9 +57,8 @@ export default (props) => {
             <div id="page">
                 <ContentPageHeader />
                 <div className="content" style={{padding: '40px 20px'}}>
-                    {content.body.map((text, i) => (
-                        <p key={i}>{text}</p>
-                    ))}
+                    <h1>{content.page_title}</h1>
+                    {RichText.render(content._body.value)}
                 </div>
                 <Footer />
             </div>

@@ -245,8 +245,13 @@ export default (props) => {
                             <p style={{paddingBottom: 40}}>{update.body}</p>
                         </div>
                     ))}
-                    <div style={{marginTop: 20}}>
-                        <a class="button" href="/updates">See All Updates</a>
+                    <div style={{marginTop: 20, textAlign: 'center'}}>
+                        <a class="button" href="/updates">
+                            <span style={{display: 'inline-block', verticalAlign: 'middle'}}>
+                                See All Updates
+                            </span>
+                            <Icons type="scrollDown" color="#fff" style={{display: 'inline-block', width: 16, height: 16, verticalAlign: 'middle', marginLeft: 6, transform: 'rotate(-90deg)'}} />
+                        </a>
                     </div>
                 </section>
                 <section style={{backgroundColor: '#EFEDEA', marginTop: 60, marginBottom: 60}}>

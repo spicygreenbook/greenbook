@@ -59,7 +59,7 @@ export default (props) => {
                 <div className="content" style={{padding: '40px 20px'}}>
                     <h1>{content.page_title}</h1>
                     <p>
-                        <a href="https://forms.gle/vJ114r7J3JkE8jrs9" class="button">Volunteer Form</a>
+                        <a href="https://forms.gle/vJ114r7J3JkE8jrs9" className="button">Volunteer Form</a>
                     </p>
                     <div className={css_content.content}>
                         {RichText.render(content._body.value, (doc) => {
@@ -68,7 +68,7 @@ export default (props) => {
                         })}
                     </div>
                     <p>
-                        <a href="https://forms.gle/vJ114r7J3JkE8jrs9" class="button">Volunteer Form</a>
+                        <a href="https://forms.gle/vJ114r7J3JkE8jrs9" className="button">Volunteer Form</a>
                     </p>
                 </div>
                 <div style={{backgroundColor: '#EFEDEA', marginTop: 60, marginBottom: 60}}>

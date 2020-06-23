@@ -246,7 +246,7 @@ export default (props) => {
                         </div>
                     ))}
                     <div style={{marginTop: 20, textAlign: 'center'}}>
-                        <a class="button" href="/updates">
+                        <a className="button" href="/updates">
                             <span style={{display: 'inline-block', verticalAlign: 'middle'}}>
                                 See All Updates
                             </span>

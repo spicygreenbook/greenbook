@@ -60,7 +60,7 @@ export default (props) => {
                     <h1>{content.page_title}</h1>
                     {RichText.render(content._body.value)}
                     <p>
-                        <a class="button" href="https://docs.google.com/forms/d/e/1FAIpQLSdWxF-zHhh76WjEu1T1EM-2NAeE7Y3NHTGMLruJe_oXeSrkRQ/viewform" target="_blank">Add Listing Form</a>
+                        <a className="button" href="https://docs.google.com/forms/d/e/1FAIpQLSdWxF-zHhh76WjEu1T1EM-2NAeE7Y3NHTGMLruJe_oXeSrkRQ/viewform" target="_blank">Add Listing Form</a>
                     </p>
                 </div>
                 <Footer />

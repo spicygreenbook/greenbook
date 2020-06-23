@@ -10,15 +10,18 @@ import Menu from "../components/Menu";
 import Footer from "../components/Footer";
 
 const fuzzySearch = (string, srch) => {
+    //console.log('srch', srch)
+    let regy = srch
+                .trim()
+                .split(/\s+/)
+                .map(function (c) {
+                    return c.split(" ").join("\\W*");
+                })
+                .join("|");
+    //console.log(regy);
 	return (string || "").match(
 		RegExp(
-			srch
-				.trim()
-				.split(/\s+/)
-				.map(function (c) {
-					return c.split("").join("\\W*");
-				})
-				.join("|"),
+			regy,
 			"gi"
 		)
 	);
@@ -44,8 +47,6 @@ export default (props) => {
 	}
 	const filter = (row) => {
 		var go = true;
-
-
 		if (search) {
 			if (!fuzzySearch(row._search, search)) {
 				go = false;
@@ -60,18 +61,27 @@ export default (props) => {
 
 	const [cuisine, setCuisine] = useState(query.cuisine || '');
 	const [filterConfig, setFilterConfig] = useState({search: query.search || '', cuisine: query.cuisine || ''});
-	const [search, setSearch] = useState(query.search);
+
+    const fixSearch = (words) => {
+        return (words || '').replace(/\+/, ' ').replace(/[^a-z0-9 ]/gi, '');
+    }
+    const [search, setSearch] = useState(fixSearch(query.search));
+
 	const [width, setWidth] = useState(get_width);
 	const [filteredList, setFilteredList] = useState(
 		listings.filter(filter)
 	);
 
+    let timer;
     useEffect(
         () => {
-        	if (filterConfig.cuisine !== cuisine || filterConfig.search !== search) {
-				setFilteredList(listings.filter(filter))
-				setFilterConfig({search: search, cuisine: cuisine})
-			}
+            clearTimeout(timer);
+            timer = setTimeout(() => {
+                if (filterConfig.cuisine !== cuisine || filterConfig.search !== search) {
+                    setFilteredList(listings.filter(filter))
+                    setFilterConfig({search: search, cuisine: cuisine})
+                }
+            }, 10);
         },
         [ cuisine, search ]
     );
@@ -125,7 +135,7 @@ export default (props) => {
                                 <label>
                                     <div>Search</div>
                                     <div style={{marginTop:17}}>
-                                        <input className={home_styles.select} name="search" value={search} placeholder="Enter Location or keywords"  onChange={(e) => setSearch(e.target.value)} />
+                                        <input className={home_styles.select} name="search" value={search} placeholder="Enter Location or keywords"  onChange={(e) => setSearch(fixSearch(e.target.value))} />
                                     </div>
                                 </label>
                             </div>

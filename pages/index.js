@@ -85,7 +85,7 @@ export default (props) => {
                         <a href="/" className={home_styles.logo}>Spicy Green Book</a>
 
                         <div className={home_styles.heroContent}>
-                            <h1 style={{color: '#fff'}}>Support Black Owned Business</h1>
+                            <h1 style={{color: '#fff'}}>Support Black-Owned Business</h1>
                             <p>
                                 <a href="/volunteer" className={home_styles.buttonHero}>Volunteer</a>
                                 <a href="/donate" className={home_styles.buttonHero}>Donate</a>
@@ -93,7 +93,7 @@ export default (props) => {
                             </p>
                             <p style={{fontSize: 20, maxWidth: 500, lineHeight: '160%', margin: '40px 0'}}>
                                 Help be the change.<br />
-                                We're building a list of <b>Food & Beverage</b> businesses that you can support in <b>Southern California</b>.
+                                We're building a list of <b>food & beverage</b> businesses that you can support in <b>Southern California</b>.
                             </p>
                             <div className={home_styles.searchBox}>
                                 <form method="GET" action="/search">
@@ -155,7 +155,7 @@ export default (props) => {
                         </ul>
                         <p>
                             We have a hard-working and <b>growing</b> team of volunteers to help provide this service with skills in writing, 
-                            photography, and other professional services. We will do our best to <b>represent everyone in our list with high quality photography and story-telling</b> so everyone can enjoy discovering and learning more about businesses in their area.
+                            photography, and other professional services. We will do our best to <b>represent everyone on our list with high-quality photography and story telling</b> so they can enjoy discovering and learning more about businesses in their area.
                         </p>
                     </div>
                     <div className={home_styles.rightCol}>
@@ -226,9 +226,9 @@ export default (props) => {
                 </section>
                 <section className="content" style={{marginTop: 60}}>
                     <div className={home_styles.leftCol}>
-                        <h2>A Peek Back To Look Forward</h2>
+                        <h2>A Peek Back to Look Forward</h2>
                         <p>
-                            From 1936 to 1964, in the midst of the Jim Crow era, black men and women were under the persistent threat of violence after sunset in the form of lynchings and other very real hate crimes. To help many escape this violence, Victor Green created the <a href="https://savingplaces.org/stories/green-book-historic-travel-guide-for-black-america#.XuVK1J5Kjlx" target="_blank">Negro Motorist Green Book</a>. This book listed vital places of refuge during the segregation era that included hotels, gas stations, grocery stores, night clubs, restaurants, and “tourist homes” where homeowners welcomed travelers who had nowhere else to go. This valuable note of history not only shows us the racial discrimination that existed, but also the importance and ingenuity of black entrepreneurship. Today we continue to push forward with black innovation and invite you to be a part of it.
+                            From 1936 to 1964, in the midst of the Jim Crow era, black men and women were under the persistent threat of violence after sunset in the form of lynchings and other palpable hate crimes. To help many escape this violence, Victor Green created the <a href="https://savingplaces.org/stories/green-book-historic-travel-guide-for-black-america#.XuVK1J5Kjlx" target="_blank">Negro Motorist Green Book</a>. It listed vital places of refuge during the segregation era that included hotels, gas stations, grocery stores, night clubs, restaurants and “tourist homes” where homeowners welcomed travelers who had nowhere else to go. This valuable note of history not only shows us the racial discrimination that existed but also the importance and ingenuity of black entrepreneurship. Today we continue to push forward with black innovation and invite you to be a part of it.
                         </p>
                     </div>
                     <div className={home_styles.rightCol}>

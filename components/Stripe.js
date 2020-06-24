@@ -155,7 +155,7 @@ const CheckoutForm = (props) => {
 					id="payment-form"
 				>
 					<div className={stripe_css.formRow}>
-						<label htmlFor="card-name">Name On Card</label>
+						<label htmlFor="card-name">Name on card</label>
 						<input
 							type="text"
 							name="name"
@@ -167,10 +167,10 @@ const CheckoutForm = (props) => {
 						/>
 					</div>
 					<div className={stripe_css.formRow}>
-						<label htmlFor="card-address">Billing Address</label>
+						<label htmlFor="card-address">Billing address</label>
 						<div className="ib middle">
 							<div className={stripe_css.subLabel}>
-								Street Address
+								Street address
 							</div>
 							<input
 								type="text"
@@ -185,7 +185,7 @@ const CheckoutForm = (props) => {
 							/>
 						</div>
 						<div className="ib middle">
-							<div className={stripe_css.subLabel}>Zip Code</div>
+							<div className={stripe_css.subLabel}>Zip code</div>
 							<input
 								type="text"
 								name="name"
@@ -245,7 +245,7 @@ const CheckoutForm = (props) => {
 							}
 							onClick={(e) => {
 								if (!useCustomAmount) {
-									setValue("amount", 5000);
+									setValue("amount", 155);
 									setUseCustomAmount(true);
 								} else {
 									// do nothing its already custom
@@ -270,7 +270,7 @@ const CheckoutForm = (props) => {
 					</div>
 					<div className={stripe_css.formRow}>
 						<label htmlFor="card-element">
-							Credit or Debit Card
+							Credit or debit card
 						</label>
 						<div
 							id="card-element"

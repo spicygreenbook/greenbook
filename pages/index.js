@@ -9,10 +9,12 @@ import Icons from "../components/Icons";
 import Menu from "../components/Menu";
 import Footer from "../components/Footer";
 
+
 const scrollToRef = (fullContainerRef, ref) => {
     let scrollAmount = (ref.current.offsetLeft - fullContainerRef.current.scrollLeft);
     fullContainerRef.current.scrollBy({top: 0, left: scrollAmount, behavior: 'smooth'})
 }
+
 
 export default (props) => {
 

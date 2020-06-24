@@ -13,14 +13,9 @@
   border: 1px solid #fff;
   text-decoration: none;
   color: #fff;
-  position: absolute;
-  top: 60px;
-  right: 20px;
   padding: 12px 20px;
   display: inline-block;
-}
-.buttonHero2 {
-  right: 180px;
+  margin: 0 20px 20px 0;
 }
 .logo {
   text-decoration: none;

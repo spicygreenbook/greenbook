@@ -83,11 +83,14 @@ export default (props) => {
                     <div className={home_styles.heroContainer}>
 
                         <a href="/" className={home_styles.logo}>Spicy Green Book</a>
-                        <a href="/volunteer" className={home_styles.buttonHero + ' ' + home_styles.buttonHero2}>Volunteer</a>
-                        <a href="/donate" className={home_styles.buttonHero}>Donate</a>
 
                         <div className={home_styles.heroContent}>
                             <h1 style={{color: '#fff'}}>Support Black Owned Business</h1>
+                            <p>
+                                <a href="/volunteer" className={home_styles.buttonHero}>Volunteer</a>
+                                <a href="/donate" className={home_styles.buttonHero}>Donate</a>
+                                <a href="/add" className={home_styles.buttonHero}>Add Listing</a>
+                            </p>
                             <p style={{fontSize: 20, maxWidth: 500, lineHeight: '160%', margin: '40px 0'}}>
                                 Help be the change.<br />
                                 We're building a list of <b>Food & Beverage</b> businesses that you can support in <b>Southern California</b>.

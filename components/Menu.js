@@ -20,7 +20,7 @@ export default function Header(props) {
                   color: "#fff",
                   position: "absolute",
                   right: 20,
-                  top: 20,
+                  top: 75,
                   width: 32,
                   cursor: "pointer",
                   zIndex: 3,

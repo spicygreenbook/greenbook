@@ -205,6 +205,15 @@ async function getContent(config) {
 		}
 	})
 
+	Object.keys(content).forEach(key => {
+		if (Array.isArray(content[key])) {
+			content[key] = content[key].filter(row => {
+				return row !== undefined
+			})
+		}
+	})
+
+
 	return {
 		content
 	}

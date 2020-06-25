@@ -88,7 +88,7 @@ async function getData(config) {
 export async function getStaticProps(context) {
 
     let content = await getData(context);
-
+    console.log('ssr content', content)
     return {
         props: {
             content: content

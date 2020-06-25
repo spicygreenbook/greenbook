@@ -123,7 +123,7 @@ export default (props) => {
                                 }
                                 {content.instagram && 
                                     <p>
-                                        <a href={'https://instagram.com/' + (content.instagram.indexOf('@') > -1 ? content.instagram.slice(1) : content.instagram)}>
+                                        <a href={'https://instagram.com/' + (content.instagram.indexOf('@') > -1 ? content.instagram.slice(1) : content.instagram)} target="_blank">
                                             <Icons type="instagram" color="#B56230" style={{width: 16, height: 16, marginRight: 10}} />
                                             <span className="ib middle">{content.instagram.substr(1)}</span>
                                         </a>
@@ -131,7 +131,7 @@ export default (props) => {
                                 }
                                 {content.website_url && 
                                     <p>
-                                        <a href={content.website_url}>
+                                        <a href={content.website_url} target="_blank">
                                             <Icons type="link" color="#B56230" style={{width: 16, height: 16, marginRight: 10}} />
                                             <span className="ib middle">{content.website_url
                                                 .replace(

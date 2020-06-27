@@ -70,6 +70,11 @@ export default function Header(props) {
                             About Us
                         </a>
                     </li>
+                   <li>
+                        <a className="link" href="/staff">
+                            Staff
+                        </a>
+                    </li>
                     <li>
                         <a className="link" href="/our-process">
                             Our Process
@@ -88,6 +93,11 @@ export default function Header(props) {
                     <li>
                         <a className="link" href="/add">
                             Add Your Listing
+                        </a>
+                    </li>
+                    <li>
+                        <a className="link" href="/contact">
+                            Contact Us
                         </a>
                     </li>
                 </ul>

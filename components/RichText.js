@@ -1,0 +1,46 @@
+
+export default function RichText(props) {
+    let content = props.render;
+
+    function part(part, key, ar) {
+
+        let html = '';
+        if (part.spans) {
+            let chars = part.text.split('');
+            part.spans.forEach(span => {
+                var injectStart = '';
+                var injectEnd = '';
+                if (span.data.type === 'Link.web') {
+                    injectStart = '<a href="' + (span.data.value.url || '') + '" target="">';
+                    injectEnd = '</a>';
+                }
+                chars.splice(span.start, 0, injectStart)
+                chars.splice(span.end + 1, 0, injectEnd)
+            })
+            html = chars.join('');
+            console.log('html', html);
+        }
+
+        if (part.type === 'heading1') {
+            return (<h1 key={key}>{part.text}</h1>)
+        } else if (part.type === 'heading2') {
+            return (<h2 key={key}>{part.text}</h2>)
+        } else if (part.type === 'heading3') {
+            return (<h3 key={key}>{part.text}</h3>)
+        } else if (part.type === 'heading4') {
+            return (<h4 key={key}>{part.text}</h4>)
+        } else if (part.type === 'heading5') {
+            return (<h5 key={key}>{part.text}</h5>)
+        } else if (part.type === 'heading6') {
+            return (<h6 key={key}>{part.text}</h6>)
+        } else if (part.type === 'paragraph' && html) {
+            return (<p key={key} dangerouslySetInnerHTML={{__html: html}}/>)
+        } else if (part.type === 'paragraph') {
+            return (<p key={key}>{part.text}</p>)
+        }
+        return ('<span></span>')
+    }
+
+    return (<div>{content.map(part)}</div>)
+}
+ 

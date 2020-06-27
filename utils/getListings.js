@@ -14,7 +14,7 @@ const getPrismicGroup = (ref, key) => {
 	if (ref[key] && ref[key].type === 'Text') {
 		return ref[key].value
 	} else if (ref[key] && ref[key].type === 'Image') {
-		if (ref[key].value.main.url) {
+		if (ref[key].value.main && ref[key].value.main.url) {
 			return {
 				width: ref[key].value.main.dimensions.width,
 				height: ref[key].value.main.dimensions.height,
@@ -235,25 +235,32 @@ async function getUpdates(config) {
 		})
 	}
 
-	var url = `https://spicygreenbook.cdn.prismic.io/api/v1/documents/search?ref=${master_ref}&q=%5B%5Bat(document.type%2C+%22${config.type}%22)%5D%5D&orderings=%5Bmy.updates.date%20desc%5D${config.limit ? ('&pageSize=' + config.limit) : ''}`;
-	let data = await fetch(url);
-	let parsed_data = await data.json();
-	//console.log('parsed_data', parsed_data)
+	let url;
+	let rows = [];
+	if (config.type === 'updates'){
+		url = `https://spicygreenbook.cdn.prismic.io/api/v1/documents/search?ref=${master_ref}&q=%5B%5Bat(document.type%2C+%22${config.type}%22)%5D%5D&orderings=%5Bmy.updates.date%20desc%5D${config.limit ? ('&pageSize=' + config.limit) : ''}`;
+	} else if (config.type === 'staff') {
+		url = `https://spicygreenbook.cdn.prismic.io/api/v1/documents/search?ref=${master_ref}&q=%5B%5Bat(document.type%2C+%22${config.type}%22)%5D%5D&orderings=%5Bmy.staff.order%20desc%5D${config.limit ? ('&pageSize=' + config.limit) : ''}`;
+	}
+	if (url) {
+		let data = await fetch(url);
+		let parsed_data = await data.json();
+		//console.log('parsed_data', parsed_data)
 
-	//console.log('parsed', parsed_data)
-	let updates = parsed_data.results.map((doc, i) => {
-		let content = {};
-		Object.keys(doc.data.updates).forEach(key => {
-			if (doc.data.updates[key].type === 'Group') {
-				content[key] = getPrismicGroupAdvanced(doc.data.updates[key]);
-			} else {
-				content[key] = getPrismicValue(doc.data.updates[key]);
-			}
+		//console.log('parsed', parsed_data)
+		rows = parsed_data.results.map((doc, i) => {
+			let content = {};
+			Object.keys(doc.data[config.type]).forEach(key => {
+				if (doc.data[config.type][key].type === 'Group') {
+					content[key] = getPrismicGroupAdvanced(doc.data[config.type][key]);
+				} else {
+					content[key] = getPrismicValue(doc.data[config.type][key]);
+				}
+			})
+			return content;
 		})
-		return content;
-	})
-
-	return updates
+	}
+	return rows
 }
 
 module.exports = {

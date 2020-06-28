@@ -93,7 +93,7 @@ export default (props) => {
                             </p>
                             <p style={{fontSize: 20, maxWidth: 500, lineHeight: '160%', margin: '40px 0'}}>
                                 Help be the change.<br />
-                                We're building a list of <b>food & beverage</b> businesses that you can support in <b>Southern California</b>.
+                                We're building a list of <b>food & beverage</b> businesses that you can support.
                             </p>
                             <div className={home_styles.searchBox}>
                                 <form method="GET" action="/search">

@@ -67,13 +67,6 @@ export default (props) => {
 
     return (
         <div className="page-home">
-            <Head>
-                <title>Spicy Green Book</title>
-                <meta
-                    name="description"
-                    content={content.description}
-                />
-            </Head>
             <header>
                 <Menu mode="home" />
             </header>

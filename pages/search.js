@@ -103,11 +103,9 @@ export default (props) => {
 	return (
 		<div>
 			<Head>
-				<title>Spicy Green Book</title>
-				<meta
-					name="description"
-					content="Support local black owned businesses with our free directory"
-				/>
+                <title>Search Our List - Spicy Green Book</title>
+                <meta property="og:title" content="Search Our List - Spicy Green Book" key="title" />
+                <meta property="og:url" content={"https://spicygreenbook.com/search"} key="og:url" />
 			</Head>
             <header>
                 <Menu mode="content" />
@@ -237,13 +235,12 @@ export default (props) => {
 
 export async function getStaticProps(context) {
 	let data = await getListings({});
-    let get_content = await getContent({type: 'home_page'});
 
     data.listings.forEach(row => {
     	row._search = JSON.stringify(row)
     })
 
 	return {
-		props: { listings: data.listings, cuisines: data.cuisines, content: get_content.content },
+		props: { listings: data.listings, cuisines: data.cuisines },
 	};
 }

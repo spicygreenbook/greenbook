@@ -13,11 +13,6 @@ export default class MyDocument extends Document {
             <meta name="msapplication-TileColor" content="#da532c" />
             <meta name="theme-color" content="#eaeaea" />
             <link rel="preconnect" href="https://www.google-analytics.com" />
-
-            <meta property="og:type" content="website"/>
-            <meta property="og:locale" content="en_IE"/>
-            <meta property="og:site_name" content="Spicy Green Book"/>
-
         </Head>
         <body>
           <Main />

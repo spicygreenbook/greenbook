@@ -45,11 +45,23 @@ export default (props) => {
     return (
         <div>
             <Head>
-                <title>{content.page_title} | Spicy Green Book</title>
-                <meta
+                <title>{content.page_title} - Spicy Green Book</title>
+                {content.description && 
+                    <meta
                     name="description"
-                    content={content.description || ''}
-                />
+                    content={content.description}
+                    key="description"
+                    />
+                }
+                {content.description && 
+                    <meta
+                    name="og:description"
+                    content={content.description}
+                    key="og:description"
+                    />
+                }
+                <meta property="og:title" content={content.page_title + " - Spicy Green Book"} key="title" />
+                <meta property="og:url" content={"https://spicygreenbook.com/" + content.uid } key="og:url" />
             </Head>
             <header>
                 <Menu mode="content" />

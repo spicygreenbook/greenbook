@@ -65,15 +65,27 @@ export default (props) => {
         <div>
             <Head>
                 <title>{content.name} - Spicy Green Book</title>
-                <meta
+                {content.description && 
+                    <meta
                     name="description"
-                    content={content.description || 'Support local black owned businesses with our free directory'}
-                />
-                <meta property="og:title" content={content.name + " - Spicy Green Book"} />
+                    content={content.description}
+                    key="description"
+                    />
+                }
+                {content.description && 
+                    <meta
+                    name="og:description"
+                    content={content.description}
+                    key="og:description"
+                    />
+                }
+                <meta property="og:title" content={content.name + " - Spicy Green Book"} key="og:title" />
                 <meta
                     name="og:image"
                     content={content.primary_image.url + '&w=1200'}
+                    key="og:image"
                 />
+                <meta property="og:url" content={"https://spicygreenbook.com/biz/" + content._slug } key="og:url" />
             </Head>
             <header>
                 <Menu mode="content" />

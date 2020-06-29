@@ -13,6 +13,7 @@ export default class MyDocument extends Document {
             <meta name="msapplication-TileColor" content="#da532c" />
             <meta name="theme-color" content="#eaeaea" />
             <link rel="preconnect" href="https://www.google-analytics.com" />
+            <link rel="manifest" href="site.webmanifest" />
         </Head>
         <body>
           <Main />
@@ -27,7 +28,13 @@ export default class MyDocument extends Document {
               gtag('js', new Date());
 
               gtag('config', 'UA-168538359-1');
-            `}} />
+            `}} />          <script
+            dangerouslySetInnerHTML={{
+              __html: `
+              if('serviceWorker' in navigator) {
+                  navigator.serviceWorker.register('./sw.js');
+              };
+              `}} />
         </body>
       </html>
     )

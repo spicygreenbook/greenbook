@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /*
+
+Disallow: /api/*
+
+Sitemap: https://spicygreenbook.com/sitemap.xml

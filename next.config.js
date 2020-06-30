@@ -1,5 +1,5 @@
 const { getListings } = require("./utils/getListings");
-const generateSiteMap = require("./utils/generateSiteMap");
+const  generateSiteMap = require("./utils/generateSiteMap");
 
 async function handle () {
     let data = await getListings({});
@@ -7,4 +7,7 @@ async function handle () {
     return {}
 }
 
-module.exports = handle()
+
+module.exports = {
+    generaiteSiteMap: handle()
+}

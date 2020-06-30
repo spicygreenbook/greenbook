@@ -58,4 +58,4 @@ async function generateSiteMap(data) {
 
 }
 
-module.exports = generateSiteMap;
+module.exports = generateSiteMap

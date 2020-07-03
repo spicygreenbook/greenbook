@@ -186,6 +186,11 @@ footer .col:first-child {
     display: block;
     width: auto;
   }
+  footer .col, footer .col:first-child {
+    display: block;
+    width: auto;
+    padding: 0;
+  }
 }
 
 

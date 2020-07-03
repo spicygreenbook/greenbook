@@ -1,4 +1,4 @@
-var cacheName = 'v1:static';
+var cacheName = 'v2:static';
 
 /*
 self.addEventListener('install', function(e) {

@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import Link from "next/link";
 import Icons from "./Icons";
 import menu from "../css/menu.module.css";
 
@@ -38,7 +39,11 @@ export default function Header(props) {
     };
 
     return (
-        <div id="menuContainer" className={menu.container} data-menu={open ? "1" : ""}>
+        <div
+            id="menuContainer"
+            className={menu.container}
+            data-menu={open ? "1" : ""}
+        >
             <span
                 className={menu.iconOpened}
                 data-menu={open ? "1" : ""}
@@ -56,49 +61,51 @@ export default function Header(props) {
             {(open || !open) && (
                 <ul className={menu.menu} data-menu={open ? "1" : ""}>
                     <li>
-                        <a className="link" href="/" style={{ fontSize: 24 }}>
-                            Spicy Green Book
-                        </a>
+                        <Link href="/">
+                            <a className="link" style={{ fontSize: 24 }}>
+                                Spicy Green Book
+                            </a>
+                        </Link>
                     </li>
                     <li>
-                        <a className="link" href="/donate">
-                            Donate
-                        </a>
+                        <Link href="/donate">
+                            <a className="link">Donate</a>
+                        </Link>
                     </li>
                     <li>
-                        <a className="link" href="/about">
-                            About Us
-                        </a>
-                    </li>
-                   <li>
-                        <a className="link" href="/staff">
-                            Staff
-                        </a>
+                        <Link href="/about">
+                            <a className="link">About Us</a>
+                        </Link>
                     </li>
                     <li>
-                        <a className="link" href="/our-process">
-                            Our Process
-                        </a>
+                        <Link href="/staff">
+                            <a className="link">Staff</a>
+                        </Link>
                     </li>
                     <li>
-                        <a className="link" href="/volunteer">
-                            Volunteer
-                        </a>
+                        <Link href="/our-process">
+                            <a className="link">Our Process</a>
+                        </Link>
                     </li>
                     <li>
-                        <a className="link" href="/updates">
-                            Latest Updates
-                        </a>
+                        <Link href="/volunteer">
+                            <a className="link">Volunteer</a>
+                        </Link>
                     </li>
                     <li>
-                        <a className="link" href="/add">
-                            Add Your Listing
-                        </a>
+                        <Link href="/updates">
+                            <a className="link">Latest Updates</a>
+                        </Link>
                     </li>
                     <li>
-                        <a className="link" href="/contact">
-                            Contact Us
-                        </a>
+                        <Link href="/add">
+                            <a className="link">Add Your Listing</a>
+                        </Link>
+                    </li>
+                    <li>
+                        <Link href="/contact">
+                            <a className="link">Contact Us</a>
+                        </Link>
                     </li>
                 </ul>
             )}

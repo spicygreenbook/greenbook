@@ -217,7 +217,7 @@ export default (props) => {
                                     </a>
                                 }
                                 {content.photos_credit_instagram && 
-                                    <a className="ib middle" href={'https://instagram.com/' + (content.photos_credit_instagram.indexOf('@') > -1 ? content.photos_credit_instagram.slice(1) : content.instagram)} style={{marginRight: 20}} target="_blank">
+                                    <a className="ib middle" href={'https://instagram.com/' + (content.photos_credit_instagram.indexOf('@') > -1 ? content.photos_credit_instagram.slice(1) : content.photos_credit_instagram)} style={{marginRight: 20}} target="_blank">
                                         <Icons type="instagram" color="#B56230" style={{display: 'inline-block', width: 16, height: 16, verticalAlign: 'middle', marginRight: 5}} />
                                         {content.photos_credit_instagram}
                                     </a>

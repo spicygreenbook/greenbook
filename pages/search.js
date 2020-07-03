@@ -8,6 +8,7 @@ import Icons from "../components/Icons.js";
 import home_styles from '../css/home.module.css';
 import Menu from "../components/Menu";
 import Footer from "../components/Footer";
+import { useRouter } from "next/router";
 
 const fuzzySearch = (string, srch) => {
     //console.log('srch', srch)
@@ -29,6 +30,7 @@ const fuzzySearch = (string, srch) => {
 
 
 export default (props) => {
+    const router = useRouter();
 	let { listings, cuisines, content } = props;
 
 	let query = {};
@@ -120,15 +122,30 @@ export default (props) => {
                 </div>
     			<div className={list.layoutList} style={{backgroundColor: '#fff'}}>
     				<div>
-    	                <a className="buttonBack" href="/" style={{whiteSpace: 'nowrap', marginBottom: 40}}>
+    	                <Link href="/"><a className="buttonBack" style={{whiteSpace: 'nowrap', marginBottom: 40}}>
     	                    <Icons type="left" color="#B56230" style={{display: 'inline-block', width: 16, height: 16, verticalAlign: 'middle', marginRight: 20}} />
     	                    <span style={{display: 'inline-block', verticalAlign: 'middle'}}>
     	                        Back To Home
     	                    </span>
-    	                </a>
+    	                </a></Link>
     	            </div>
                     <div className={home_styles.searchBox} style={{textAlign: 'left', position: 'relative', zIndex: 2, padding: '20px 0'}}>
-                        <form method="GET" action="/search">
+                        <form method="GET" action="/search" 
+                            onSubmit={(e) => {
+                                e.preventDefault();
+                                let query = {};
+                                if (cuisine) {
+                                    query.cuisine = cuisine;
+                                }
+                                if (search) {
+                                    query.search = search;
+                                }
+                                router.push({
+                                    pathname: "/search",
+                                    query: query,
+                                });
+                            }}
+                        >
                             <div className={home_styles.searchBoxItem}>
                                 <label>
                                     <div>Search</div>

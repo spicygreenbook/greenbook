@@ -157,7 +157,7 @@ export default (props) => {
                                                 .replace(
                                                     "www.",
                                                     ""
-                                                )}</span>
+                                                ).split('/')[0]}</span>
                                         </a>
                                     </p>
                                 }
@@ -194,6 +194,35 @@ export default (props) => {
                                 <h3 style={{color: '#29293E', fontSize: 18, fontWeight: 'normal', margin: 0}}>About {content.name}</h3>
                                 {RichText.render(content._bio.value)}
                             </div>
+                        }
+
+                        {content.photos_credit_name && 
+                            <p style={{marginTop: 100}}>
+                                Thank you to professional photographer {content.photos_credit_name} for donating your time and talent providing the photos on this page.<br />
+                                {content.photos_credit_link && 
+                                    <a className="ib middle" href={content.photos_credit_link} style={{marginRight: 20}}>
+                                        <Icons type="link" color="#B56230" style={{display: 'inline-block', width: 16, height: 16, verticalAlign: 'middle', marginRight: 5}} />
+                                        {content.photos_credit_link.replace(
+                                                    "https://",
+                                                    ""
+                                                )
+                                                .replace(
+                                                    "http://",
+                                                    ""
+                                                )
+                                                .replace(
+                                                    "www.",
+                                                    ""
+                                                ).split('/')[0]}
+                                    </a>
+                                }
+                                {content.photos_credit_instagram && 
+                                    <a className="ib middle" href={'https://instagram.com/' + (content.photos_credit_instagram.indexOf('@') > -1 ? content.photos_credit_instagram.slice(1) : content.instagram)} style={{marginRight: 20}}>
+                                        <Icons type="instagram" color="#B56230" style={{display: 'inline-block', width: 16, height: 16, verticalAlign: 'middle', marginRight: 5}} />
+                                        {content.photos_credit_instagram}
+                                    </a>
+                                }
+                            </p>
                         }
                     </div>
                 </div>

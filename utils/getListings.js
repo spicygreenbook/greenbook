@@ -142,6 +142,9 @@ async function getListings(config) {
 			_bio: doc.data.listing.bio || {},
 			home_page_order: getPrismicValue(doc.data.listing.home_page_order),
 			service_area_radius: getPrismicValue(doc.data.listing.service_area_radius),
+			photos_credit_name: getPrismicValue(doc.data.listing.photos_credit_name),
+			photos_credit_link: getPrismicValue(doc.data.listing.photos_credit_link),
+			photos_credit_instagram: getPrismicValue(doc.data.listing.photos_credit_instagram),
 			images: images
 		};
 		console.log('possible missing keys', Object.keys(doc.data.listing).filter(key => {

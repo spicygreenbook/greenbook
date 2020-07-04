@@ -161,6 +161,11 @@ footer .col:first-child {
   padding-right: 20px;
   width: calc(100% - 180px);
 }
+footer .socialIcons, header .socialIcons {
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0 10px 10px 0;
+}
 
 @media all and (min-width: 900px) {
   .grid-3:nth-child(3n+1) {

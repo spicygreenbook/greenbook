@@ -1,10 +1,27 @@
 import Link from "next/link";
+import Icons from "./Icons.js";
 
 export default function Header(props) {
     return (
         <footer className="content" style={{padding: '40px 20px'}}>
             <div className="col">
-                <a href="/" className="link" style={{fontSize: 24}}>Spicy Green Book</a>
+                <div>
+                    <a href="/" className="link" style={{fontSize: 24}}>Spicy Green Book</a>
+                </div>
+                <div>
+                    <a className="socialIcons" href="https://www.instagram.com/spicygreenbook/" target="_blank">
+                        <Icons type="instagram" color="#B56230" className="ib middle" style={{width: 24, height: 24}} />
+                    </a>
+                    <a className="socialIcons" href="https://www.facebook.com/SpicyGreenBook/" target="_blank">
+                        <Icons type="facebook" color="#B56230" className="ib middle" style={{width: 24, height: 24}} />
+                    </a>
+                    <a className="socialIcons" href="https://twitter.com/Spicy_GreenBook" target="_blank">
+                        <Icons type="twitter" color="#B56230" className="ib middle" style={{width: 24, height: 24}} />
+                    </a>
+                    <a className="socialIcons" href="https://www.linkedin.com/company/spicy-green-book/" target="_blank">
+                        <Icons type="linkedin" color="#B56230" className="ib middle" style={{width: 24, height: 24}} />
+                    </a>
+                </div>
             </div>
             <div className="col">
                 <Link href="/donate"><a className="link">Donate</a></Link>

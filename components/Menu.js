@@ -68,6 +68,20 @@ export default function Header(props) {
                         </Link>
                     </li>
                     <li>
+                        <a className="socialIcons" href="https://www.instagram.com/spicygreenbook/" target="_blank">
+                            <Icons type="instagram" color="#B56230" className="ib middle" style={{width: 24, height: 24}} />
+                        </a>
+                        <a className="socialIcons" href="https://www.facebook.com/SpicyGreenBook/" target="_blank">
+                            <Icons type="facebook" color="#B56230" className="ib middle" style={{width: 24, height: 24}} />
+                        </a>
+                        <a className="socialIcons" href="https://twitter.com/Spicy_GreenBook" target="_blank">
+                            <Icons type="twitter" color="#B56230" className="ib middle" style={{width: 24, height: 24}} />
+                        </a>
+                        <a className="socialIcons" href="https://www.linkedin.com/company/spicy-green-book/" target="_blank">
+                            <Icons type="linkedin" color="#B56230" className="ib middle" style={{width: 24, height: 24}} />
+                        </a>
+                    </li>
+                    <li>
                         <Link href="/donate">
                             <a className="link">Donate</a>
                         </Link>

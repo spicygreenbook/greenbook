@@ -6,6 +6,7 @@ import { getContent, getUpdates } from "../utils/getListings";
 import ContentPageHeader from "../components/ContentPageHeader";
 import Menu from "../components/Menu";
 import Footer from "../components/Footer";
+import RichText from '../components/RichText';
 
 export default (props) => {
 
@@ -89,7 +90,7 @@ export default (props) => {
                             <div className="ibb top" style={{width: '80%', paddingLeft: 20}}>
                                 <h3 style={{margin: '0 0 20px 0'}}>{staff.title}</h3>
                                 <h4 style={{margin: '0 0 20px 0'}}>{staff.name}</h4>
-                                <p>{staff.description}</p>
+                                <RichText render={staff._description} />
                                 { staff.links && staff.links.length && staff.links[0].link && staff.links.map(link => (
                                     <p>
                                         <b>{link.link_name}</b>: {link.link_description}<br />

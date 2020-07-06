@@ -260,6 +260,7 @@ async function getUpdates(config) {
 				} else {
 					content[key] = getPrismicValue(doc.data[config.type][key]);
 				}
+				content['_' + key] = doc.data[config.type][key];
 			})
 			return content;
 		})

@@ -286,7 +286,7 @@ export default (props) => {
                         <div className="ib middle" style={{width: 1, paddingTop: '56%'}} />
                         <div className="ib middle" style={{width: 'calc(100% - 1px)', position: 'relative', overflow: 'hidden'}}>
                             <div style={{paddingTop: '56%'}} />
-                            <iframe width="100%" height="100%" src="https://abc7.com/video/embed/?pid=6293409" frameborder="0" scrolling="no" allowfullscreen style={{position: 'absolute', left: 0, top: 0, bottom: 0, right: 0, overflow: 'hidden'}} />
+                            <iframe width="100%" height="100%" src="https://abc7.com/video/embed/?pid=6293409" frameborder="0" scrolling="no" allowFullScreen style={{position: 'absolute', left: 0, top: 0, bottom: 0, right: 0, overflow: 'hidden'}} />
                         </div>
                         <div style={{marginTop: 20}} />
                         <a className="button" href="https://abc7.com/business/new-website-shines-spotlight-on-black-owned-restaurants-across-socal/6293409/" target="_blank">

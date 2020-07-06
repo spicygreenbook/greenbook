@@ -40,7 +40,10 @@ export default function RichText(props) {
         }
         return ('<span></span>')
     }
-
-    return (<div>{content.map(part)}</div>)
+    let use = content;
+    if (Array.isArray(content.value)){
+        use = content.value;
+    }
+    return (<div>{use && use.map(part)}</div>)
 }
  

@@ -111,7 +111,7 @@ export default function Header(props) {
                                     key={i}
                                     className={listingMedia.item}
                                     data-active={scrolledMediaIndex === i ? '1' : ''}
-                                    style={{ backgroundImage: `url(${image.url}&w=400)`}}
+                                    style={{ backgroundImage: `url(${image.url}&w=1024)`}}
                                     data-mode={mode}
                                     onClick={(e) => {
                                         setMode('full')

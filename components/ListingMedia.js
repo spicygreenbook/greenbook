@@ -111,7 +111,7 @@ export default function Header(props) {
                                     key={i}
                                     className={listingMedia.item}
                                     data-active={scrolledMediaIndex === i ? '1' : ''}
-                                    style={{ backgroundImage: `url(${image.url}&w=1024)`}}
+                                    style={{ backgroundImage: `url(${image.url}&w=400)`}}
                                     data-mode={mode}
                                     onClick={(e) => {
                                         setMode('full')
@@ -133,7 +133,7 @@ export default function Header(props) {
             ) : (
                 <div>
                     <div className={"ib middle " + listingMedia.normalLeft}>
-                        <div className={listingMedia.primaryImage} style={{ backgroundImage: `url(${images[0].url}&w=400)`}} onClick={(e) => { setMediaIndex(0); setMode('full'); }} />
+                        <div className={listingMedia.primaryImage} style={{ backgroundImage: `url(${images[0].url}&w=1024)`}} onClick={(e) => { setMediaIndex(0); setMode('full'); }} />
                     </div>
                     <div  className={"ib middle " + listingMedia.normalRight}>
                         {images[1] && <div className={listingMedia.subImage} style={{ backgroundImage: `url(${images[1].url}&w=400)`}} onClick={(e) => { setMediaIndex(1); setMode('full'); }} />}

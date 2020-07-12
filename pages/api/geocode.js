@@ -11,28 +11,70 @@ AWS.config.update({
 
 var docClient = new AWS.DynamoDB.DocumentClient();
 
+// https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=YOUR_API_KEY
+
 async function handler(req, res) {
 
     const tableName = "geocache";
+    let query = (req.query && req.query.query || '').trim().toLowerCase().replace(/[^a-z0-9\-\,\.]/gi, ' ').replace(/  /g, ' ').replace(/  /g, ' ').replace(/  /g, ' ');
+    let error = '';
+    let coords;
 
-    var params = {
-        TableName:tableName,
-        Item:{
-            "query": "yolo time",
-            "geocoordinates": [1223432,23421231]
-        }
-    };
-
-    docClient.put(params, function(err, data) {
-        if (err) {
-            console.error("Unable to add item. Error JSON:", JSON.stringify(err, null, 2));
+    const handleFinal = () => {
+        if (error) {
+            res.statusCode = 500;
+            res.json({error: error});
         } else {
-            console.log("Added item:", JSON.stringify(data, null, 2));
+            res.statusCode = 200;
+            res.json({query: query, coords: coords});
+        }
+    }
+
+    // first try to get the cached results from DynamoDB on AWS
+    return docClient.get({TableName: tableName, Key: {query: query}}, async (err, data) => {
+        if (err) {
+            error = 'Error connecting to backend cache service, please try again';
+        } else {
+            console.log('data', data)
+            if (data && data.Item && data.Item.coords) {
+                coords = data.Item.coords
+                handleFinal();
+            } else {
+                // if we do not get a result, lets hit the mapquest API do get the coords
+                try {
+                    let mapquest_results = await fetch(`http://open.mapquestapi.com/geocoding/v1/address?key=${process.env.MAPQUEST_KEY}&location=${query}`);
+                    let mapquest_json = await mapquest_results.json();
+                    coords = [mapquest_json.results[0].locations[0].latLng.lat, mapquest_json.results[0].locations[0].latLng.lng];
+
+                    if (coords) {
+                        docClient.put({
+                            TableName:tableName,
+                            Item:{
+                                query: query,
+                                "coords": coords
+                            }
+                        }, (err, data) => {
+                            if (err) {
+                                console.error("Unable to add item. Error JSON:", JSON.stringify(err, null, 2));
+                                error = 'Error updating cache on backend cache service, please try again';
+                                handleFinal();
+                            } else {
+                                console.log("Added item:", JSON.stringify(data, null, 2));
+                                handleFinal();
+                            }
+                        });
+                    } else {
+                        error = 'invalid coords from api';
+                        handleFinal();
+                    }
+                } catch(err) {
+                    error = 'Could not lookup that query';
+                    handleFinal();
+                }
+            }
         }
     });
 
-    res.statusCode = 200;
-    return res.json({error: 'sup'});
 }
 
 module.exports = handler;

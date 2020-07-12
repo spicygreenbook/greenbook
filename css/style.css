@@ -139,24 +139,39 @@ h1 {
 .content p{
   margin: 10px 0;
 }
+
 footer {
-  box-sizing: border-box;
-  max-width: 800px;
-  margin: 40px auto;
+  background-color: #000;
+  color: #FBFBFB;
 }
 footer .link, header .link {
   display:block;
-  color: #B56230;
+  color: #FBFBFB;
   text-decoration: none;
   font-size: 18px;
-  font-weight: 600;
+  font-weight: 400;
 }
 footer .col {
   vertical-align: top;
   display:inline-block;
   box-sizing: border-box;
-  width: 180px;
+  width: 16%;
+  position: relative;
+  padding-right: 20px;
 }
+footer .col-l {
+  padding: 8px 0;
+  width: 50%;
+}
+footer .col-r-1:after {
+  content: '';
+  border-right: 2px solid #585858;
+  position: absolute;
+  right: 20px;
+  top: 10px;
+  bottom: 0px;
+}
+
 footer .col:first-child {
   padding-right: 20px;
   width: calc(100% - 180px);
@@ -164,7 +179,7 @@ footer .col:first-child {
 footer .socialIcons, header .socialIcons {
   display: inline-block;
   vertical-align: middle;
-  margin: 0 10px 10px 0;
+  margin: 20px 12px;
 }
 
 @media all and (min-width: 900px) {

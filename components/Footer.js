@@ -8,7 +8,7 @@ export default function Header(props) {
                 <div>
                     <a href="/" className="link" style={{fontSize: 24}}>Spicy Green Book</a>
                 </div>
-                <div>
+                <div style={{marginTop: 10}}>
                     <a className="socialIcons" href="https://www.instagram.com/spicygreenbook/" target="_blank">
                         <Icons type="instagram" color="#B56230" className="ib middle" style={{width: 24, height: 24}} />
                     </a>
@@ -22,6 +22,22 @@ export default function Header(props) {
                         <Icons type="linkedin" color="#B56230" className="ib middle" style={{width: 24, height: 24}} />
                     </a>
                 </div>
+                <div style={{marginTop: 10}}>
+                    We're growing fast, keep up!
+                </div>
+                <div
+                    dangerouslySetInnerHTML={{
+                      __html: `
+                        <div id="mc_embed_signup">
+                            <form action="https://spicygreenbook.us10.list-manage.com/subscribe/post?u=51c52bc37485392a66fae588d&amp;id=e09a86d809" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+                                <div id="mc_embed_signup_scroll" style="line-height: 400%">
+                                    <input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="email address" required style="background:#fff;color: #000">
+                                    <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_51c52bc37485392a66fae588d_e09a86d809" tabindex="-1" value=""></div>
+                                    <input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button">
+                                </div>
+                            </form>
+                        </div>
+                    `}} />
             </div>
             <div className="col">
                 <Link href="/donate"><a className="link">Donate</a></Link>

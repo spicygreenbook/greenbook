@@ -191,50 +191,52 @@ export default (props) => {
     										href={"/biz/" + row._slug}
     										key={"item" + i}
     									>
-    										<div
-    											className={list.box}
-    											style={{ cursor: "pointer" }}
-    										>
-    											<div
-    												className={list.boxImage}
-    												style={{
-    													backgroundImage:
-    														"url(" +
-    														row.primary_image.url +
-    														"&w=400)",
-    												}}
-    											/>
-    											<div className={list.boxContent}>
-    												<h3 className={list.boxTitle}>
-    													{row.name}
-    												</h3>
-    												<p className={list.description}>{row.description}</p>
-    	                                            <Icons type="tag" color="#CF9052" style={{width: 14, height: 14, marginRight: 6}} />
-    	                                            {row.cuisines.map((line, i , ar) => (
-    	                                            	<span key={line} style={{color: '#CF9052',display: 'inline-block', 'verticalAlign': 'middle'}}>
-    	                                                	<span>{line}</span>
-    	                                                	{ar[i+1] && (<span>,{'\u00A0'}</span>)}
-    	                                                </span>
-    	                                            ))}
-    												<div
-    													className={
-    														list.boxContentRight
-    													}
-    												>
-    													{row.phone_number && (
-    														<p>
-    															{row.phone_number}
-    														</p>
-    													)}
-    													{row.address && (
-    														<p>
-    															{row.address}
-    														</p>
-    													)}
+                                            <a>
+        										<div
+        											className={list.box}
+        											style={{ cursor: "pointer" }}
+        										>
+        											<div
+        												className={list.boxImage}
+        												style={{
+        													backgroundImage:
+        														"url(" +
+        														row.primary_image.url +
+        														"&w=400)",
+        												}}
+        											/>
+        											<div className={list.boxContent}>
+        												<h3 className={list.boxTitle}>
+        													{row.name}
+        												</h3>
+        												<p className={list.description}>{row.description}</p>
+        	                                            <Icons type="tag" color="#CF9052" style={{width: 14, height: 14, marginRight: 6}} />
+        	                                            {row.cuisines.map((line, i , ar) => (
+        	                                            	<span key={line} style={{color: '#CF9052',display: 'inline-block', 'verticalAlign': 'middle'}}>
+        	                                                	<span>{line}</span>
+        	                                                	{ar[i+1] && (<span>,{'\u00A0'}</span>)}
+        	                                                </span>
+        	                                            ))}
+        												<div
+        													className={
+        														list.boxContentRight
+        													}
+        												>
+        													{row.phone_number && (
+        														<p>
+        															{row.phone_number}
+        														</p>
+        													)}
+        													{row.address && (
+        														<p>
+        															{row.address}
+        														</p>
+        													)}
 
-    												</div>
-    											</div>
-    										</div>
+        												</div>
+        											</div>
+        										</div>
+                                            </a>
     									</Link>
     								))}
     							</React.Fragment>

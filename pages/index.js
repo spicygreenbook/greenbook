@@ -76,6 +76,9 @@ export default (props) => {
 
     return (
         <div className="page-home">
+            <Head>
+                <title>Spicy Green Book - Support Black-Owned Business</title>
+            </Head>
             <header>
                 <Menu mode="home" />
             </header>

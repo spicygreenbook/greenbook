@@ -285,12 +285,39 @@ export default (props) => {
                     {/*<div className={home_styles.rightCol}>
                         <img src="/images/home1.png" />
                     </div>*/}
-                    <div className={home_styles.rightCol} style={{whiteSpace: 'nowrap', overflow: 'hidden'}}>
-                        <div className="ib middle" style={{width: 1, paddingTop: '56%'}} />
+                    <div className={home_styles.rightCol}>
+                        <a href="https://www.ocregister.com/2020/07/15/spicy-green-book-emulates-historic-green-book-as-virtual-guide-to-black-owned-eateries/" target="_blank">
+                            <img style={{borderRadius:5}} src="https://images.prismic.io/spicygreenbook/1dab1269-5108-4a6f-a84f-927bd2017cb9_Selection_863.png?auto=compress,format&w=400" />
+                        </a>
+                        <div style={{marginTop: 20}} />
+                        <a className="button" href="https://www.ocregister.com/2020/07/15/spicy-green-book-emulates-historic-green-book-as-virtual-guide-to-black-owned-eateries/" target="_blank">
+                            <span
+                                style={{
+                                    display: "inline-block",
+                                    verticalAlign: "middle",
+                                }}
+                            >
+                                Check Us Out On OC Register
+                            </span>
+                            <Icons
+                                type="scrollDown"
+                                color="#fff"
+                                style={{
+                                    display: "inline-block",
+                                    width: 16,
+                                    height: 16,
+                                    verticalAlign: "middle",
+                                    marginLeft: 6,
+                                    transform: "rotate(-90deg)",
+                                }}
+                            />
+                        </a>
+                        <div style={{marginTop: 20}} />
                         <div className="ib middle" style={{width: 'calc(100% - 1px)', position: 'relative', overflow: 'hidden'}}>
                             <div style={{paddingTop: '56%'}} />
                             <iframe width="100%" height="100%" src="https://abc7.com/video/embed/?pid=6293409" frameBorder="0" scrolling="no" allowFullScreen style={{position: 'absolute', left: 0, top: 0, bottom: 0, right: 0, overflow: 'hidden'}} />
                         </div>
+
                         <div style={{marginTop: 20}} />
                         <a className="button" href="https://abc7.com/business/new-website-shines-spotlight-on-black-owned-restaurants-across-socal/6293409/" target="_blank">
                             <span

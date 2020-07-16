@@ -112,6 +112,11 @@ export default function Header(props) {
                         </Link>
                     </li>
                     <li>
+                        <Link href="/press">
+                            <a className="link">Press</a>
+                        </Link>
+                    </li>
+                    <li>
                         <Link href="/add">
                             <a className="link">Add Your Listing</a>
                         </Link>

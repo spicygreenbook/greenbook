@@ -341,6 +341,32 @@ export default (props) => {
                                 }}
                             />
                         </a>
+
+                        <div style={{marginTop: 20}} />
+                        <Link href="/press">
+                            <a className="button">
+                                <span
+                                    style={{
+                                        display: "inline-block",
+                                        verticalAlign: "middle",
+                                    }}
+                                >
+                                    See All Press
+                                </span>
+                                <Icons
+                                    type="scrollDown"
+                                    color="#fff"
+                                    style={{
+                                        display: "inline-block",
+                                        width: 16,
+                                        height: 16,
+                                        verticalAlign: "middle",
+                                        marginLeft: 6,
+                                        transform: "rotate(-90deg)",
+                                    }}
+                                />
+                            </a>
+                        </Link>
                     </div>
                 </section>
                 <section className="content" style={{ marginTop: 60 }}>

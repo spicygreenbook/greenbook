@@ -245,6 +245,8 @@ async function getUpdates(config) {
 		url = `https://spicygreenbook.cdn.prismic.io/api/v1/documents/search?ref=${master_ref}&q=%5B%5Bat(document.type%2C+%22${config.type}%22)%5D%5D&orderings=%5Bmy.updates.date%20desc%5D${config.limit ? ('&pageSize=' + config.limit) : ''}`;
 	} else if (config.type === 'staff') {
 		url = `https://spicygreenbook.cdn.prismic.io/api/v1/documents/search?ref=${master_ref}&q=%5B%5Bat(document.type%2C+%22${config.type}%22)%5D%5D&orderings=%5Bmy.staff.order%20desc%5D${config.limit ? ('&pageSize=' + config.limit) : ''}`;
+	} else if (config.type === 'press') {
+		url = `https://spicygreenbook.cdn.prismic.io/api/v1/documents/search?ref=${master_ref}&q=%5B%5Bat(document.type%2C+%22${config.type}%22)%5D%5D&orderings=%5Bmy.press.date%20desc%5D${config.limit ? ('&pageSize=' + config.limit) : ''}`;
 	}
 	if (url) {
 		let data = await fetch(url);

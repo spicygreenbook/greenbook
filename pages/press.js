@@ -75,21 +75,27 @@ export default (props) => {
                     ))}
                 </div>
                 <div className="content" style={{padding: '20px 20px 40px 20px'}}>
-                    {updates.map(update => (
-                        <div style={{marginBottom: 40}}>
-                            <div className="ibb top" style={{width: '20%'}}>
-                                <a href={update.image.url} target="_blank"><img src={update.image.url + '&w=200'} /></a>
-                            </div>
-                            <div className="ibb top" style={{width: '80%', paddingLeft: 20}}>
-                                <h3 style={{margin: '0 0 20px 0'}}>{update.title}</h3>
-                                <p>{update.date}</p>
-                                <p>{update.body}</p>
-                               {!!update.action_text && <p>
-                                    <a className="buttonSmall" href={update.link}>
-                                        {update.action_text}
-                                    </a>
-                                </p>}
-                            </div>
+                    {updates.map((update, i) => (
+                        <div style={{marginBottom: 100}} key={i}>
+                            <h3 style={{margin: '0 0 20px 0'}}>{update.title}</h3>
+                            <p>{update.name} on {update.date}</p>
+                            <p>{update.body}</p>
+                            {update.image && 
+                                <a target="_blank"><img src={update.image.url + '&w=1024'} style={{borderRadius: 5}}/></a>
+                            }
+                            {update.embed_url && 
+                                <div className="ib middle" style={{width: 'calc(100% - 1px)', position: 'relative', overflow: 'hidden'}}>
+                                    <div style={{paddingTop: '56%'}} />
+                                    <iframe width="100%" height="100%" src={update.embed_url} frameBorder="0" scrolling="no" allowFullScreen style={{position: 'absolute', left: 0, top: 0, bottom: 0, right: 0, overflow: 'hidden'}} />
+                                </div>
+                            }
+
+
+                           {!!update.action_text && <p>
+                                <a className="button" href={update.link} target="_blank">
+                                    {update.action_text}
+                                </a>
+                            </p>}
                         </div>
                     ))}
                 </div>
@@ -102,14 +108,14 @@ export default (props) => {
 async function getData(config) {
     if (!config) { config = {}; }
     console.log('config get data after load', config)
-    let content = await getContent({type: 'content', uid: 'updates', ref_id: config.preview || ''});
+    let content = await getContent({type: 'content', uid: 'press', ref_id: config.preview || ''});
     return content.content
 }
 
 export async function getStaticProps(context) {
 
     let content = await getData(context);
-    let updates = await getUpdates({type: 'updates'});
+    let updates = await getUpdates({type: 'press'});
 
     return {
         props: {

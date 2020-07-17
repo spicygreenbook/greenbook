@@ -24,8 +24,8 @@ export default (props) => {
     const router = useRouter();
     const { content, listings, cuisines, updates } = props;
 
-    const [search, setSearch] = useState("");
-    const [cuisine, setCuisine] = useState("");
+    const [query, setQuery] = useState("");
+    const [location, setLocation] = useState("");
 
     if (typeof window !== "undefined") {
         console.log("props", props);
@@ -146,11 +146,11 @@ export default (props) => {
                                     onSubmit={(e) => {
                                         e.preventDefault();
                                         let query = {};
-                                        if (cuisine) {
-                                            query.cuisine = cuisine;
+                                        if (query) {
+                                            query.q = query;
                                         }
-                                        if (search) {
-                                            query.search = search;
+                                        if (location) {
+                                            query.near = location;
                                         }
                                         router.push({
                                             pathname: "/search",
@@ -160,43 +160,23 @@ export default (props) => {
                                 >
                                     <div className={home_styles.searchBoxItem}>
                                         <label>
-                                            <div>Search</div>
+                                            <div>Search / Cuisine</div>
                                             <div style={{ marginTop: 17 }}>
                                                 <input
                                                     className={
                                                         home_styles.select
                                                     }
-                                                    name="search"
-                                                    value={search}
-                                                    placeholder="Enter Location or keywords"
+                                                    name="q"
+                                                    value={query}
+                                                    placeholder="Tacos, bbq, cheesecake"
                                                     onChange={(e) =>
-                                                        setSearch(
+                                                        setQuery(
                                                             e.target.value
                                                         )
                                                     }
+                                                    list="cuisines"
                                                 />
-                                            </div>
-                                        </label>
-                                    </div>
-                                    <div className={home_styles.searchBoxItem}>
-                                        <label>
-                                            <div>Food Category</div>
-                                            <div style={{ marginTop: 17 }}>
-                                                <select
-                                                    className={
-                                                        home_styles.select
-                                                    }
-                                                    name="cuisine"
-                                                    value={cuisine}
-                                                    onChange={(e) =>
-                                                        setCuisine(
-                                                            e.target.value
-                                                        )
-                                                    }
-                                                >
-                                                    <option value="">
-                                                        Show all
-                                                    </option>
+                                                <datalist id="cuisines">
                                                     {cuisines.map((cuisine) => (
                                                         <option
                                                             key={cuisine}
@@ -205,7 +185,27 @@ export default (props) => {
                                                             {cuisine}
                                                         </option>
                                                     ))}
-                                                </select>
+                                                </datalist>
+                                            </div>
+                                        </label>
+                                    </div>
+                                    <div className={home_styles.searchBoxItem}>
+                                        <label>
+                                            <div>Around Location</div>
+                                            <div style={{ marginTop: 17 }}>
+                                                <input
+                                                    className={
+                                                        home_styles.select
+                                                    }
+                                                    name="near"
+                                                    value={location}
+                                                    placeholder="Enter Location or keywords"
+                                                    onChange={(e) =>
+                                                        setLocation(
+                                                            e.target.value
+                                                        )
+                                                    }
+                                                />
                                             </div>
                                         </label>
                                     </div>

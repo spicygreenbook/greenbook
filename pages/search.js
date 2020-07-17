@@ -28,12 +28,36 @@ const fuzzySearch = (string, srch) => {
 	);
 };
 
+// credit to https://www.geodatasource.com/developers/javascript
+function getDistance(lat1, lon1, lat2, lon2, unit) {
+    if ((lat1 == lat2) && (lon1 == lon2)) {
+        return 0;
+    }
+    else {
+        var radlat1 = Math.PI * lat1/180;
+        var radlat2 = Math.PI * lat2/180;
+        var theta = lon1-lon2;
+        var radtheta = Math.PI * theta/180;
+        var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
+        if (dist > 1) {
+            dist = 1;
+        }
+        dist = Math.acos(dist);
+        dist = dist * 180/Math.PI;
+        dist = dist * 60 * 1.1515;
+        if (unit=="K") { dist = dist * 1.609344 }
+        if (unit=="N") { dist = dist * 0.8684 }
+        return dist;
+    }
+}
+
 
 export default (props) => {
     const router = useRouter();
 	let { listings, cuisines, content } = props;
 
-	let query = {};
+    //console.log('list', listings)
+	let qs = {};
 	let get_width = 1000;
 	if (typeof window !== "undefined") {
 		get_width = window.innerWidth;
@@ -43,7 +67,7 @@ export default (props) => {
 			.forEach((pair) => {
 				var spl = pair.split("=");
 				if (spl[0] && spl[1]) {
-					query[decodeURIComponent(spl[0])] = decodeURIComponent(spl[1]);
+					qs[decodeURIComponent(spl[0])] = decodeURIComponent(spl[1]);
 				}
 			});
 	}
@@ -54,38 +78,69 @@ export default (props) => {
 				go = false;
 			}
 		}
-		if (cuisine && row.cuisines.indexOf(cuisine) < 0) {
-			console.log('no go')
-			go = false;
-		}
+        if (geoLocation) {
+            let _distance = getDistance(row.geocoordinates.lat, row.geocoordinates.lng, geoLocation[0], geoLocation[1], 'M');
+            if (_distance) {
+                row.distance = _distance;
+            } else {
+                row.distance = 100; // not nearby??
+            }
+            //console.log('row', row.geocoordinates, 'vs', geoLocation, 'distance', row.distance)
+            if (row.distance > 30) {
+                go = false;
+            }
+        }
 		return go;
 	};
+    const sortDistance = (a, b) => {
+        if (a.distance < b.distance) {
+            return -1;
+        }
+        if (a.distance > b.distance) {
+            return 1;
+        }
+        return 0;
+    }
 
-	const [cuisine, setCuisine] = useState(query.cuisine || '');
-	const [filterConfig, setFilterConfig] = useState({search: query.search || '', cuisine: query.cuisine || ''});
+	const [location, setLocation] = useState(qs.near || '');
+    const [query, setQuery] = useState(qs.q || '');
+    const [geoLocation, setGeoLocation] = useState();
+    const [gettingGeo, setGettingGeo] = useState(true);
+    const [pushInterval, setPushInterval] = useState(1);
 
     const fixSearch = (words) => {
         return (words || '').replace(/\+/, ' ').replace(/[^a-z0-9 ]/gi, '');
     }
-    const [search, setSearch] = useState(fixSearch(query.search));
+    const [search, setSearch] = useState(fixSearch(query.q));
 
 	const [width, setWidth] = useState(get_width);
 	const [filteredList, setFilteredList] = useState(
-		listings.filter(filter)
+		listings.filter(filter).sort(sortDistance)
 	);
 
     let timer;
     useEffect(
         () => {
-            clearTimeout(timer);
-            timer = setTimeout(() => {
-                if (filterConfig.cuisine !== cuisine || filterConfig.search !== search) {
-                    setFilteredList(listings.filter(filter))
-                    setFilterConfig({search: search, cuisine: cuisine})
-                }
-            }, 10);
+            setSearch(fixSearch(query.q));
+            if (location) {
+                fetch('/api/geocode?query=' + location).then(res => res.json()).then(json => {
+                    if (json.coords) {
+                        setGeoLocation(json.coords);
+                    }
+                    setGettingGeo(false);
+                }).catch(console.error)
+            } else {
+                setGettingGeo(false);
+                setFilteredList(listings.filter(filter));
+            }
         },
-        [ cuisine, search ]
+        [ pushInterval ]
+    );
+    useEffect(
+        () => {
+            setFilteredList(listings.filter(filter).sort(sortDistance));
+        },
+        [ geoLocation ]
     );
 
     if (typeof window !== 'undefined') {
@@ -94,7 +149,6 @@ export default (props) => {
 			    function handleResize() {
 			      setWidth(window.innerWidth)
 			    }
-
 			    window.addEventListener('resize', handleResize);
 			    return () => window.removeEventListener('resize', handleResize);
   	        },
@@ -116,7 +170,9 @@ export default (props) => {
                 <div>
     			{width > 900 && 
     	            <div className={list.layoutMap}>
-    					<Map list={filteredList} mode="d" />
+                        {!gettingGeo && 
+    					   <Map list={filteredList} mode="d" near={geoLocation} />
+                        }
     				</div>
     			}
                 </div>
@@ -133,16 +189,17 @@ export default (props) => {
                         <form method="GET" action="/search" 
                             onSubmit={(e) => {
                                 e.preventDefault();
-                                let query = {};
-                                if (cuisine) {
-                                    query.cuisine = cuisine;
+                                let push = {}
+                                if (location) {
+                                    push.near = location;
                                 }
-                                if (search) {
-                                    query.search = search;
+                                if (query) {
+                                    push.q = query;
                                 }
+                                setPushInterval(pushInterval + 1);
                                 router.push({
                                     pathname: "/search",
-                                    query: query,
+                                    query: push,
                                 });
                             }}
                         >
@@ -150,20 +207,20 @@ export default (props) => {
                                 <label>
                                     <div>Search</div>
                                     <div style={{marginTop:17}}>
-                                        <input className={home_styles.select} name="search" value={search} placeholder="Enter Location or keywords"  onChange={(e) => setSearch(fixSearch(e.target.value))} />
+                                        <input className={home_styles.select} name="q" value={query} placeholder="Tacos, BBQ, cheesecake"  onChange={(e) => setQuery(e.target.value)} list="cuisines" />
+                                        <datalist id="cuisines">
+                                            {cuisines.map(cuisine => (
+                                                <option key={cuisine} value={cuisine}>{cuisine}</option>
+                                            ))}
+                                        </datalist>
                                     </div>
                                 </label>
                             </div>
                             <div className={home_styles.searchBoxItem}>
                                 <label>
-                                    <div>Food Category</div>
+                                    <div>Near Location</div>
                                     <div style={{marginTop:17}}>
-                                        <select className={home_styles.select} name="cuisine" value={cuisine} onChange={(e) => setCuisine(e.target.value)}>
-                                            <option value="">Show all</option>
-                                            {cuisines.map(cuisine => (
-                                                <option key={cuisine} value={cuisine}>{cuisine}</option>
-                                            ))}
-                                        </select>
+                                        <input className={home_styles.select} name="near" value={location} placeholder="Bellflower, CA"  onChange={(e) => setLocation(e.target.value)}/>
                                     </div>
                                 </label>
                             </div>
@@ -178,9 +235,9 @@ export default (props) => {
                         </form>
                     </div>
 
-    				<h3>{cuisine ? cuisine : 'All Businesses'} ({filteredList && filteredList.length})</h3>
+    				<h3>{query ? query : 'All Businesses'} ({filteredList && filteredList.length})</h3>
 
-    				{width <= 900 && <Map list={filteredList} mode="m" />}
+    				{width <= 900 && !gettingGeo && <Map list={filteredList} mode="m" near={geoLocation} />}
 
     				<div className={list.overallContainer}>
     					<div className={list.boxContainer}>
@@ -222,6 +279,9 @@ export default (props) => {
         														list.boxContentRight
         													}
         												>
+                                                            {row.distance && 
+                                                                (<p>Distance: {(Math.round(row.distance * 10)/10)} Miles</p>)
+                                                            }
         													{row.phone_number && (
         														<p>
         															{row.phone_number}

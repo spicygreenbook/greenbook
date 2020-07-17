@@ -12,6 +12,7 @@ AWS.config.update({
 var docClient = new AWS.DynamoDB.DocumentClient();
 
 // https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=YOUR_API_KEY
+// https://www.mapquestapi.com/geocoding/v1/address?key=KEY&inFormat=kvp&outFormat=json&location=irvine+ca&thumbMaps=false
 
 async function handler(req, res) {
 
@@ -25,6 +26,7 @@ async function handler(req, res) {
             res.statusCode = 500;
             res.json({error: error});
         } else {
+            res.setHeader('Cache-Control', 'public, s-maxage=3600, maxage=3600, stale-while-revalidate');
             res.statusCode = 200;
             res.json({query: query, coords: coords});
         }
@@ -42,10 +44,12 @@ async function handler(req, res) {
             } else {
                 // if we do not get a result, lets hit the mapquest API do get the coords
                 try {
-                    let mapquest_results = await fetch(`http://open.mapquestapi.com/geocoding/v1/address?key=${process.env.MAPQUEST_KEY}&location=${query}`);
+                    // broken?? let mapquest_results = await fetch(`http://open.mapquestapi.com/geocoding/v1/address?key=${process.env.MAPQUEST_KEY}&inFormat=kvp&location=${query}`);
+                    let mapquest_results = await fetch(`https://www.mapquestapi.com/geocoding/v1/address?key=${process.env.MAPQUEST_KEY}&inFormat=kvp&outFormat=json&location=${encodeURIComponent(query)}&thumbMaps=false`);
                     let mapquest_json = await mapquest_results.json();
-                    coords = [mapquest_json.results[0].locations[0].latLng.lat, mapquest_json.results[0].locations[0].latLng.lng];
 
+                    coords = [mapquest_json.results[0].locations[0].latLng.lat, mapquest_json.results[0].locations[0].latLng.lng];
+                    //console.log(mapquest_json.results[0].locations);
                     if (coords) {
                         docClient.put({
                             TableName:tableName,
@@ -63,6 +67,7 @@ async function handler(req, res) {
                                 handleFinal();
                             }
                         });
+                        handleFinal();
                     } else {
                         error = 'invalid coords from api';
                         handleFinal();

@@ -1,0 +1,5 @@
+[{
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target" : { "namespace": "android_app", "package_name": "com.spicygreenbook.twa",
+                   "sha256_cert_fingerprints": ["2B:CE:1A:DB:17:D3:3F:96:80:7A:CF:99:44:67:01:F0:71:C6:C2:93:96:F7:B9:78:2E:42:01:85:A2:1C:40:28"] }
+    }]

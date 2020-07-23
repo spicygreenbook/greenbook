@@ -94,7 +94,7 @@ async function getListings(config) {
 	}
 
 	let results = [];
-	var url = 'https://spicygreenbook.cdn.prismic.io/api/v1/documents/search?ref='+master_ref+'&q=%5B%5Bat(document.type%2C+%22listing%22)%5D%5D';
+	var url = 'https://spicygreenbook.cdn.prismic.io/api/v1/documents/search?ref='+master_ref+'&q=%5B%5Bat(document.type%2C+%22listing%22)%5D%5D&pageSize=100';
 	let data = await fetch(url);
 	let getLoop = async (nextInfo) => {
 		nextInfo.results.map((doc, i) => {
@@ -147,9 +147,6 @@ async function getListings(config) {
 			photos_credit_instagram: getPrismicValue(doc.data.listing.photos_credit_instagram),
 			images: images
 		};
-		console.log('possible missing keys', Object.keys(doc.data.listing).filter(key => {
-			return !listing[key]
-		}))
 
 		return listing;
 	})

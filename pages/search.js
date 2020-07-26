@@ -259,7 +259,7 @@ export default (props) => {
         													backgroundImage:
         														"url(" +
         														row.primary_image.url +
-        														"&w=400)",
+        														"&w=800)",
         												}}
         											/>
         											<div className={list.boxContent}>

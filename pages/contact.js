@@ -72,6 +72,19 @@ export default (props) => {
                 <div className="content" style={{padding: '40px 20px'}}>
                     <h1>{content.page_title}</h1>
                     <RichText render={content._body.value} />
+
+                    <h3>Contact Form</h3>
+                    <div className="hb-p-5f0282b0a1f62a61eedd0881-2" style={{display: 'inline-block', maxWidth: '100%', minWidth: 600, boxSizing: 'border-box'}}/>
+                    <img height="1" width="1" style={{display:'none'}} src="https://www.honeybook.com/p.png?pid=5f0282b0a1f62a61eedd0881" />
+                    <script
+                    dangerouslySetInnerHTML={{
+                        __html: `
+                      (function(h,b,s,n,i,p,e,t) {
+                        h._HB_ = h._HB_ || {};h._HB_.pid = i;;;;
+                        t=b.createElement(s);t.type="text/javascript";t.async=!0;t.src=n;
+                        e=b.getElementsByTagName(s)[0];e.parentNode.insertBefore(t,e);
+                    })(window,document,"script","https://widget.honeybook.com/assets_users_production/websiteplacements/placement-controller.min.js","5f0282b0a1f62a61eedd0881");
+                        `}} />
                 </div>
                 <Footer />
             </div>

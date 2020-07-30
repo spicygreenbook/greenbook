@@ -28,13 +28,25 @@ export default class MyDocument extends Document {
               gtag('js', new Date());
 
               gtag('config', 'UA-168538359-1');
-            `}} />          <script
+            `}} />
+            <script
             dangerouslySetInnerHTML={{
               __html: `
               if('serviceWorker' in navigator) {
                   navigator.serviceWorker.register('/sw.js');
               };
               `}} />
+            <script
+            dangerouslySetInnerHTML={{
+              __html: `
+              window.__lc = window.__lc || {};
+              window.__lc.license = 12115266;
+              (function() {
+                var lc = document.createElement('script'); lc.type = 'text/javascript'; lc.async = true;
+                lc.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'cdn.livechatinc.com/tracking.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(lc, s);
+              })();
+                `}} />
         </body>
       </html>
     )

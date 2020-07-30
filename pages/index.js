@@ -557,8 +557,9 @@ export default (props) => {
                     <h2 style={{ marginBottom: 40 }}>
                         What We've Been Up To Lately
                     </h2>
-                    {updates.map((update) => (
+                    {updates.map((update, i) => (
                         <div
+                            key={'updates' + i}
                             className="grid-3"
                             style={{ position: "relative" }}
                         >

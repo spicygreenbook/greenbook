@@ -10,6 +10,17 @@ import Menu from "../components/Menu";
 import Footer from "../components/Footer";
 import { useRouter } from "next/router";
 
+
+const searchKeysConfig = [
+    {key: 'name', multiplier: 10},
+    {key: 'address', multiplier: 1},
+    {key: 'cuisines', multiplier: 4},
+    {key: 'description', multiplier: 2},
+    {key: 'bio', multiplier: 2},
+    {key: 'instagram', multiplier: 10},
+    {key: 'website_url', multiplier: 2},
+]
+
 const fuzzySearch = (string, srch) => {
     //console.log('srch', srch)
     let regy = srch
@@ -27,6 +38,95 @@ const fuzzySearch = (string, srch) => {
 		)
 	);
 };
+const wordSearch = (needle, haystack, multiplier) => {
+    if (typeof haystack === 'string') {
+        haystack = haystack.split(' ')
+    }
+    let ar = ((haystack || []).join(' ') || '').toLowerCase().replace(/[^A-Za-z0-9\ ]/gi, '').split(/[^A-Za-z0-9]/).filter(w => (w || w == 0) ? true: false);
+    let score = 0;
+    let matches = 0;
+    let exact_matches = 0;
+    ar.forEach(word => {
+        if (word === needle) {
+            matches++;
+            exact_matches++;
+            score += multiplier
+        }
+        if (word.indexOf(needle) > -1) {
+            matches++;
+            score += (multiplier * 0.1)
+        }
+    })
+    let ret = {
+        matches: matches,
+        exact_matches: exact_matches,
+        score: score
+    }
+    console.log('search ar', needle, 'in', haystack, 'makes', ar, 'returns', ret);
+    return ret;
+};
+
+const searchSeries = (needle) => {
+    console.log('processing new input', needle)
+    let searchWords = ((needle || '') + '').toLowerCase().replace(/[^A-Za-z0-9\ ]/gi, '').split(/[^A-Za-z0-9]/).filter(w => (w || w == 0) ? true: false);
+    let searchPhrases = [];
+    let tmp_ar = [];
+    let counters = {};
+    for(let i = 2; i<10;i++) {
+        if (searchWords.length >= i) {
+            counters = {};
+            tmp_ar = [];
+            searchWords.forEach((searchNeedle, s) => {
+                console.log('search needle', searchNeedle, 'i', i, 's', s)
+                let b = s * 1;
+                for (b; b > (s-i); b--) {
+                    if (!counters[b]){ counters[b] = 0; }
+                    if (b >= 0) {
+                        if (!tmp_ar[b]) {
+                            if (s < searchWords.length-1) {
+                                tmp_ar[b] = searchNeedle;
+                                counters[b] ++;
+                            }
+                        } else {
+                            tmp_ar[b] += ' ' + searchNeedle
+                            counters[b] ++;
+                        }
+                    }
+                }
+            })
+            console.log('tmp len', i, 'makes', tmp_ar, tmp_ar.length, 'counters', counters)
+            tmp_ar.forEach((phrase_ar, b) => {
+                console.log('phrase', phrase_ar, 'b', b, 'strlen needed', i, 'counters[b]', counters[b])
+                if (counters[b] === i) {
+                    searchPhrases.push(phrase_ar);
+                }
+            })
+        }
+    }
+    console.log('search', needle, 'becomes series', searchWords, 'and phrases', searchPhrases)
+    return {words: searchWords, phrases: searchPhrases};
+}
+
+const searchRank = (processedSearchTerms, row) => {
+    let searchRank = 0;
+
+    console.log('terms', processedSearchTerms, 'row', row)
+
+    processedSearchTerms.words.forEach(searchNeedle => {
+        searchKeysConfig.forEach(searchConfig => {
+            if (row[searchConfig.key]) {
+                searchRank += wordSearch(searchNeedle, row[searchConfig.key], searchConfig.multiplier).score;
+            }
+        })
+    })
+    processedSearchTerms.phrases.forEach(searchPhrase => {
+        searchKeysConfig.forEach(searchConfig => {
+            searchRank += (fuzzySearch(((row.name || []).join(' ') || ''), searchPhrase) || []).length * searchConfig.multiplier;
+        })
+        
+    })
+    return searchRank;
+}
 
 // credit to https://www.geodatasource.com/developers/javascript
 function getDistance(lat1, lon1, lat2, lon2, unit) {
@@ -56,10 +156,13 @@ export default (props) => {
     const router = useRouter();
 	let { listings, cuisines, content } = props;
 
+    let debug = false;
+
     //console.log('list', listings)
 	let qs = {};
 	let get_width = 1000;
 	if (typeof window !== "undefined") {
+        debug = window.location.host.indexOf('localhost') > -1
 		get_width = window.innerWidth;
 		let params = (window.location.search || "")
 			.substr(1)
@@ -72,9 +175,11 @@ export default (props) => {
 			});
 	}
 	const filter = (row) => {
+        //console.log('exec filter on row', processedSearchTerms.words[0]);
 		var go = true;
-		if (search) {
-			if (!fuzzySearch(row._search, search)) {
+		if (processedSearchTerms.words.length) {
+            row._searchRank = searchRank(processedSearchTerms, row)
+			if (!row._searchRank) {
 				go = false;
 			}
 		}
@@ -101,6 +206,15 @@ export default (props) => {
         }
         return 0;
     }
+    const sortSearchRank = (a, b) => {
+        if (a._searchRank > b._searchRank) {
+            return -1;
+        }
+        if (a._searchRank < b._searchRank) {
+            return 1;
+        }
+        return 0;
+    }
 
 	const [location, setLocation] = useState(qs.near || '');
     const [query, setQuery] = useState(qs.q || '');
@@ -109,19 +223,20 @@ export default (props) => {
     const [pushInterval, setPushInterval] = useState(1);
 
     const fixSearch = (words) => {
-        return (words || '').replace(/\+/, ' ').replace(/[^a-z0-9 ]/gi, '');
+        return (words || '').replace(/\+/, ' ').replace(/[^A-Za-z0-9 ]/gi, '');
     }
-    const [search, setSearch] = useState(fixSearch(query.q));
+    const [search, setSearch] = useState(fixSearch(query));
+    const [processedSearchTerms, setProcessedSearchTerms] = useState(searchSeries(fixSearch(query)));
 
 	const [width, setWidth] = useState(get_width);
-	const [filteredList, setFilteredList] = useState(
-		listings.filter(filter).sort(sortDistance)
-	);
+    console.log('filter set list', processedSearchTerms);
+	const [filteredList, setFilteredList] = useState([]);
 
     let timer;
     useEffect(
         () => {
             setSearch(fixSearch(query.q));
+            setProcessedSearchTerms(searchSeries(fixSearch(query)));
             if (location) {
                 fetch('/api/geocode?query=' + location).then(res => res.json()).then(json => {
                     if (json.coords) {
@@ -131,16 +246,16 @@ export default (props) => {
                 }).catch(console.error)
             } else {
                 setGettingGeo(false);
-                setFilteredList(listings.filter(filter));
             }
         },
         [ pushInterval ]
     );
     useEffect(
         () => {
-            setFilteredList(listings.filter(filter).sort(sortDistance));
+            console.log('filter set list', processedSearchTerms);
+            setFilteredList(listings.filter(filter).sort(sortDistance).sort(sortSearchRank));
         },
-        [ geoLocation ]
+        [ geoLocation, processedSearchTerms ]
     );
 
     if (typeof window !== 'undefined') {
@@ -235,7 +350,7 @@ export default (props) => {
                         </form>
                     </div>
 
-    				<h3>{query ? query : 'All Businesses'} ({filteredList && filteredList.length})</h3>
+    				<h3>{filteredList.length} match{filteredList.length != 1 ? 'es' : ''}</h3>
 
     				{width <= 900 && !gettingGeo && <Map list={filteredList} mode="m" near={geoLocation} />}
 
@@ -294,6 +409,10 @@ export default (props) => {
         													)}
 
         												</div>
+                                                        {debug && <div>
+                                                            <div>{JSON.stringify(processedSearchTerms)}</div>
+                                                            <div>Rank: {row._searchRank}</div>
+                                                        </div>}
         											</div>
         										</div>
                                             </a>

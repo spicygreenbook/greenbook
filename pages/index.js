@@ -145,16 +145,16 @@ export default (props) => {
                                     action="/search"
                                     onSubmit={(e) => {
                                         e.preventDefault();
-                                        let query = {};
+                                        let push = {};
                                         if (query) {
-                                            query.q = query;
+                                            push.q = query;
                                         }
                                         if (location) {
-                                            query.near = location;
+                                            push.near = location;
                                         }
                                         router.push({
                                             pathname: "/search",
-                                            query: query,
+                                            query: push,
                                         });
                                     }}
                                 >

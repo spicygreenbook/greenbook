@@ -189,6 +189,13 @@ export default (props) => {
 
                         {content.geocoordinates && width <= 900 && <Map list={[content]} mode="m" single />}
 
+                        {content.youtube_video && 
+                            <div
+                            dangerouslySetInnerHTML={{
+                              __html: content.youtube_video.html}} />
+
+                        }
+
                         {content.bio && 
                             <div style={{marginTop: 40}}>
                                 <h3 style={{color: '#29293E', fontSize: 18, fontWeight: 'normal', margin: 0}}>About {content.name}</h3>

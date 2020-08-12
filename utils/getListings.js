@@ -70,6 +70,10 @@ const getPrismicValue = (ref, key) => {
 			return ref.value.map(item => {
 				return getPrismicGroup(item, key)
 			}).filter(item => item)
+		} else if(ref.type === 'Embed') {
+			return ref.value.oembed
+		} else {
+			console.log('unhandled type', ref)
 		}
 	} else {
 		//console.log('tried passing empty ref', ref, 'with key', key)
@@ -121,6 +125,10 @@ async function getListings(config) {
 		})
 		let services = getPrismicValue(doc.data.listing.services, 'service');
 
+		if (doc.uid == 'pineapple-express-trap-kitchen') {
+			console.log('raw', doc.data.listing)
+		}
+
 		let listing = {
 			id: doc.id,
 			_slug: doc.uid,
@@ -134,6 +142,7 @@ async function getListings(config) {
 			yelp_link: getPrismicValue(doc.data.listing.yelp_link),
 			hours: getPrismicValue(doc.data.listing.hours) || [],
 			website_url: getPrismicValue(doc.data.listing.website_url),
+			youtube_video: getPrismicValue(doc.data.listing.youtube_video),
 			instagram: getPrismicValue(doc.data.listing.instagram),
 			geocoordinates: getPrismicValue(doc.data.listing.geocoordinates),
 			address: getPrismicValue(doc.data.listing.address),

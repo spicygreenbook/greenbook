@@ -317,7 +317,7 @@ export default (props) => {
                         </a>
 
                         <div style={{marginTop: 20}}>
-                            {props.press.filter(press => {
+                            {props.press.reverse().filter(press => {
                                 return press.press_site_logo && press.press_site_logo.url
                             }).map(press => (
                                 <a href={press.link} target="_blank"><img src={press.press_site_logo.url + '&w=400'} border="0" style={{width: 'calc(25% - 10px)', margin: '0 10px 10px 0'}} /></a>

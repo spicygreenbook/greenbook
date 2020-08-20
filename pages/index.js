@@ -289,7 +289,7 @@ export default (props) => {
                         <div style={{marginTop: 20}} />
                         <div className="ib middle" style={{width: 'calc(100% - 1px)', position: 'relative', overflow: 'hidden'}}>
                             <div style={{paddingTop: '56%'}} />
-                            <iframe width="100%" height="100%" src="https://abc7.com/video/embed/?pid=6293409" frameBorder="0" scrolling="no" allowFullScreen style={{position: 'absolute', left: 0, top: 0, bottom: 0, right: 0, overflow: 'hidden'}} />
+                            <iframe width="100%" height="100%" src="https://www.youtube.com/embed/dPtgRAKB67s" frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen style={{position: 'absolute', left: 0, top: 0, bottom: 0, right: 0, overflow: 'hidden'}} />
                         </div>
 
                         <div style={{marginTop: 20}} />
@@ -319,8 +319,8 @@ export default (props) => {
                         <div style={{marginTop: 20}}>
                             {props.press.reverse().filter(press => {
                                 return press.press_site_logo && press.press_site_logo.url
-                            }).map(press => (
-                                <a href={press.link} target="_blank"><img src={press.press_site_logo.url + '&w=400'} border="0" style={{width: 'calc(25% - 10px)', margin: '0 10px 10px 0'}} /></a>
+                            }).map((press, i) => (
+                                <a key={i} href={press.link} target="_blank"><img src={press.press_site_logo.url + '&w=400'} border="0" style={{width: 'calc(25% - 10px)', margin: '0 10px 10px 0'}} /></a>
                             ))}
                         </div>
 

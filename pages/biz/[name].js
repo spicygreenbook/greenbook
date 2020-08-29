@@ -203,32 +203,42 @@ export default (props) => {
                             </div>
                         }
 
-                        {content.photos_credit_name && 
-                            <p style={{marginTop: 100}}>
-                                Thank you to professional photographer {content.photos_credit_name} for donating your time and talent providing the photos on this page.<br />
-                                {content.photos_credit_link && 
-                                    <a className="ib middle" href={content.photos_credit_link} style={{marginRight: 20}} target="_blank">
-                                        <Icons type="link" color="#B56230" style={{display: 'inline-block', width: 16, height: 16, verticalAlign: 'middle', marginRight: 5}} />
-                                        {content.photos_credit_link.replace(
-                                                    "https://",
-                                                    ""
-                                                )
-                                                .replace(
-                                                    "http://",
-                                                    ""
-                                                )
-                                                .replace(
-                                                    "www.",
-                                                    ""
-                                                ).split('/')[0]}
-                                    </a>
-                                }
-                                {content.photos_credit_instagram && 
-                                    <a className="ib middle" href={'https://instagram.com/' + (content.photos_credit_instagram.indexOf('@') > -1 ? content.photos_credit_instagram.slice(1) : content.photos_credit_instagram)} style={{marginRight: 20}} target="_blank">
-                                        <Icons type="instagram" color="#B56230" style={{display: 'inline-block', width: 16, height: 16, verticalAlign: 'middle', marginRight: 5}} />
-                                        {content.photos_credit_instagram}
-                                    </a>
-                                }
+                        {content.attribution && content.attribution.length && <p style={{marginTop: 100}}>
+                            {content.attribution.map((attribution, a) => (
+                                <p key={'attr' + a}>
+                                    {attribution.attribution_type === 'Photography' ? (
+                                        <span>Thank you to professional photographer {attribution.attribution_name} for donating your time and talent providing the photos on this page.</span>
+                                    ) : attribution.attribution_type === 'Videography' ? (
+                                        <span>Thank you to professional videographer {attribution.attribution_name} for donating your time and talent providing the video on this page.</span>
+                                    ) : (
+                                        <span>Thank you to volunteer {attribution.attribution_name} for donating your time and talent on this page.</span>
+                                    )}
+                                    <br />
+                                    {attribution.attribution_link && 
+                                        <a className="ib middle" href={attribution.attribution_link} style={{marginRight: 20}} target="_blank">
+                                            <Icons type="link" color="#B56230" style={{display: 'inline-block', width: 16, height: 16, verticalAlign: 'middle', marginRight: 5}} />
+                                            {attribution.attribution_link.replace(
+                                                        "https://",
+                                                        ""
+                                                    )
+                                                    .replace(
+                                                        "http://",
+                                                        ""
+                                                    )
+                                                    .replace(
+                                                        "www.",
+                                                        ""
+                                                    ).split('/')[0]}
+                                        </a>
+                                    }
+                                    {attribution.attribution_instagram && 
+                                        <a className="ib middle" href={'https://instagram.com/' + (attribution.attribution_instagram.indexOf('@') > -1 ? attribution.attribution_instagram.slice(1) : attribution.attribution_instagram)} style={{marginRight: 20}} target="_blank">
+                                            <Icons type="instagram" color="#B56230" style={{display: 'inline-block', width: 16, height: 16, verticalAlign: 'middle', marginRight: 5}} />
+                                            {attribution.attribution_instagram}
+                                        </a>
+                                    }
+                                </p>
+                            ))}
                             </p>
                         }
                     </div>

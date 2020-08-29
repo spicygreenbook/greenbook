@@ -10,18 +10,27 @@ function getPrismicGroupAdvanced(ref) {
 	})
 }
 const getPrismicGroup = (ref, key) => {
-	//console.log('ref', ref, 'key', key)
-	if (ref[key] && ref[key].type === 'Text') {
-		return ref[key].value
-	} else if (ref[key] && ref[key].type === 'Image') {
-		if (ref[key].value.main && ref[key].value.main.url) {
-			return {
-				width: ref[key].value.main.dimensions.width,
-				height: ref[key].value.main.dimensions.height,
-				url: ref[key].value.main.url
+	if (!key && ref) {
+		let obj = {}
+		Object.keys(ref).forEach(key => {
+			obj[key] = getPrismicValue(ref[key]);
+		})
+		return obj
+	} else {
+		if (ref[key] && (ref[key].type === 'Text' || ref[key].type === 'Select' || ref[key].type === 'Link.web')) {
+			return ref[key].value
+		} else if (ref[key] && ref[key].type === 'Image') {
+			if (ref[key].value.main && ref[key].value.main.url) {
+				return {
+					width: ref[key].value.main.dimensions.width,
+					height: ref[key].value.main.dimensions.height,
+					url: ref[key].value.main.url
+				}
+			} else {
+				return null
 			}
 		} else {
-			return null
+			console.log('get', 'key', key, 'ref', ref)
 		}
 	}
 }
@@ -30,7 +39,7 @@ const getPrismicValue = (ref, key) => {
 	if (ref) {
 		if (ref.type === 'StructuredText') {
 			return ref.value.map(line => line.text)
-		} else if (ref.type === 'Text' || ref.type === 'Number') {
+		} else if (ref.type === 'Text' || ref.type === 'Number' || ref.type === 'Select') {
 			return Array.isArray(ref.value) ? ref.value.map(line => line.text).join('') : ref.value
 		} else if (ref.type === 'Date') {
 			let val = Array.isArray(ref.value) ? ref.value.map(line => line.text).join('') : ref.value;
@@ -125,9 +134,19 @@ async function getListings(config) {
 		})
 		let services = getPrismicValue(doc.data.listing.services, 'service');
 
-		if (doc.uid == 'pineapple-express-trap-kitchen') {
+		if (doc.uid === 'pineapple-express-trap-kitchen') {
 			console.log('raw', doc.data.listing)
 		}
+
+		let photos_credit_name = getPrismicValue(doc.data.listing.photos_credit_name);
+		let photos_credit_link = getPrismicValue(doc.data.listing.photos_credit_link);
+		let photos_credit_instagram = getPrismicValue(doc.data.listing.photos_credit_instagram);
+		let attribution = (photos_credit_name ? [{
+			attribution_name: photos_credit_name.join(''),
+			attribution_type: 'Photography',
+			attribution_instagram: photos_credit_instagram,
+			attribution_link: photos_credit_link
+		}] : []).concat(getPrismicValue(doc.data.listing.attribution));
 
 		let listing = {
 			id: doc.id,
@@ -151,10 +170,8 @@ async function getListings(config) {
 			_bio: doc.data.listing.bio || {},
 			home_page_order: getPrismicValue(doc.data.listing.home_page_order),
 			service_area_radius: getPrismicValue(doc.data.listing.service_area_radius),
-			photos_credit_name: getPrismicValue(doc.data.listing.photos_credit_name),
-			photos_credit_link: getPrismicValue(doc.data.listing.photos_credit_link),
-			photos_credit_instagram: getPrismicValue(doc.data.listing.photos_credit_instagram),
-			images: images
+			images: images,
+			attribution: attribution
 		};
 
 		return listing;

@@ -21,5 +21,6 @@
     "react": "latest",
     "react-dom": "latest",
     "stripe": "^8.63.0"
-  }
+  },
+  "devDependencies": {}
 }

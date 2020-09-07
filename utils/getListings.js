@@ -154,6 +154,9 @@ async function getListings(config) {
 		} else if (!attribution.length && get_more_attribution.length){
 			attribution = get_more_attribution
 		}
+		attribution = attribution.filter(item => {
+			return item && item.attribution_name && item.attribution_name.trim()
+		})
 
 		//console.log('attr', attribution)
 

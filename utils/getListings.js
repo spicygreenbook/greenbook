@@ -135,7 +135,7 @@ async function getListings(config) {
 		let services = getPrismicValue(doc.data.listing.services, 'service');
 
 		if (doc.uid === 'pineapple-express-trap-kitchen') {
-			console.log('raw', doc.data.listing)
+			//console.log('raw', doc.data.listing)
 		}
 
 		let photos_credit_name = getPrismicValue(doc.data.listing.photos_credit_name);
@@ -146,7 +146,16 @@ async function getListings(config) {
 			attribution_type: 'Photography',
 			attribution_instagram: photos_credit_instagram,
 			attribution_link: photos_credit_link
-		}] : []).concat(getPrismicValue(doc.data.listing.attribution));
+		}] : []);
+		let get_more_attribution = getPrismicValue(doc.data.listing.attribution);
+		//console.log('more attr', get_more_attribution)
+		if (get_more_attribution.length && attribution.length){
+			attribution = attribution.concat(get_more_attribution);
+		} else if (!attribution.length && get_more_attribution.length){
+			attribution = get_more_attribution
+		}
+
+		//console.log('attr', attribution)
 
 		let listing = {
 			id: doc.id,

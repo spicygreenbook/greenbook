@@ -41,7 +41,7 @@ export default (props) => {
 
     const [ content, setContent ] = useState(props.content);
     const [ width, setWidth ] = useState(get_width);
-
+    console.log('content', props.content)
     if (typeof window !== 'undefined') {
         useEffect(
             () => {
@@ -203,7 +203,11 @@ export default (props) => {
                             </div>
                         }
 
-                        {content.attribution && content.attribution.length && <p style={{marginTop: 100}}>
+                        {content.attribution && content.attribution.length ?
+                        ( 
+
+                            <p style={{marginTop: 100}}>
+
                             {content.attribution.map((attribution, a) => (
                                 <p key={'attr' + a}>
                                     {attribution.attribution_type === 'Photography' ? (
@@ -239,7 +243,10 @@ export default (props) => {
                                     }
                                 </p>
                             ))}
+
                             </p>
+                        ) : (<React.Fragment />)
+
                         }
                     </div>
                 </div>

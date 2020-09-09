@@ -6,6 +6,7 @@ import { getContent, getUpdates } from "../utils/getListings";
 import ContentPageHeader from "../components/ContentPageHeader";
 import Menu from "../components/Menu";
 import Footer from "../components/Footer";
+import Icons from "../components/Icons.js";
 
 export default (props) => {
 
@@ -88,6 +89,46 @@ export default (props) => {
                                     <a className="buttonSmall" href={update.link}>
                                         {update.action_text}
                                     </a>
+                                </p>}
+
+                                {update.attribution && update.attribution.length && <p style={{marginTop: 20}}>
+                                        {update.attribution.map((attribution, a) => (
+                                            <p key={'attr' + a}>
+                                                {attribution.attribution_type === 'Photography' ? (
+                                                    <span>Thank you to professional photographer {attribution.attribution_name} for donating your time and talent providing the photos on this update.</span>
+                                                ) : attribution.attribution_type === 'Videography' ? (
+                                                    <span>Thank you to professional videographer {attribution.attribution_name} for donating your time and talent providing the video on this update.</span>
+                                                ) : attribution.attribution_type === 'Design' ? (
+                                                    <span>Thank you to professional designer {attribution.attribution_name} for donating your time and talent providing the design on this update.</span>
+                                                ) : (
+                                                    <span>Thank you to volunteer {attribution.attribution_name} for donating your time and talent on this update.</span>
+                                                )}
+                                                <br />
+                                                {attribution.attribution_link && 
+                                                    <a className="ib middle" href={attribution.attribution_link} style={{marginRight: 20}} target="_blank">
+                                                        <Icons type="link" color="#B56230" style={{display: 'inline-block', width: 16, height: 16, verticalAlign: 'middle', marginRight: 5}} />
+                                                        {attribution.attribution_link.replace(
+                                                                    "https://",
+                                                                    ""
+                                                                )
+                                                                .replace(
+                                                                    "http://",
+                                                                    ""
+                                                                )
+                                                                .replace(
+                                                                    "www.",
+                                                                    ""
+                                                                ).split('/')[0]}
+                                                    </a>
+                                                }
+                                                {attribution.attribution_instagram && 
+                                                    <a className="ib middle" href={'https://instagram.com/' + (attribution.attribution_instagram.indexOf('@') > -1 ? attribution.attribution_instagram.slice(1) : attribution.attribution_instagram)} style={{marginRight: 20}} target="_blank">
+                                                        <Icons type="instagram" color="#B56230" style={{display: 'inline-block', width: 16, height: 16, verticalAlign: 'middle', marginRight: 5}} />
+                                                        {attribution.attribution_instagram}
+                                                    </a>
+                                                }
+                                            </p>
+                                        ))}
                                 </p>}
                             </div>
                         </div>

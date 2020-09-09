@@ -214,6 +214,8 @@ export default (props) => {
                                         <span>Thank you to professional photographer {attribution.attribution_name} for donating your time and talent providing the photos on this page.</span>
                                     ) : attribution.attribution_type === 'Videography' ? (
                                         <span>Thank you to professional videographer {attribution.attribution_name} for donating your time and talent providing the video on this page.</span>
+                                    ) : attribution.attribution_type === 'Designer' ? (
+                                        <span>Thank you to professional designer {attribution.attribution_name} for donating your time and talent providing design work for this business.</span>
                                     ) : (
                                         <span>Thank you to volunteer {attribution.attribution_name} for donating your time and talent on this page.</span>
                                     )}

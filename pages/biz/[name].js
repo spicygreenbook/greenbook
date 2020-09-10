@@ -161,6 +161,14 @@ export default (props) => {
                                         </a>
                                     </p>
                                 }
+                                {content.online_ordering_link && 
+                                    <p>
+                                        <a href={content.online_ordering_link} target="_blank">
+                                            <Icons type="link" color="#B56230" style={{width: 16, height: 16, marginRight: 10}} />
+                                            <span className="ib middle">Online Ordering</span>
+                                        </a>
+                                    </p>
+                                }
                             </div>
                         </div>
                         <div>

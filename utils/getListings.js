@@ -173,6 +173,7 @@ async function getListings(config) {
 			yelp_link: getPrismicValue(doc.data.listing.yelp_link),
 			hours: getPrismicValue(doc.data.listing.hours) || [],
 			website_url: getPrismicValue(doc.data.listing.website_url),
+			online_ordering_link: getPrismicValue(doc.data.listing.online_ordering_link),
 			youtube_video: getPrismicValue(doc.data.listing.youtube_video),
 			instagram: getPrismicValue(doc.data.listing.instagram),
 			geocoordinates: getPrismicValue(doc.data.listing.geocoordinates),

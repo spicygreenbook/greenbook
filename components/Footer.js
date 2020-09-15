@@ -47,7 +47,7 @@ export default function Header(props) {
                 <Link href="/volunteer"><a className="link">Volunteer</a></Link>
                 <Link href="/updates"><a className="link">Latest Updates</a></Link>
                 <Link href="/press"><a className="link">Press</a></Link>
-                <Link href="/SpicyGreenBook_PressRelease_08_19_2020.pdf"><a className="link" target="_blank">Press Release</a></Link>
+                <Link href="/SpicyGreenBook_PressRelease_09_11_2020.pdf"><a className="link" target="_blank">Press Release</a></Link>
                 <Link href="/add"><a className="link">Add Your Listing</a></Link>
                 <Link href="/contact"><a className="link">Contact Us</a></Link>
             </div>

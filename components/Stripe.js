@@ -207,7 +207,7 @@ const CheckoutForm = (props) => {
 							For an email receipt
 						</div>
 						<input
-							type="email"
+							type="text"
 							name="email"
 							id="card-email"
 							value={fields.email || ""}

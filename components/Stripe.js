@@ -245,7 +245,7 @@ const CheckoutForm = (props) => {
 							}
 							onClick={(e) => {
 								if (!useCustomAmount) {
-									setValue("amount", 155);
+									setValue("amount", 20);
 									setUseCustomAmount(true);
 								} else {
 									// do nothing its already custom

@@ -191,6 +191,7 @@ const CheckoutForm = (props) => {
 								name="name"
 								id="card-zip"
 								placeholder="92561"
+								pattern="^\s*\d{5}(-\d{4})?\s*$"
 								size="5"
 								value={fields.zip}
 								onChange={(e) =>

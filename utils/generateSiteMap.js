@@ -30,7 +30,7 @@ async function generateSiteMap(data) {
     paths.sort().forEach(path => {
         urls += `
 <url>
-    <loc>https://lunarcrush.com/${path}</loc>
+    <loc>https://spicygreenbook.com/${path}</loc>
     <lastmod>${today}</lastmod>
     <changefreq>always</changefreq>
     <priority>1.0</priority>
@@ -40,7 +40,7 @@ async function generateSiteMap(data) {
     data.listings.forEach(item => {
         urls += `
 <url>
-    <loc>https://lunarcrush.com/biz/${item._slug}</loc>
+    <loc>https://spicygreenbook.com/biz/${item._slug}</loc>
     <lastmod>${today}</lastmod>
     <changefreq>always</changefreq>
     <priority>1.0</priority>

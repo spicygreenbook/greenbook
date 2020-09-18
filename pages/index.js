@@ -199,7 +199,7 @@ export default (props) => {
                                                     }
                                                     name="near"
                                                     value={location}
-                                                    placeholder="Enter Location or keywords"
+                                                    placeholder="Address, City, State, Zip"
                                                     onChange={(e) =>
                                                         setLocation(
                                                             e.target.value

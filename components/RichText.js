@@ -11,7 +11,8 @@ export default function RichText(props) {
                 var injectStart = '';
                 var injectEnd = '';
                 if (span.data.type === 'Link.web') {
-                    injectStart = '<a href="' + (span.data.value.url || '') + '" target="">';
+                    let external = span.data.value.url.indexOf('http') === 0 ? true : false
+                    injectStart = '<a href="' + (span.data.value.url || '') + '" target="' + (external ? '_blank' : '') + ' ">';
                     injectEnd = '</a>';
                 }
                 chars.splice(span.start, 0, injectStart)

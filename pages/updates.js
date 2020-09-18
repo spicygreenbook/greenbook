@@ -91,7 +91,7 @@ export default (props) => {
                                     </a>
                                 </p>}
 
-                                {update.attribution && update.attribution.length && <p style={{marginTop: 20}}>
+                                {!!(update.attribution && update.attribution.length) && <p style={{marginTop: 20}}>
                                         {update.attribution.map((attribution, a) => (
                                             <p key={'attr' + a}>
                                                 {attribution.attribution_type === 'Photography' ? (

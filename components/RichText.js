@@ -18,7 +18,6 @@ export default function RichText(props) {
                 chars.splice(span.end + 1, 0, injectEnd)
             })
             html = chars.join('');
-            console.log('html', html);
         }
 
         if (part.type === 'heading1') {

@@ -192,7 +192,7 @@ async function getListings(config) {
 
 	return {
 		listings: listings,
-		cuisines: Array.from(allCuisines)
+		cuisines: Array.from(allCuisines).sort()
 		//cuisines: cuisines,
 		//neighborhoods: neighborhoods
 	}

@@ -7,6 +7,7 @@ export default function MyApp({ Component, pageProps }) {
   return (
         <React.Fragment>
             <Head>
+                <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1" />
                 <meta name="description" content="Support black-owned business. We bring professional services to these businesses and then bring them to you. A new experience to find a new place to eat today!" key="description"></meta>
                 <meta property="og:description" content="Support black-owned business. We bring professional services to these businesses and then bring them to you. A new experience to find a new place to eat today!" key="og:description" />
                 <meta name="twitter:card" content="summary" key="twitter:card"></meta>

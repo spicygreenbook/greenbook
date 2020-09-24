@@ -67,7 +67,7 @@ async function handler(req, res) {
                                 handleFinal();
                             }
                         });
-                        handleFinal();
+                        //handleFinal();
                     } else {
                         error = 'invalid coords from api';
                         handleFinal();

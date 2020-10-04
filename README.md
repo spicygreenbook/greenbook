@@ -1,3 +1,7 @@
+# NEW CODE BASE FOR MOBILE & WEB APPS WITH NEW DESIGN!!
+Want to help us? Check it out, see if you can help.
+See the [greenbook-app](https://github.com/spicygreenbook/greenbook-app) repo! 
+
 # greenbook
 Code base for the website [spicygreenbook.com](https://spicygreenbook.com) which is a directory of local black-owned businesses that users can find to support
 

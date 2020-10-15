@@ -81,7 +81,7 @@ export default function Map({
 							var marker = new google.maps.Marker({
 								map: map,
 								position: row.geocoordinates,
-								title: row.name,
+								title: row.name || '',
 							});
 						}
 						//console.log('marker', marker)

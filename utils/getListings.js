@@ -30,7 +30,7 @@ const getPrismicGroup = (ref, key) => {
 				return null
 			}
 		} else {
-			console.log('get', 'key', key, 'ref', ref)
+			//console.log('get', 'key', key, 'ref', ref)
 		}
 	}
 }
@@ -82,7 +82,7 @@ const getPrismicValue = (ref, key) => {
 		} else if(ref.type === 'Embed') {
 			return ref.value.oembed
 		} else {
-			console.log('unhandled type', ref)
+			//console.log('unhandled type', ref)
 		}
 	} else {
 		//console.log('tried passing empty ref', ref, 'with key', key)
@@ -93,7 +93,7 @@ const getPrismicValue = (ref, key) => {
 async function getListings(config) {
 	if (!config){ config = {}; }
 	if (config.ref_id) {
-		console.log('using custom master ref', config.ref_id)
+		//console.log('using custom master ref', config.ref_id)
 		var master_ref = config.ref_id;
 	} else {
 		var masterRef = await fetch('https://spicygreenbook.cdn.prismic.io/api/v2');
@@ -114,7 +114,7 @@ async function getListings(config) {
 			results.push(doc);
 		})
 		if (nextInfo.next_page) {
-			console.log('fetching', nextInfo.next_page)
+			//console.log('fetching', nextInfo.next_page)
 			let data = await fetch(nextInfo.next_page);
 			getLoop(await data.json());
 		}
@@ -203,7 +203,7 @@ async function getListings(config) {
 async function getContent(config) {
 	if (!config){ config = {}; }
 	if (config.ref_id) {
-		console.log('using custom master ref', config.ref_id)
+		//console.log('using custom master ref', config.ref_id)
 		var master_ref = config.ref_id;
 	} else {
 		var masterRef = await fetch('https://spicygreenbook.cdn.prismic.io/api/v2');
@@ -262,7 +262,7 @@ async function getContent(config) {
 async function getUpdates(config) {
 	if (!config){ config = {}; }
 	if (config.ref_id) {
-		console.log('using custom master ref', config.ref_id)
+		//console.log('using custom master ref', config.ref_id)
 		var master_ref = config.ref_id;
 	} else {
 		var masterRef = await fetch('https://spicygreenbook.cdn.prismic.io/api/v2');

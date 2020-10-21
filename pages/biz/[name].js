@@ -23,15 +23,15 @@ export default (props) => {
                 var spl = pair.split("=");
                 query[decodeURIComponent(spl[0])] = decodeURIComponent(spl[1]);
             });
-        console.log("props", props, "query", query);
+        //console.log("props", props, "query", query);
 
         if (query.preview) {
-            console.log('execute preview ref_id', query.preview)
+            //console.log('execute preview ref_id', query.preview)
             useEffect(
                 () => {
                     getUpdatedData({preview: query.preview, name: content._slug}).then(res => {
                         setContent(res.props.content);
-                        console.log('updated content', content)
+                        //console.log('updated content', content)
                     });
                 },
                 [ ]
@@ -41,7 +41,7 @@ export default (props) => {
 
     const [ content, setContent ] = useState(props.content);
     const [ width, setWidth ] = useState(get_width);
-    console.log('content', props.content)
+    //console.log('content', props.content)
     if (typeof window !== 'undefined') {
         useEffect(
             () => {
@@ -273,7 +273,7 @@ async function getUpdatedData(params) {
     }
     let data = await getListings(config);
     let content = {};
-    console.log('params', params)
+    //console.log('params', params)
     data.listings.forEach(item => {
         if(item._slug === params.name) {
             content = item;

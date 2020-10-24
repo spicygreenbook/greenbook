@@ -14,6 +14,7 @@ export default (props) => {
     const [ content, setContent ] = useState(props.content);
 
     useEffect(() => {
+        console.log('execute contact form script')
         (function(h,b,s,n,i,p,e,t) {
             let check = document.getElementById('honeybook-form');
             if (check){ check.parentNode.removeChild(check); }
@@ -22,9 +23,7 @@ export default (props) => {
             t.id = 'honeybook-form';
             e=b.getElementsByTagName(s)[0];e.parentNode.insertBefore(t,e);
         })(window,document,"script","https://widget.honeybook.com/assets_users_production/websiteplacements/placement-controller.min.js","5f0282b0a1f62a61eedd0881");
-
     }, [])
-
 
     let query = {};
     if (typeof window !== "undefined") {

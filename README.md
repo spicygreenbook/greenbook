@@ -1,12 +1,16 @@
+# WE ARE LIVE WITH THE NEW CODEBASE - THIS REPO IS NOW RETIRED
+
 # NEW CODE BASE FOR MOBILE & WEB APPS WITH NEW DESIGN!!
 Want to help us? Check it out, see if you can help.
 See the [greenbook-app](https://github.com/spicygreenbook/greenbook-app) repo! 
+
+# WE ARE LIVE WITH THE NEW CODEBASE - THIS REPO IS NOW RETIRED
 
 # greenbook
 Code base for the website [spicygreenbook.com](https://spicygreenbook.com) which is a directory of local black-owned businesses that users can find to support
 
 ## Want to report a bug or issue with the website?
-Use the [issues](https://github.com/spicygreenbook/greenbook/issues) section on this page to let us know!
+Use the [issues](https://github.com/spicygreenbook/greenbook-app/issues) section on this page to let us know!
 
 ## How To Contribute Code
 The app is built with [React](https://reactjs.org/) + [NextJS](https://nextjs.org/) and is hosted/deployed on [Vercel](https://www.vercel.com) (formerly now.sh)
